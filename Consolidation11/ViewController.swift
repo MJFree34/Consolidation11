@@ -38,15 +38,64 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         collectionView.register(CardCell.self, forCellWithReuseIdentifier: "Card")
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
+        
         // setting background picture
         resizeBackgrounds()
-        
         currentBackground = backgroundPictures[0]
-        
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
         collectionView.backgroundColor = .clear
         
-        view.addSubview(collectionView)
+        // creating customize label
+        let customizeLabel = UILabel()
+        customizeLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
+        customizeLabel.backgroundColor = .clear
+        
+        customizeLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        customizeLabel.font = UIFont(name: "FingerPaint-Regular", size: 36)
+        customizeLabel.textAlignment = .center
+        customizeLabel.text = "Customize Here:"
+        
+        customizeLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customizeLabel)
+        
+        // creating bottom buttons
+        let customizeBackgroundButton = UIButton(type: .custom)
+        customizeBackgroundButton.setImage(UIImage(named: "BackgroundButton"), for: .normal)
+        customizeBackgroundButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        customizeBackgroundButton.showsTouchWhenHighlighted = true
+        customizeBackgroundButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customizeBackgroundButton)
+        
+        let customizeCardsButton = UIButton(type: .custom)
+        customizeCardsButton.setImage(UIImage(named: "CardButton"), for: .normal)
+        customizeCardsButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        customizeCardsButton.showsTouchWhenHighlighted = true
+        customizeCardsButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customizeCardsButton)
+        
+        NSLayoutConstraint.activate([
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+            
+            customizeBackgroundButton.widthAnchor.constraint(equalToConstant: 44),
+            customizeBackgroundButton.heightAnchor.constraint(equalToConstant: 44),
+            customizeBackgroundButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 85),
+            customizeBackgroundButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            customizeCardsButton.widthAnchor.constraint(equalToConstant: 44),
+            customizeCardsButton.heightAnchor.constraint(equalToConstant: 44),
+            customizeCardsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -85),
+            customizeCardsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            customizeLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
+            customizeLabel.heightAnchor.constraint(equalToConstant: 60),
+            customizeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customizeLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10)
+        ])
     }
     
     func resizeBackgrounds() {
@@ -100,8 +149,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
         
-        
-        
         return cell
+    }
+    
+    @objc func customizeBackground() {
+        
+    }
+    
+    @objc func customizeCards() {
+        
     }
 }

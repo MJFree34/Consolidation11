@@ -14,6 +14,7 @@
 		9A85B8B6242A6ADB0036CBDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B5242A6ADB0036CBDC /* ViewController.swift */; };
 		9A85B8BB242A6AE10036CBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A85B8BA242A6AE10036CBDC /* Assets.xcassets */; };
 		9A85B8BE242A6AE10036CBDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A85B8BC242A6AE10036CBDC /* LaunchScreen.storyboard */; };
+		9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		9A85B8BA242A6AE10036CBDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A85B8BD242A6AE10036CBDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A85B8BF242A6AE10036CBDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FingerPaint-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				9A85B8B5242A6ADB0036CBDC /* ViewController.swift */,
 				9A0D378C2438324600DCF45B /* CardCell.swift */,
 				9A0D37902439394E00DCF45B /* Card.swift */,
+				9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */,
 				9A85B8BA242A6AE10036CBDC /* Assets.xcassets */,
 				9A85B8BC242A6AE10036CBDC /* LaunchScreen.storyboard */,
 				9A85B8BF242A6AE10036CBDC /* Info.plist */,
@@ -128,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */,
 				9A85B8BE242A6AE10036CBDC /* LaunchScreen.storyboard in Resources */,
 				9A85B8BB242A6AE10036CBDC /* Assets.xcassets in Resources */,
 			);

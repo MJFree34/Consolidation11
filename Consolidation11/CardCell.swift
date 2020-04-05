@@ -12,13 +12,14 @@ class CardCell: UICollectionViewCell {
     var cardBackImage: UIImageView = {
         let image = UIImage(named: "BlueBack")! // sample image
         let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     var cardFrontImage: UIImageView = {
         let image = UIImage(named: "AppleCard")! // sample back
         let imageView = UIImageView(image: image)
-        imageView.isHidden = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -29,19 +30,19 @@ class CardCell: UICollectionViewCell {
     }
     
     func addViews() {
-        contentView.addSubview(cardBackImage)
         contentView.addSubview(cardFrontImage)
+        contentView.addSubview(cardBackImage)
         
         NSLayoutConstraint.activate([
-            cardBackImage.leftAnchor.constraint(equalTo: leftAnchor),
+            cardBackImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             cardBackImage.topAnchor.constraint(equalTo: topAnchor),
-            cardBackImage.rightAnchor.constraint(equalTo: rightAnchor),
+            cardBackImage.trailingAnchor.constraint(equalTo: trailingAnchor),
             cardBackImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            cardFrontImage.leftAnchor.constraint(equalTo: leftAnchor),
-            cardFrontImage.topAnchor.constraint(equalTo: topAnchor),
-            cardFrontImage.rightAnchor.constraint(equalTo: rightAnchor),
-            cardFrontImage.bottomAnchor.constraint(equalTo: bottomAnchor)
+            cardFrontImage.leadingAnchor.constraint(equalTo: cardBackImage.leadingAnchor),
+            cardFrontImage.topAnchor.constraint(equalTo: cardBackImage.topAnchor),
+            cardFrontImage.trailingAnchor.constraint(equalTo: cardBackImage.trailingAnchor),
+            cardFrontImage.bottomAnchor.constraint(equalTo: cardBackImage.bottomAnchor)
         ])
     }
     
