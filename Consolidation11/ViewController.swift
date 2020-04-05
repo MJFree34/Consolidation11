@@ -8,24 +8,35 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var backgroundPictures = [UIImage]()
+    var currentCards = [UIImage]()
     
     let defaults = UserDefaults.standard
     
     var currentBackground: UIImage!
+    var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // creating the collectionView
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        layout.itemSize = CGSize(width: 69, height: 100)
         
-        collectionView.frame = self.view.frame
-        collectionView.alwaysBounceVertical = true
-
-        collectionView.delegate = self
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        
         collectionView.dataSource = self
-
+        collectionView.delegate = self
+        
+        collectionView.alwaysBounceVertical = true
+        
         collectionView.register(CardCell.self, forCellWithReuseIdentifier: "Card")
-        view.addSubview(collectionView)
         
         // setting background picture
         resizeBackgrounds()
@@ -34,6 +45,8 @@ class ViewController: UICollectionViewController {
         
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
         collectionView.backgroundColor = .clear
+        
+        view.addSubview(collectionView)
     }
     
     func resizeBackgrounds() {
@@ -78,5 +91,17 @@ class ViewController: UICollectionViewController {
     func addBackgroundPicture(from data: Data) {
         let image = UIImage(data: data)!
         backgroundPictures.append(image)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 24
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
+        
+        
+        
+        return cell
     }
 }
