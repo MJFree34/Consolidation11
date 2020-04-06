@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  GameViewController.swift
 //  Consolidation11
 //
 //  Created by Matt Free on 3/24/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class GameViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var backgroundPictures = [UIImage]()
     var currentCards = [UIImage]()
     
@@ -65,6 +65,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         customizeBackgroundButton.setImage(UIImage(named: "BackgroundButton"), for: .normal)
         customizeBackgroundButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         customizeBackgroundButton.showsTouchWhenHighlighted = true
+        customizeBackgroundButton.addTarget(self, action: #selector(moveToCustomizeBackgroundViewController), for: .touchUpInside)
         customizeBackgroundButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customizeBackgroundButton)
         
@@ -72,6 +73,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         customizeCardsButton.setImage(UIImage(named: "CardButton"), for: .normal)
         customizeCardsButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         customizeCardsButton.showsTouchWhenHighlighted = true
+        customizeCardsButton.addTarget(self, action: #selector(moveToCustomizeCardsViewController), for: .touchUpInside)
         customizeCardsButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customizeCardsButton)
         
@@ -152,11 +154,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return cell
     }
     
-    @objc func customizeBackground() {
-        
+    @objc func moveToCustomizeBackgroundViewController() {
+        let vc = CustomizeBackgroundViewController()
+        vc.currentBackground = currentBackground
+        navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func customizeCards() {
-        
+    @objc func moveToCustomizeCardsViewController() {
+        let vc = CustomizeCardsViewController()
+        vc.currentBackground = currentBackground
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
