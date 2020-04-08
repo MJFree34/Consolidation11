@@ -17,13 +17,13 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var currentBackground: UIImage!
     var collectionView: UICollectionView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         // creating the collectionView
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
@@ -77,6 +77,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         customizeCardsButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customizeCardsButton)
         
+        // activating all constraints
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
