@@ -28,7 +28,7 @@ class CustomizeCardsViewController: UIViewController {
         
         setupView()
         
-        twentyFourOption.isHighlighted = true
+        thirtyTwoOption.isHighlighted = true
     }
     
     func setupView() {

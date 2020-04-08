@@ -8,6 +8,13 @@
 
 import UIKit
 
-struct Card {
+struct Card: Codable {
     var frontImageName: String
+    var backImageName: String
+    var isMatched: Bool {
+        return false
+    }
+    var isFlipped: Bool {
+        return false
+    }
 }

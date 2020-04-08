@@ -10,12 +10,14 @@ import UIKit
 
 class GameViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var backgroundPictures = [UIImage]()
-    var currentCards = [UIImage]()
+    var cardModel = CardModel()
     
     let defaults = UserDefaults.standard
     
     var currentBackground: UIImage!
     var collectionView: UICollectionView!
+    
+    var firstLoad = true
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -24,6 +26,10 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupView()
+    }
+    
+    func setupView() {
         // creating the collectionView
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
@@ -146,13 +152,27 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 24
+        return cardModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
         
+        cell.setCard(cardModel.card(at: indexPath.item))
+        cell.setBackImage()
+        cell.setFrontImage()
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CardCell else { fatalError("Could not find a CardCell") }
+        
+        cell.flip()
+        
+        
+        
+        cell.flipBack()
     }
     
     @objc func moveToCustomizeBackgroundViewController() {

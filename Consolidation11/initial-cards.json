@@ -1,0 +1,66 @@
+[
+  {
+    "frontImageName": "AppleCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "AtomCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "BasketballCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "BiohazardCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "BookCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "CowboyHatCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "CrossCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "FleurDeLisCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "HeartCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "ImperialCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "RebelCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "SnowflakeCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "SunglassesCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "TargetCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "TulipCard",
+    "backImageName": "BlueBack"
+  },
+  {
+    "frontImageName": "USFlagCard",
+    "backImageName": "BlueBack"
+  },
+]

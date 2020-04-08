@@ -219,11 +219,11 @@ class CustomizeBackgroundViewController: UIViewController {
             backgroundLabels1StackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             backgroundLabels1StackView.topAnchor.constraint(equalTo: backgroundTitleLabel.bottomAnchor),
             
-            backgroundLabels2StackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            backgroundLabels2StackView.topAnchor.constraint(equalTo: backgrounds1StackView.bottomAnchor),
-            
             backgrounds1StackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             backgrounds1StackView.topAnchor.constraint(equalTo: backgroundLabels1StackView.bottomAnchor, constant: 5),
+            
+            backgroundLabels2StackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            backgroundLabels2StackView.topAnchor.constraint(equalTo: backgrounds1StackView.bottomAnchor, constant: 5),
             
             backgrounds2StackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             backgrounds2StackView.topAnchor.constraint(equalTo: backgroundLabels2StackView.bottomAnchor, constant: 5),

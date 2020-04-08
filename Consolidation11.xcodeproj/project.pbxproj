@@ -20,6 +20,8 @@
 		9ADB03E2243C139B00A8EE5B /* Courgette-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E1243C139B00A8EE5B /* Courgette-Regular.ttf */; };
 		9ADB03E5243C160D00A8EE5B /* ClickerScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E4243C160D00A8EE5B /* ClickerScript-Regular.ttf */; };
 		9ADB03E7243D4A1200A8EE5B /* Kranky-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E6243D4A1200A8EE5B /* Kranky-Regular.ttf */; };
+		9ADB03E9243E20FA00A8EE5B /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03E8243E20FA00A8EE5B /* CardModel.swift */; };
+		9ADB03EB243E2DDF00A8EE5B /* initial-cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03EA243E2DDF00A8EE5B /* initial-cards.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		9ADB03E1243C139B00A8EE5B /* Courgette-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Courgette-Regular.ttf"; sourceTree = "<group>"; };
 		9ADB03E4243C160D00A8EE5B /* ClickerScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClickerScript-Regular.ttf"; sourceTree = "<group>"; };
 		9ADB03E6243D4A1200A8EE5B /* Kranky-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kranky-Regular.ttf"; sourceTree = "<group>"; };
+		9ADB03E8243E20FA00A8EE5B /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		9ADB03EA243E2DDF00A8EE5B /* initial-cards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "initial-cards.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				9ADB03D9243A89E100A8EE5B /* ViewControllers */,
 				9A0D378C2438324600DCF45B /* CardCell.swift */,
 				9A0D37902439394E00DCF45B /* Card.swift */,
+				9ADB03E8243E20FA00A8EE5B /* CardModel.swift */,
+				9ADB03EA243E2DDF00A8EE5B /* initial-cards.json */,
 				9ADB03E3243C13A000A8EE5B /* Fonts */,
 				9A85B8BA242A6AE10036CBDC /* Assets.xcassets */,
 				9A85B8BC242A6AE10036CBDC /* LaunchScreen.storyboard */,
@@ -162,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ADB03EB243E2DDF00A8EE5B /* initial-cards.json in Resources */,
 				9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */,
 				9A85B8BE242A6AE10036CBDC /* LaunchScreen.storyboard in Resources */,
 				9ADB03E2243C139B00A8EE5B /* Courgette-Regular.ttf in Resources */,
@@ -183,6 +190,7 @@
 				9A0D37912439394F00DCF45B /* Card.swift in Sources */,
 				9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */,
 				9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */,
+				9ADB03E9243E20FA00A8EE5B /* CardModel.swift in Sources */,
 				9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */,
 				9A0D378D2438324600DCF45B /* CardCell.swift in Sources */,
 			);
