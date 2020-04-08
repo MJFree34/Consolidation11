@@ -7,21 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A0D378D2438324600DCF45B /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0D378C2438324600DCF45B /* CardCell.swift */; };
+		9A0D37912439394F00DCF45B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0D37902439394E00DCF45B /* Card.swift */; };
 		9A85B8B2242A6ADB0036CBDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */; };
 		9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */; };
-		9A85B8B6242A6ADB0036CBDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B5242A6ADB0036CBDC /* ViewController.swift */; };
+		9A85B8B6242A6ADB0036CBDC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B5242A6ADB0036CBDC /* GameViewController.swift */; };
 		9A85B8BB242A6AE10036CBDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A85B8BA242A6AE10036CBDC /* Assets.xcassets */; };
 		9A85B8BE242A6AE10036CBDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A85B8BC242A6AE10036CBDC /* LaunchScreen.storyboard */; };
+		9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */; };
+		9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */; };
+		9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */; };
+		9ADB03E2243C139B00A8EE5B /* Courgette-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E1243C139B00A8EE5B /* Courgette-Regular.ttf */; };
+		9ADB03E5243C160D00A8EE5B /* ClickerScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E4243C160D00A8EE5B /* ClickerScript-Regular.ttf */; };
+		9ADB03E7243D4A1200A8EE5B /* Kranky-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03E6243D4A1200A8EE5B /* Kranky-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A0D378C2438324600DCF45B /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		9A0D37902439394E00DCF45B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		9A85B8AE242A6ADB0036CBDC /* MatchingPairs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchingPairs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9A85B8B5242A6ADB0036CBDC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9A85B8B5242A6ADB0036CBDC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9A85B8BA242A6AE10036CBDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A85B8BD242A6AE10036CBDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A85B8BF242A6AE10036CBDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FingerPaint-Regular.ttf"; sourceTree = "<group>"; };
+		9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeBackgroundViewController.swift; sourceTree = "<group>"; };
+		9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeCardsViewController.swift; sourceTree = "<group>"; };
+		9ADB03E1243C139B00A8EE5B /* Courgette-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Courgette-Regular.ttf"; sourceTree = "<group>"; };
+		9ADB03E4243C160D00A8EE5B /* ClickerScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClickerScript-Regular.ttf"; sourceTree = "<group>"; };
+		9ADB03E6243D4A1200A8EE5B /* Kranky-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kranky-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +72,36 @@
 			children = (
 				9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */,
 				9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */,
-				9A85B8B5242A6ADB0036CBDC /* ViewController.swift */,
+				9ADB03D9243A89E100A8EE5B /* ViewControllers */,
+				9A0D378C2438324600DCF45B /* CardCell.swift */,
+				9A0D37902439394E00DCF45B /* Card.swift */,
+				9ADB03E3243C13A000A8EE5B /* Fonts */,
 				9A85B8BA242A6AE10036CBDC /* Assets.xcassets */,
 				9A85B8BC242A6AE10036CBDC /* LaunchScreen.storyboard */,
 				9A85B8BF242A6AE10036CBDC /* Info.plist */,
 			);
 			path = Consolidation11;
+			sourceTree = "<group>";
+		};
+		9ADB03D9243A89E100A8EE5B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9A85B8B5242A6ADB0036CBDC /* GameViewController.swift */,
+				9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */,
+				9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		9ADB03E3243C13A000A8EE5B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */,
+				9ADB03E1243C139B00A8EE5B /* Courgette-Regular.ttf */,
+				9ADB03E4243C160D00A8EE5B /* ClickerScript-Regular.ttf */,
+				9ADB03E6243D4A1200A8EE5B /* Kranky-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,7 +162,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */,
 				9A85B8BE242A6AE10036CBDC /* LaunchScreen.storyboard in Resources */,
+				9ADB03E2243C139B00A8EE5B /* Courgette-Regular.ttf in Resources */,
+				9ADB03E7243D4A1200A8EE5B /* Kranky-Regular.ttf in Resources */,
+				9ADB03E5243C160D00A8EE5B /* ClickerScript-Regular.ttf in Resources */,
 				9A85B8BB242A6AE10036CBDC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,9 +178,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A85B8B6242A6ADB0036CBDC /* ViewController.swift in Sources */,
+				9A85B8B6242A6ADB0036CBDC /* GameViewController.swift in Sources */,
 				9A85B8B2242A6ADB0036CBDC /* AppDelegate.swift in Sources */,
+				9A0D37912439394F00DCF45B /* Card.swift in Sources */,
 				9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */,
+				9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */,
+				9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */,
+				9A0D378D2438324600DCF45B /* CardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +330,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MattFree.Consolidation11;
 				PRODUCT_NAME = MatchingPairs;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -300,7 +348,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MattFree.Consolidation11;
 				PRODUCT_NAME = MatchingPairs;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
