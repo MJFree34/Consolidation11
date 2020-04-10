@@ -12,6 +12,7 @@ struct CardModel {
     private var cards = [Card]()
     private var cardSet = [Card]()
     private var totalMatches: Int
+    private var flippedIndex: IndexPath?
     
     var count: Int {
         return cards.count
@@ -21,20 +22,33 @@ struct CardModel {
         return cards[index]
     }
     
-    mutating func shuffle() {
-        cards.shuffle()
+    func getFlippedIndex() -> IndexPath? {
+        return flippedIndex
     }
     
-    func matchedCardsIndexes() -> [Int] {
-        var indexes = [Int]()
-        
-        for (index, card) in cards.enumerated() {
-            if card.isMatched {
-                indexes.append(index)
-            }
+    mutating func setFlippedIndex(to index: IndexPath) {
+        flippedIndex = index
+    }
+    
+    mutating func resetFlipIndex() {        
+        flippedIndex = nil
+    }
+    
+    mutating func toggleFlip(for index: Int) {
+        cards[index].isFlipped.toggle()
+    }
+    
+    mutating func matchCards(index1: Int, index2: Int) -> Bool {
+        if cards[index1].frontImageName == cards[index2].frontImageName {
+            cards[index1].isMatched = true
+            cards[index2].isMatched = true
+            return true
         }
-        
-        return indexes
+        return false
+    }
+    
+    mutating func shuffle() {
+        cards.shuffle()
     }
     
     init() {

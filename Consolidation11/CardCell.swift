@@ -9,7 +9,6 @@
 import UIKit
 
 class CardCell: UICollectionViewCell {
-    private var card: Card!
     
     var cardBackImage: UIImageView = {
         let image = UIImage(named: "BlueBack")! // sample image
@@ -58,15 +57,16 @@ class CardCell: UICollectionViewCell {
         }
     }
     
-    func setCard(_ card: Card) {
-        self.card = card
+    func remove() {
+        cardBackImage.alpha = 0
+        
+        UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: { [weak self] in
+            self?.cardFrontImage.alpha = 0
+        }, completion: nil)
     }
     
-    func setBackImage() {
+    func setCell(with card: Card) {
         cardBackImage.image = UIImage(named: card.backImageName)
-    }
-    
-    func setFrontImage() {
         cardFrontImage.image = UIImage(named: card.frontImageName)
     }
     

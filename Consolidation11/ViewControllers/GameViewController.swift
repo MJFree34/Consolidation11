@@ -158,9 +158,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
         
-        cell.setCard(cardModel.card(at: indexPath.item))
-        cell.setBackImage()
-        cell.setFrontImage()
+        cell.setCell(with: cardModel.card(at: indexPath.item))
         
         return cell
     }
@@ -168,11 +166,31 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCell else { fatalError("Could not find a CardCell") }
         
-        cell.flip()
+        // flipping one card if not flipped
+        if !cardModel.card(at: indexPath.item).isFlipped {
+            cardModel.toggleFlip(for: indexPath.item)
+            cell.flip()
+        }
         
-        
-        
-        cell.flipBack()
+        // if there are two cards flipped
+        if let cardIndexPath = cardModel.getFlippedIndex() {
+            guard let cell2 = collectionView.cellForItem(at: cardIndexPath) as? CardCell else { fatalError("Could not find a Card Cell") }
+            
+            if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
+                cell.remove()
+                cell2.remove()
+            }
+            
+            // flipping all of these for both match and not match
+            cardModel.resetFlipIndex()
+            cardModel.toggleFlip(for: indexPath.item)
+            cardModel.toggleFlip(for: cardIndexPath.item)
+            cell.flipBack()
+            cell2.flipBack()
+        } else {
+            // only one card flipped
+            cardModel.setFlippedIndex(to: indexPath)
+        }
     }
     
     @objc func moveToCustomizeBackgroundViewController() {
