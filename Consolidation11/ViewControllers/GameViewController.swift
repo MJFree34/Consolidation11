@@ -113,7 +113,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             addBackgroundPicture(from: defaults.data(forKey: "BlueBackground")!)
             addBackgroundPicture(from: defaults.data(forKey: "PinkBackground")!)
             addBackgroundPicture(from: defaults.data(forKey: "RedBackground")!)
-
+            
             return
         }
         
@@ -167,39 +167,39 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCell else { fatalError("Could not find a CardCell") }
         
         // two cards flipped
-        if !cardModel.card(at: indexPath.item).isFlipped, let cardIndexPath = cardModel.getFlippedIndex() {
-            if let cell2 = collectionView.cellForItem(at: cardIndexPath) as? CardCell {
-                if !cardModel.card(at: indexPath.item).isFlipped && !cell.isHidden {
+        if !cardModel.card(at: indexPath.item).isFlipped && !cardModel.card(at: indexPath.item).isMatched {
+            if let cardIndexPath = cardModel.getFlippedIndex() {
+                if let cell2 = collectionView.cellForItem(at: cardIndexPath) as? CardCell {
                     cardModel.toggleFlip(for: indexPath.item)
                     cell.flip()
+                    
+                    if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
+                        cell.remove()
+                        cell2.remove()
+                    }
+                    
+                    // flipping all of these for both match and not match
+                    cell.flipBack()
+                    cell2.flipBack()
+                } else {
+                    // for when the cell is offscreen
+                    if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
+                        cell.remove()
+                    }
+                    
+                    // flipping all of these for both match and not match
+                    cell.flipBack()
                 }
                 
-                if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
-                    cell.remove()
-                    cell2.remove()
-                }
-                
-                // flipping all of these for both match and not match
-                cell.flipBack()
-                cell2.flipBack()
+                cardModel.resetFlipIndex()
+                cardModel.toggleFlip(for: indexPath.item)
+                cardModel.toggleFlip(for: cardIndexPath.item)
             } else {
-                // for when the cell is offscreen
-                if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
-                    cell.remove()
-                }
-                
-                // flipping all of these for both match and not match
-                cell.flipBack()
+                // only one card flipped
+                cardModel.setFlippedIndex(to: indexPath)
+                cardModel.toggleFlip(for: indexPath.item)
+                cell.flip()
             }
-            
-            cardModel.resetFlipIndex()
-            cardModel.toggleFlip(for: indexPath.item)
-            cardModel.toggleFlip(for: cardIndexPath.item)
-        } else if cell.cardBackImage.alpha != 0 {
-            // only one card flipped
-            cardModel.setFlippedIndex(to: indexPath)
-            cardModel.toggleFlip(for: indexPath.item)
-            cell.flip()
         }
     }
     
