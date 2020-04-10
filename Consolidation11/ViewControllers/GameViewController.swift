@@ -17,7 +17,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var currentBackground: UIImage!
     var collectionView: UICollectionView!
     
-    var firstLoad = true
+    var hiddenCardIndexPath: IndexPath?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -163,16 +163,26 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         return cell
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        for indexPath in collectionView.indexPathsForVisibleItems {
+            if indexPath == hiddenCardIndexPath {
+                // make sure the cell is flipped the correct way and reset hiddenCardIndexPath
+                collectionView.reloadItems(at: [indexPath])
+                hiddenCardIndexPath = nil
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCell else { fatalError("Could not find a CardCell") }
         
         // two cards flipped
         if !cardModel.card(at: indexPath.item).isFlipped && !cardModel.card(at: indexPath.item).isMatched {
             if let cardIndexPath = cardModel.getFlippedIndex() {
+                cardModel.toggleFlip(for: indexPath.item)
+                cell.flip()
+                
                 if let cell2 = collectionView.cellForItem(at: cardIndexPath) as? CardCell {
-                    cardModel.toggleFlip(for: indexPath.item)
-                    cell.flip()
-                    
                     if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
                         cell.remove()
                         cell2.remove()
@@ -189,6 +199,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                     
                     // flipping all of these for both match and not match
                     cell.flipBack()
+                    
+                    hiddenCardIndexPath = cardIndexPath
                 }
                 
                 cardModel.resetFlipIndex()
