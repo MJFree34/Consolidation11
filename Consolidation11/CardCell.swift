@@ -57,12 +57,18 @@ class CardCell: UICollectionViewCell {
         }
     }
     
+    func flipBackImmediately() {
+        UIView.transition(from: cardFrontImage, to: cardBackImage, duration: 0.01, options: [.transitionFlipFromRight, .showHideTransitionViews])
+    }
+    
     func remove() {
         cardBackImage.alpha = 0
         
         UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: { [weak self] in
             self?.cardFrontImage.alpha = 0
-        }, completion: nil)
+        }) { (bool) in
+            self.isHidden = true
+        }
     }
     
     func setCell(with card: Card) {
