@@ -11,13 +11,11 @@ import UIKit
 class CustomizeCardsViewController: UIViewController {
     var currentBackground: UIImage!
     
-    var eightOption: UILabel!
-    var sixteenOption: UILabel!
-    var twentyFourOption: UILabel!
-    var thirtyTwoOption: UILabel!
-    var fourtyOption: UILabel!
+    var options = [UIButton]()
     
     var frontsTitleLabel: UILabel!
+    
+    let defaults = UserDefaults.standard
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -28,7 +26,22 @@ class CustomizeCardsViewController: UIViewController {
         
         setupView()
         
-        thirtyTwoOption.isHighlighted = true
+        if defaults.integer(forKey: "NumberOfCards") != 0 {
+            resetSelecteds()
+            
+            switch defaults.integer(forKey: "NumberOfCards") {
+            case 8:
+                options[0].isSelected = true
+            case 16:
+                options[1].isSelected = true
+            case 24:
+                options[2].isSelected = true
+            case 32:
+                options[3].isSelected = true
+            default:
+                options[4].isSelected = true
+            }
+        }
     }
     
     func setupView() {
@@ -69,45 +82,55 @@ class CustomizeCardsViewController: UIViewController {
         scrollView.addSubview(numberOfCardsTitleLabel)
         
         // creating the number options
-        eightOption = UILabel()
-        eightOption.textColor = .white
-        eightOption.highlightedTextColor = UIColor(red: 0, green: 0.94, blue: 1, alpha: 1)
-        eightOption.text = "8"
-        eightOption.font = UIFont(name: "Kranky-Regular", size: 36)
-        eightOption.textAlignment = .center
+        let eightOption = UIButton()
+        eightOption.setTitleColor(.white, for: .normal)
+        eightOption.setTitleColor(UIColor(red: 0, green: 0.94, blue: 1, alpha: 1), for: .selected)
+        eightOption.setTitle("8", for: .normal)
+        eightOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        eightOption.titleLabel?.textAlignment = .center
+        eightOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         eightOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        options.append(eightOption)
         
-        sixteenOption = UILabel()
-        sixteenOption.textColor = .white
-        sixteenOption.highlightedTextColor = UIColor(red: 1, green: 0.9, blue: 0, alpha: 1)
-        sixteenOption.text = "16"
-        sixteenOption.font = UIFont(name: "Kranky-Regular", size: 36)
-        sixteenOption.textAlignment = .center
+        let sixteenOption = UIButton()
+        sixteenOption.setTitleColor(.white, for: .normal)
+        sixteenOption.setTitleColor(UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), for: .selected)
+        sixteenOption.setTitle("16", for: .normal)
+        sixteenOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        sixteenOption.titleLabel?.textAlignment = .center
+        sixteenOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         sixteenOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        options.append(sixteenOption)
         
-        twentyFourOption = UILabel()
-        twentyFourOption.textColor = .white
-        twentyFourOption.highlightedTextColor = UIColor(red: 0.56, green: 1, blue: 0, alpha: 1)
-        twentyFourOption.text = "24"
-        twentyFourOption.font = UIFont(name: "Kranky-Regular", size: 36)
-        twentyFourOption.textAlignment = .center
+        let twentyFourOption = UIButton()
+        twentyFourOption.setTitleColor(.white, for: .normal)
+        twentyFourOption.setTitleColor(UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), for: .selected)
+        twentyFourOption.setTitle("24", for: .normal)
+        twentyFourOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        twentyFourOption.titleLabel?.textAlignment = .center
+        twentyFourOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         twentyFourOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        options.append(twentyFourOption)
         
-        thirtyTwoOption = UILabel()
-        thirtyTwoOption.textColor = .white
-        thirtyTwoOption.highlightedTextColor = UIColor(red: 0.32, green: 0, blue: 0.571, alpha: 1)
-        thirtyTwoOption.text = "32"
-        thirtyTwoOption.font = UIFont(name: "Kranky-Regular", size: 36)
-        thirtyTwoOption.textAlignment = .center
+        let thirtyTwoOption = UIButton()
+        thirtyTwoOption.setTitleColor(.white, for: .normal)
+        thirtyTwoOption.setTitleColor(UIColor(red: 0.32, green: 0, blue: 0.571, alpha: 1), for: .selected)
+        thirtyTwoOption.setTitle("32", for: .normal)
+        thirtyTwoOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        thirtyTwoOption.titleLabel?.textAlignment = .center
+        thirtyTwoOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         thirtyTwoOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        options.append(thirtyTwoOption)
         
-        fourtyOption = UILabel()
-        fourtyOption.textColor = .white
-        fourtyOption.highlightedTextColor = UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1)
-        fourtyOption.text = "40"
-        fourtyOption.font = UIFont(name: "Kranky-Regular", size: 36)
-        fourtyOption.textAlignment = .center
+        let fourtyOption = UIButton()
+        fourtyOption.setTitleColor(.white, for: .normal)
+        fourtyOption.setTitleColor(UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), for:.selected )
+        fourtyOption.setTitle("40", for: .normal)
+        fourtyOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        fourtyOption.titleLabel?.textAlignment = .center
+        fourtyOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         fourtyOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        options.append(fourtyOption)
         
         // creating the numbers' stackView
         let numbersStackView = UIStackView(arrangedSubviews: [eightOption, sixteenOption, twentyFourOption, thirtyTwoOption, fourtyOption])
@@ -304,6 +327,34 @@ class CustomizeCardsViewController: UIViewController {
             cardStackView.topAnchor.constraint(equalTo: frontsTitleLabel.bottomAnchor, constant: 5),
             cardStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 10-8)
         ])
+    }
+    
+    @objc func saveNumberOfCards(_ sender: UIButton) {
+        resetSelecteds()
+        
+        switch sender.title(for: .normal) {
+        case "8":
+            defaults.set(8, forKey: "NumberOfCards")
+            options[0].isSelected = true
+        case "16":
+            defaults.set(16, forKey: "NumberOfCards")
+            options[1].isSelected = true
+        case "24":
+            defaults.set(24, forKey: "NumberOfCards")
+            options[2].isSelected = true
+        case "32":
+            defaults.set(32, forKey: "NumberOfCards")
+            options[3].isSelected = true
+        default:
+            defaults.set(40, forKey: "NumberOfCards")
+            options[4].isSelected = true
+        }
+    }
+    
+    func resetSelecteds() {
+        for option in options {
+            option.isSelected = false
+        }
     }
     
     @objc func moveToGameViewController() {

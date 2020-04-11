@@ -11,7 +11,7 @@ import Foundation
 struct CardModel {
     private var cards = [Card]()
     private var cardSet = [Card]()
-    private var totalMatches: Int
+    private var totalCards: Int
     private var flippedIndex: IndexPath?
     
     var count: Int {
@@ -49,6 +49,7 @@ struct CardModel {
     
     mutating func shuffle() {
         cards.shuffle()
+        cards.shuffle()
     }
     
     init() {
@@ -69,13 +70,13 @@ struct CardModel {
         cards += cards // makes it so that there are pairs
         
         // setting the total matches
-        if UserDefaults.standard.integer(forKey: "TotalMatches") != 0 {
-            totalMatches = UserDefaults.standard.integer(forKey: "TotalMatches")
+        if UserDefaults.standard.integer(forKey: "NumberOfCards") != 0 {
+            totalCards = UserDefaults.standard.integer(forKey: "NumberOfCards")
         } else {
-            totalMatches = 16
+            totalCards = 0
         }
         
-        assert(totalMatches * 2 == count)
+        assert(totalCards == count)
         
         // shuffling deck
         shuffle()
