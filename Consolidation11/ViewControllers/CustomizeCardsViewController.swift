@@ -26,21 +26,19 @@ class CustomizeCardsViewController: UIViewController {
         
         setupView()
         
-        if defaults.integer(forKey: "NumberOfCards") != 0 {
-            resetSelecteds()
-            
-            switch defaults.integer(forKey: "NumberOfCards") {
-            case 8:
-                options[0].isSelected = true
-            case 16:
-                options[1].isSelected = true
-            case 24:
-                options[2].isSelected = true
-            case 32:
-                options[3].isSelected = true
-            default:
-                options[4].isSelected = true
-            }
+        resetSelected()
+        
+        switch defaults.integer(forKey: "NumberOfCards") {
+        case 8:
+            options[0].isSelected = true
+        case 16:
+            options[1].isSelected = true
+        case 24:
+            options[2].isSelected = true
+        case 32:
+            options[3].isSelected = true
+        default:
+            options[4].isSelected = true
         }
     }
     
@@ -330,7 +328,7 @@ class CustomizeCardsViewController: UIViewController {
     }
     
     @objc func saveNumberOfCards(_ sender: UIButton) {
-        resetSelecteds()
+        resetSelected()
         
         switch sender.title(for: .normal) {
         case "8":
@@ -351,7 +349,7 @@ class CustomizeCardsViewController: UIViewController {
         }
     }
     
-    func resetSelecteds() {
+    func resetSelected() {
         for option in options {
             option.isSelected = false
         }

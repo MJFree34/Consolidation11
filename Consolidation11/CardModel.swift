@@ -73,7 +73,7 @@ struct CardModel {
         if UserDefaults.standard.integer(forKey: "NumberOfCards") != 0 {
             totalCards = UserDefaults.standard.integer(forKey: "NumberOfCards")
         } else {
-            totalCards = 0
+            totalCards = 40
         }
         
         assert(totalCards == count)

@@ -9,15 +9,14 @@
 import UIKit
 
 class GameViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    var backgroundPictures = [UIImage]()
     var cardModel = CardModel()
+    var hiddenCardIndexPath: IndexPath?
     
     let defaults = UserDefaults.standard
     
     var currentBackground: UIImage!
-    var collectionView: UICollectionView!
     
-    var hiddenCardIndexPath: IndexPath?
+    var collectionView: UICollectionView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -49,7 +48,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         // setting background picture
         resizeBackgrounds()
-        currentBackground = backgroundPictures[0]
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
         collectionView.backgroundColor = .clear
         
@@ -109,10 +107,16 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func resizeBackgrounds() {
         guard defaults.data(forKey: "GreenBackground")?.isEmpty ?? true else {
-            addBackgroundPicture(from: defaults.data(forKey: "GreenBackground")!)
-            addBackgroundPicture(from: defaults.data(forKey: "BlueBackground")!)
-            addBackgroundPicture(from: defaults.data(forKey: "PinkBackground")!)
-            addBackgroundPicture(from: defaults.data(forKey: "RedBackground")!)
+            switch defaults.string(forKey: "Background") {
+            case "green":
+                currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+            case "red":
+                currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
+            case "blue":
+                currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
+            default:
+                currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
+            }
             
             return
         }
@@ -138,17 +142,12 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                 background.draw(in: CGRect(x: -50, y: -50, width: view.bounds.width + 100, height: view.bounds.height + 100))
             }
             
-            backgroundPictures.append(image)
-            
             guard let imageData = image.jpegData(compressionQuality: 0.5) else { fatalError("Could not save background image") }
             
             defaults.set(imageData, forKey: backgroundName)
         }
-    }
-    
-    func addBackgroundPicture(from data: Data) {
-        let image = UIImage(data: data)!
-        backgroundPictures.append(image)
+        
+        currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

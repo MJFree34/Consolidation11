@@ -11,6 +11,10 @@ import UIKit
 class CustomizeBackgroundViewController: UIViewController {
     var currentBackground: UIImage!
     
+    var smallBackgroundOptions = [UIButton]()
+    
+    let defaults = UserDefaults.standard
+    
     // makes the top status bar white
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -20,11 +24,24 @@ class CustomizeBackgroundViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        
+        resetSelected()
+        
+        switch defaults.string(forKey: "Background") {
+        case "green":
+            smallBackgroundOptions[0].isSelected = true
+        case "red":
+            smallBackgroundOptions[1].isSelected = true
+        case "blue":
+            smallBackgroundOptions[2].isSelected = true
+        default:
+            smallBackgroundOptions[3].isSelected = true
+        }
     }
     
     func setupView() {
         // setting background pic
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+        setBackground()
         
         // giving the ability to swipe from the left of screen to pop to rootView
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -105,18 +122,41 @@ class CustomizeBackgroundViewController: UIViewController {
         backgroundLabels2StackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundLabels2StackView)
         
-        // creating the background choices
-        let greenSmallBackground = UIImageView(image: UIImage(named: "SmallGreenBackground"))
+        // creating the background options
+        let greenSmallBackground = UIButton(type: .custom)
+        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
+        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        greenSmallBackground.adjustsImageWhenHighlighted = false
+        greenSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
+        greenSmallBackground.tag = 0
         greenSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        smallBackgroundOptions.append(greenSmallBackground)
         
-        let redSmallBackground = UIImageView(image: UIImage(named: "SmallRedBackground"))
+        let redSmallBackground = UIButton(type: .custom)
+        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
+        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        redSmallBackground.adjustsImageWhenHighlighted = false
+        redSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
+        redSmallBackground.tag = 1
         redSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        smallBackgroundOptions.append(redSmallBackground)
         
-        let blueSmallBackground = UIImageView(image: UIImage(named: "SmallBlueBackground"))
+        let blueSmallBackground = UIButton(type: .custom)
+        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
+        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        blueSmallBackground.adjustsImageWhenHighlighted = false
+        blueSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
+        blueSmallBackground.tag = 2
         blueSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        smallBackgroundOptions.append(blueSmallBackground)
         
-        let pinkSmallBackground = UIImageView(image: UIImage(named: "SmallPinkBackground"))
+        let pinkSmallBackground = UIButton(type: .custom)
+        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
+        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        pinkSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
+        pinkSmallBackground.tag = 3
         pinkSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        smallBackgroundOptions.append(pinkSmallBackground)
         
         // creating the stackViews for the smallBackgrounds
         let backgrounds1StackView = UIStackView(arrangedSubviews: [greenSmallBackground, redSmallBackground])
@@ -237,6 +277,41 @@ class CustomizeBackgroundViewController: UIViewController {
             cardStackView.topAnchor.constraint(equalTo: backsTitleLabel.bottomAnchor, constant: 20),
             cardStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 10-8)
         ])
+    }
+    
+    func setBackground() {
+        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+    }
+    
+    func resetSelected() {
+        for option in smallBackgroundOptions {
+            option.isSelected = false
+        }
+    }
+    
+    @objc func saveBackground(_ sender: UIButton) {
+        resetSelected()
+        
+        switch sender.tag {
+        case 0:
+            defaults.set("green", forKey: "Background")
+            smallBackgroundOptions[0].isSelected = true
+            currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+        case 1:
+            defaults.set("red", forKey: "Background")
+            smallBackgroundOptions[1].isSelected = true
+            currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
+        case 2:
+            defaults.set("blue", forKey: "Background")
+            smallBackgroundOptions[2].isSelected = true
+            currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
+        default:
+            defaults.set("pink", forKey: "Background")
+            smallBackgroundOptions[3].isSelected = true
+            currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
+        }
+        
+        setBackground()
     }
     
     @objc func moveToGameViewController() {
