@@ -211,6 +211,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         blueBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        blueBack.adjustsImageWhenHighlighted = false
         blueBack.tag = 0
         blueBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(blueBack)
@@ -219,6 +220,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         redBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        redBack.adjustsImageWhenHighlighted = false
         redBack.tag = 1
         redBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(redBack)
@@ -227,6 +229,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         greenBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        greenBack.adjustsImageWhenHighlighted = false
         greenBack.tag = 2
         greenBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(greenBack)
@@ -235,6 +238,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         purpleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        purpleBack.adjustsImageWhenHighlighted = false
         purpleBack.tag = 3
         purpleBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(purpleBack)
@@ -243,6 +247,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         orangeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        orangeBack.adjustsImageWhenHighlighted = false
         orangeBack.tag = 4
         orangeBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(orangeBack)
@@ -251,6 +256,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         yellowBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        yellowBack.adjustsImageWhenHighlighted = false
         yellowBack.tag = 5
         yellowBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(yellowBack)
@@ -259,6 +265,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         pinkBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        pinkBack.adjustsImageWhenHighlighted = false
         pinkBack.tag = 6
         pinkBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(pinkBack)
@@ -267,6 +274,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         circleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        circleBack.adjustsImageWhenHighlighted = false
         circleBack.tag = 7
         circleBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(circleBack)
@@ -275,6 +283,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
         eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         eyeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        eyeBack.adjustsImageWhenHighlighted = false
         eyeBack.tag = 8
         eyeBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
         cardBackOptions.append(eyeBack)

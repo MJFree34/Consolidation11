@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "FlowerCard@2x.png",
+      "filename" : "TulipCard@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "FlowerCard@3x.png",
+      "filename" : "TulipCard@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
