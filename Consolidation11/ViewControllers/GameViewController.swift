@@ -28,6 +28,14 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            
+        cardModel = CardModel()
+        setCurrentBackground()
+        collectionView.reloadData()
+    }
+    
     func setupView() {
         // creating the collectionView
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -48,7 +56,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         // setting background picture
         resizeBackgrounds()
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
         collectionView.backgroundColor = .clear
         
         // creating customize label
@@ -107,16 +114,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func resizeBackgrounds() {
         guard defaults.data(forKey: "GreenBackground")?.isEmpty ?? true else {
-            switch defaults.string(forKey: "Background") {
-            case "green":
-                currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
-            case "red":
-                currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
-            case "blue":
-                currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
-            default:
-                currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
-            }
+            setCurrentBackground()
             
             return
         }
@@ -148,6 +146,21 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+    }
+    
+    func setCurrentBackground() {
+        switch defaults.string(forKey: "Background") {
+        case "green":
+            currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+        case "red":
+            currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
+        case "blue":
+            currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
+        default:
+            currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
+        }
+        
+        view.backgroundColor = UIColor.init(patternImage: currentBackground)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

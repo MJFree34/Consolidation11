@@ -9,18 +9,22 @@
 import UIKit
 
 extension UIImage {
-    func imageWithBorder(width: CGFloat, color: UIColor) -> UIImage? {
-        let square = CGSize(width: min(size.width, size.height) + width * 2, height: min(size.width, size.height) + width * 2)
-        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+    func imageWithBorder(width: CGFloat, radius: CGFloat, color: UIColor) -> UIImage? {
+        let newSize = CGSize(width: size.width + width, height: size.height + width)
+        
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: newSize))
         imageView.contentMode = .center
         imageView.image = self
         imageView.layer.borderWidth = width
         imageView.layer.borderColor = color.cgColor
-        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        imageView.layer.render(in: context)
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return result
+        imageView.layer.cornerRadius = radius
+        
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        
+        let img = renderer.image { ctx in
+            imageView.layer.render(in: ctx.cgContext)
+        }
+        
+        return img
     }
 }

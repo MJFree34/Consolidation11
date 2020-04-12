@@ -8,10 +8,11 @@
 
 import UIKit
 
-class CustomizeBackgroundViewController: UIViewController {
+class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     var currentBackground: UIImage!
     
     var smallBackgroundOptions = [UIButton]()
+    var cardBackOptions = [UIButton]()
     
     let defaults = UserDefaults.standard
     
@@ -25,7 +26,7 @@ class CustomizeBackgroundViewController: UIViewController {
         
         setupView()
         
-        resetSelected()
+        resetSelectedBackgrounds()
         
         switch defaults.string(forKey: "Background") {
         case "green":
@@ -36,6 +37,29 @@ class CustomizeBackgroundViewController: UIViewController {
             smallBackgroundOptions[2].isSelected = true
         default:
             smallBackgroundOptions[3].isSelected = true
+        }
+        
+        resetSelectedBacks()
+        
+        switch defaults.string(forKey: "Back") {
+        case "blue":
+            cardBackOptions[0].isSelected = true
+        case "red":
+            cardBackOptions[1].isSelected = true
+        case "green":
+            cardBackOptions[2].isSelected = true
+        case "purple":
+            cardBackOptions[3].isSelected = true
+        case "orange":
+            cardBackOptions[4].isSelected = true
+        case "yellow":
+            cardBackOptions[5].isSelected = true
+        case "pink":
+            cardBackOptions[6].isSelected = true
+        case "circle":
+            cardBackOptions[7].isSelected = true
+        default:
+            cardBackOptions[8].isSelected = true
         }
     }
     
@@ -124,8 +148,8 @@ class CustomizeBackgroundViewController: UIViewController {
         
         // creating the background options
         let greenSmallBackground = UIButton(type: .custom)
-        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
-        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         greenSmallBackground.adjustsImageWhenHighlighted = false
         greenSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         greenSmallBackground.tag = 0
@@ -133,8 +157,8 @@ class CustomizeBackgroundViewController: UIViewController {
         smallBackgroundOptions.append(greenSmallBackground)
         
         let redSmallBackground = UIButton(type: .custom)
-        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
-        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         redSmallBackground.adjustsImageWhenHighlighted = false
         redSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         redSmallBackground.tag = 1
@@ -142,8 +166,8 @@ class CustomizeBackgroundViewController: UIViewController {
         smallBackgroundOptions.append(redSmallBackground)
         
         let blueSmallBackground = UIButton(type: .custom)
-        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
-        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         blueSmallBackground.adjustsImageWhenHighlighted = false
         blueSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         blueSmallBackground.tag = 2
@@ -151,8 +175,8 @@ class CustomizeBackgroundViewController: UIViewController {
         smallBackgroundOptions.append(blueSmallBackground)
         
         let pinkSmallBackground = UIButton(type: .custom)
-        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, color: .white), for: .normal)
-        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, color: .blue), for: .selected)
+        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         pinkSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         pinkSmallBackground.tag = 3
         pinkSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
@@ -183,32 +207,77 @@ class CustomizeBackgroundViewController: UIViewController {
         scrollView.addSubview(backsTitleLabel)
         
         // creating all the back styles
-        let blueBack = UIImageView(image: UIImage(named: "BlueBack"))
+        let blueBack = UIButton(type: .custom)
+        blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        blueBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        blueBack.tag = 0
         blueBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(blueBack)
         
-        let redBack = UIImageView(image: UIImage(named: "RedBack"))
+        let redBack = UIButton(type: .custom)
+        redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        redBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        redBack.tag = 1
         redBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(redBack)
         
-        let greenBack = UIImageView(image: UIImage(named: "GreenBack"))
+        let greenBack = UIButton(type: .custom)
+        greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        greenBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        greenBack.tag = 2
         greenBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(greenBack)
         
-        let purpleBack = UIImageView(image: UIImage(named: "PurpleBack"))
+        let purpleBack = UIButton(type: .custom)
+        purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        purpleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        purpleBack.tag = 3
         purpleBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(purpleBack)
         
-        let orangeBack = UIImageView(image: UIImage(named: "OrangeBack"))
+        let orangeBack = UIButton(type: .custom)
+        orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        orangeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        orangeBack.tag = 4
         orangeBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(orangeBack)
         
-        let yellowBack = UIImageView(image: UIImage(named: "YellowBack"))
+        let yellowBack = UIButton(type: .custom)
+        yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        yellowBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        yellowBack.tag = 5
         yellowBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(yellowBack)
         
-        let pinkBack = UIImageView(image: UIImage(named: "PinkBack"))
+        let pinkBack = UIButton(type: .custom)
+        pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        pinkBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        pinkBack.tag = 6
         pinkBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(pinkBack)
         
-        let circleBack = UIImageView(image: UIImage(named: "CircleBack"))
+        let circleBack = UIButton(type: .custom)
+        circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        circleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        circleBack.tag = 7
         circleBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(circleBack)
         
-        let eyeBack = UIImageView(image: UIImage(named: "EyeBack"))
+        let eyeBack = UIButton(type: .custom)
+        eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        eyeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        eyeBack.tag = 8
         eyeBack.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
+        cardBackOptions.append(eyeBack)
         
         // creating each row horizontalStackView to hold the cards
         let row1StackView = UIStackView(arrangedSubviews: [blueBack, redBack, greenBack])
@@ -279,18 +348,14 @@ class CustomizeBackgroundViewController: UIViewController {
         ])
     }
     
-    func setBackground() {
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
-    }
-    
-    func resetSelected() {
+    func resetSelectedBackgrounds() {
         for option in smallBackgroundOptions {
             option.isSelected = false
         }
     }
     
     @objc func saveBackground(_ sender: UIButton) {
-        resetSelected()
+        resetSelectedBackgrounds()
         
         switch sender.tag {
         case 0:
@@ -312,6 +377,50 @@ class CustomizeBackgroundViewController: UIViewController {
         }
         
         setBackground()
+    }
+    
+    func setBackground() {
+        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+    }
+    
+    func resetSelectedBacks() {
+        for option in cardBackOptions {
+            option.isSelected = false
+        }
+    }
+    
+    @objc func saveCardBack(_ cardBack: UIButton) {
+        resetSelectedBacks()
+        
+        switch cardBack.tag {
+        case 0:
+            defaults.set("blue", forKey: "Back")
+            cardBackOptions[0].isSelected = true
+        case 1:
+            defaults.set("red", forKey: "Back")
+            cardBackOptions[1].isSelected = true
+        case 2:
+            defaults.set("green", forKey: "Back")
+            cardBackOptions[2].isSelected = true
+        case 3:
+            defaults.set("purple", forKey: "Back")
+            cardBackOptions[3].isSelected = true
+        case 4:
+            defaults.set("orange", forKey: "Back")
+            cardBackOptions[4].isSelected = true
+        case 5:
+            defaults.set("yellow", forKey: "Back")
+            cardBackOptions[5].isSelected = true
+        case 6:
+            defaults.set("pink", forKey: "Back")
+            cardBackOptions[6].isSelected = true
+        case 7:
+            defaults.set("circle", forKey: "Back")
+            cardBackOptions[7].isSelected = true
+        default:
+            defaults.set("eye", forKey: "Back")
+            cardBackOptions[8].isSelected = true
+        }
     }
     
     @objc func moveToGameViewController() {

@@ -70,8 +70,8 @@ class CardCell: UICollectionViewCell {
     }
     
     func setCell(with card: Card) {
-        cardBackImage.image = UIImage(named: card.backImageName)
-        cardFrontImage.image = UIImage(named: card.frontImageName)
+        cardBackImage.image = UIImage(named: card.backImageName)?.imageWithBorder(width: 1, radius: 5, color: .black)
+        cardFrontImage.image = UIImage(named: card.frontImageName)?.imageWithBorder(width: 1, radius: 5, color: .black)
         
         if !card.isFlipped {
             flipBackImmediately()
