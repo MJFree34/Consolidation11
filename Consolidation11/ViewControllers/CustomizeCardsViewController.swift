@@ -21,6 +21,7 @@ class CustomizeCardsViewController: UIViewController {
     
     var frontsTitleLabel: UILabel!
     
+    var selectedCardTags = [Int]()
     
     let defaults = UserDefaults.standard
     
@@ -33,25 +34,33 @@ class CustomizeCardsViewController: UIViewController {
         
         setupView()
         
+        // setting the number of cards from saved state
         resetSelectedNumbers()
         
         switch defaults.integer(forKey: "NumberOfCards") {
         case 8:
-            cardOptions[0].isSelected = true
+            numberOptions[0].isSelected = true
             currentNumberOfCards = 8
         case 16:
-            cardOptions[1].isSelected = true
+            numberOptions[1].isSelected = true
             currentNumberOfCards = 16
         case 24:
-            cardOptions[2].isSelected = true
+            numberOptions[2].isSelected = true
             currentNumberOfCards = 24
         case 32:
-            cardOptions[3].isSelected = true
+            numberOptions[3].isSelected = true
             currentNumberOfCards = 32
         default:
-            cardOptions[4].isSelected = true
+            numberOptions[4].isSelected = true
             currentNumberOfCards = 40
         }
+        
+        // setting the selected card fronts from saved state
+        if let frontCardsTags = defaults.array(forKey: "CardFrontTags") as? [Int] {
+            selectedCardTags = frontCardsTags
+        }
+        
+        fillCardsSelected()
     }
     
     func setupView() {
@@ -100,7 +109,7 @@ class CustomizeCardsViewController: UIViewController {
         eightOption.titleLabel?.textAlignment = .center
         eightOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         eightOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        cardOptions.append(eightOption)
+        numberOptions.append(eightOption)
         
         let sixteenOption = UIButton()
         sixteenOption.setTitleColor(.white, for: .normal)
@@ -110,7 +119,7 @@ class CustomizeCardsViewController: UIViewController {
         sixteenOption.titleLabel?.textAlignment = .center
         sixteenOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         sixteenOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        cardOptions.append(sixteenOption)
+        numberOptions.append(sixteenOption)
         
         let twentyFourOption = UIButton()
         twentyFourOption.setTitleColor(.white, for: .normal)
@@ -120,7 +129,7 @@ class CustomizeCardsViewController: UIViewController {
         twentyFourOption.titleLabel?.textAlignment = .center
         twentyFourOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         twentyFourOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        cardOptions.append(twentyFourOption)
+        numberOptions.append(twentyFourOption)
         
         let thirtyTwoOption = UIButton()
         thirtyTwoOption.setTitleColor(.white, for: .normal)
@@ -130,7 +139,7 @@ class CustomizeCardsViewController: UIViewController {
         thirtyTwoOption.titleLabel?.textAlignment = .center
         thirtyTwoOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         thirtyTwoOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        cardOptions.append(thirtyTwoOption)
+        numberOptions.append(thirtyTwoOption)
         
         let fortyOption = UIButton()
         fortyOption.setTitleColor(.white, for: .normal)
@@ -140,7 +149,7 @@ class CustomizeCardsViewController: UIViewController {
         fortyOption.titleLabel?.textAlignment = .center
         fortyOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         fortyOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        cardOptions.append(fortyOption)
+        numberOptions.append(fortyOption)
         
         // creating the numbers' stackView
         let numbersStackView = UIStackView(arrangedSubviews: [eightOption, sixteenOption, twentyFourOption, thirtyTwoOption, fortyOption])
@@ -384,7 +393,7 @@ class CustomizeCardsViewController: UIViewController {
         carCard.adjustsImageWhenHighlighted = false
         carCard.tag = 24
         carCard.frame = CGRect(x: 0, y: 0, width: 69, height: 100)
-        cardOptions.append(turtleCard)
+        cardOptions.append(carCard)
         
         let motorcycleCard = UIButton(type: .custom)
         motorcycleCard.setImage(UIImage(named: "MotorcycleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
@@ -532,7 +541,7 @@ class CustomizeCardsViewController: UIViewController {
     }
     
     func resetSelectedNumbers() {
-        for option in cardOptions {
+        for option in numberOptions {
             option.isSelected = false
         }
     }
@@ -543,33 +552,81 @@ class CustomizeCardsViewController: UIViewController {
         switch sender.title(for: .normal) {
         case "8":
             defaults.set(8, forKey: "NumberOfCards")
-            cardOptions[0].isSelected = true
+            numberOptions[0].isSelected = true
             currentNumberOfCards = 8
         case "16":
             defaults.set(16, forKey: "NumberOfCards")
-            cardOptions[1].isSelected = true
+            numberOptions[1].isSelected = true
             currentNumberOfCards = 16
         case "24":
             defaults.set(24, forKey: "NumberOfCards")
-            cardOptions[2].isSelected = true
+            numberOptions[2].isSelected = true
             currentNumberOfCards = 24
         case "32":
             defaults.set(32, forKey: "NumberOfCards")
-            cardOptions[3].isSelected = true
+            numberOptions[3].isSelected = true
             currentNumberOfCards = 32
         default:
             defaults.set(40, forKey: "NumberOfCards")
-            cardOptions[4].isSelected = true
+            numberOptions[4].isSelected = true
             currentNumberOfCards = 40
+        }
+        
+        fillCardsSelected()
+    }
+    
+    @objc func saveAndAdjustCards(_ sender: UIButton) {
+        if sender.isSelected {
+            for (index, tag) in selectedCardTags.enumerated() {
+                if sender.tag == tag {
+                    selectedCardTags.remove(at: index)
+                }
+            }
+        } else {
+            selectedCardTags.append(sender.tag)
+        }
+        
+        fillCardsSelected()
+    }
+    
+    func fillCardsSelected() {
+        if selectedCardTags.count < currentNumberOfCards / 2 {
+            // fills space up to amount of cards necessary in tags
+            while selectedCardTags.count < currentNumberOfCards / 2 || selectedCardTags.isEmpty {
+                var i = 0
+                while selectedCardTags.contains(cardOptions[i].tag) {
+                    i += 1
+                }
+                selectedCardTags.append(cardOptions[i].tag)
+            }
+        } else if selectedCardTags.count == currentNumberOfCards / 2 {
+            // do nothing this is state we want
+        } else {
+            // removes the excess
+            while selectedCardTags.count > currentNumberOfCards / 2 {
+                selectedCardTags.removeFirst()
+            }
+        }
+        
+        setSelectedCards()
+        
+        defaults.set(selectedCardTags, forKey: "CardFrontTags")
+    }
+    
+    func selectSavedCardsWithTags() {
+        for tag in selectedCardTags {
+            cardOptions[tag].isSelected = true
         }
     }
     
-    func resetSelectedCards() {
+    func setSelectedCards() {
+        for card in cardOptions {
+            card.isSelected = false
+        }
         
-    }
-    
-    @objc func saveAndAdjustCards() {
-        
+        for tag in selectedCardTags {
+            cardOptions[tag].isSelected = true
+        }
     }
     
     @objc func moveToGameViewController() {
