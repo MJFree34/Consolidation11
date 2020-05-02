@@ -45,9 +45,12 @@ class CardCell: UICollectionViewCell {
             cardFrontImage.trailingAnchor.constraint(equalTo: cardBackImage.trailingAnchor),
             cardFrontImage.bottomAnchor.constraint(equalTo: cardBackImage.bottomAnchor)
         ])
+        
+        cardFrontImage.alpha = 0
     }
     
     func flip() {
+        cardFrontImage.alpha = 1
         UIView.transition(from: cardBackImage, to: cardFrontImage, duration: 0.2, options: [.transitionFlipFromLeft, .showHideTransitionViews])
     }
     
@@ -58,7 +61,7 @@ class CardCell: UICollectionViewCell {
     }
     
     func flipBackImmediately() {
-        addViews()
+        UIView.transition(from: cardFrontImage, to: cardBackImage, duration: 0.01, options: [.transitionFlipFromRight, .showHideTransitionViews])
     }
     
     func remove() {
@@ -73,14 +76,15 @@ class CardCell: UICollectionViewCell {
         cardBackImage.image = UIImage(named: card.backImageName)?.imageWithBorder(width: 2, radius: 5, color: .black)
         cardFrontImage.image = UIImage(named: card.frontImageName)?.imageWithBorder(width: 2, radius: 5, color: .black)
         
-        if !card.isFlipped {
-            flipBackImmediately()
-        }
-        
         if card.isMatched {
             cardBackImage.alpha = 0
-            cardFrontImage.alpha = 0
+        } else {
+            cardBackImage.alpha = 1
         }
+        
+        cardFrontImage.alpha = 0
+        
+        flipBackImmediately()
     }
     
     required init?(coder: NSCoder) {

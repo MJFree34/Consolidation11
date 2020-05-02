@@ -10,6 +10,8 @@ import UIKit
 
 class CustomizeCardsViewController: UIViewController {
     var currentBackground: UIImage!
+    var cardModel: CardModel!
+    
     var currentNumberOfCards: Int = 0 {
         didSet {
             frontsTitleLabel.text = "Fronts (Pick \(currentNumberOfCards / 2)):"
@@ -552,22 +554,27 @@ class CustomizeCardsViewController: UIViewController {
         switch sender.title(for: .normal) {
         case "8":
             defaults.set(8, forKey: "NumberOfCards")
+            cardModel.saveTotalCards()
             numberOptions[0].isSelected = true
             currentNumberOfCards = 8
         case "16":
             defaults.set(16, forKey: "NumberOfCards")
+            cardModel.saveTotalCards()
             numberOptions[1].isSelected = true
             currentNumberOfCards = 16
         case "24":
             defaults.set(24, forKey: "NumberOfCards")
+            cardModel.saveTotalCards()
             numberOptions[2].isSelected = true
             currentNumberOfCards = 24
         case "32":
             defaults.set(32, forKey: "NumberOfCards")
+            cardModel.saveTotalCards()
             numberOptions[3].isSelected = true
             currentNumberOfCards = 32
         default:
             defaults.set(40, forKey: "NumberOfCards")
+            cardModel.saveTotalCards()
             numberOptions[4].isSelected = true
             currentNumberOfCards = 40
         }
@@ -611,6 +618,7 @@ class CustomizeCardsViewController: UIViewController {
         setSelectedCards()
         
         defaults.set(selectedCardTags, forKey: "CardFrontTags")
+        cardModel.setCardFronts()
     }
     
     func selectSavedCardsWithTags() {

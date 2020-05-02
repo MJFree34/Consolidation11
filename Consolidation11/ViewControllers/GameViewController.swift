@@ -230,12 +230,14 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func moveToCustomizeBackgroundViewController() {
         let vc = CustomizeBackgroundViewController()
         vc.currentBackground = currentBackground
+        vc.cardModel = cardModel
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func moveToCustomizeCardsViewController() {
         let vc = CustomizeCardsViewController()
         vc.currentBackground = currentBackground
+        vc.cardModel = cardModel
         navigationController?.pushViewController(vc, animated: true)
     }
 }

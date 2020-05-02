@@ -10,6 +10,7 @@ import UIKit
 
 class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     var currentBackground: UIImage!
+    var cardModel: CardModel!
     
     var smallBackgroundOptions = [UIButton]()
     var cardBackOptions = [UIButton]()
@@ -42,21 +43,21 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         resetSelectedBacks()
         
         switch defaults.string(forKey: "Back") {
-        case "blue":
+        case "BlueBack":
             cardBackOptions[0].isSelected = true
-        case "red":
+        case "RedBack":
             cardBackOptions[1].isSelected = true
-        case "green":
+        case "GreenBack":
             cardBackOptions[2].isSelected = true
-        case "purple":
+        case "PurpleBack":
             cardBackOptions[3].isSelected = true
-        case "orange":
+        case "OrangeBack":
             cardBackOptions[4].isSelected = true
-        case "yellow":
+        case "YellowBack":
             cardBackOptions[5].isSelected = true
-        case "pink":
+        case "PinkBack":
             cardBackOptions[6].isSelected = true
-        case "circle":
+        case "CircleBack":
             cardBackOptions[7].isSelected = true
         default:
             cardBackOptions[8].isSelected = true
@@ -403,31 +404,40 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         switch cardBack.tag {
         case 0:
-            defaults.set("blue", forKey: "Back")
+            defaults.set("BlueBack", forKey: "Back")
+            cardModel.setCardBacks(to: "BlueBack")
             cardBackOptions[0].isSelected = true
         case 1:
-            defaults.set("red", forKey: "Back")
+            defaults.set("RedBack", forKey: "Back")
+            cardModel.setCardBacks(to: "RedBack")
             cardBackOptions[1].isSelected = true
         case 2:
-            defaults.set("green", forKey: "Back")
+            defaults.set("GreenBack", forKey: "Back")
+            cardModel.setCardBacks(to: "GreenBack")
             cardBackOptions[2].isSelected = true
         case 3:
-            defaults.set("purple", forKey: "Back")
+            defaults.set("PurpleBack", forKey: "Back")
+            cardModel.setCardBacks(to: "PurpleBack")
             cardBackOptions[3].isSelected = true
         case 4:
-            defaults.set("orange", forKey: "Back")
+            defaults.set("OrangeBack", forKey: "Back")
+            cardModel.setCardBacks(to: "OrangeBack")
             cardBackOptions[4].isSelected = true
         case 5:
-            defaults.set("yellow", forKey: "Back")
+            defaults.set("YellowBack", forKey: "Back")
+            cardModel.setCardBacks(to: "YellowBack")
             cardBackOptions[5].isSelected = true
         case 6:
-            defaults.set("pink", forKey: "Back")
+            defaults.set("PinkBack", forKey: "Back")
+            cardModel.setCardBacks(to: "PinkBack")
             cardBackOptions[6].isSelected = true
         case 7:
-            defaults.set("circle", forKey: "Back")
+            defaults.set("CircleBack", forKey: "Back")
+            cardModel.setCardBacks(to: "CircleBack")
             cardBackOptions[7].isSelected = true
         default:
-            defaults.set("eye", forKey: "Back")
+            defaults.set("EyeBack", forKey: "Back")
+            cardModel.setCardBacks(to: "EyeBack")
             cardBackOptions[8].isSelected = true
         }
     }
