@@ -19,6 +19,7 @@
 		9AAF5D0E24572C0D00C3EFB2 /* current-cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AAF5D0D24572C0D00C3EFB2 /* current-cards.json */; };
 		9AAF5D10245CF98600C3EFB2 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03E8243E20FA00A8EE5B /* CardModel.swift */; };
 		9AAF5D12245CF9B400C3EFB2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D11245CF9B400C3EFB2 /* Constants.swift */; };
+		9AAF5D14245DC3B500C3EFB2 /* initial-cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03EA243E2DDF00A8EE5B /* initial-cards.json */; };
 		9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */; };
 		9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */; };
 		9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */; };
@@ -192,6 +193,7 @@
 				9ADB03E2243C139B00A8EE5B /* Courgette-Regular.ttf in Resources */,
 				9AAF5D0E24572C0D00C3EFB2 /* current-cards.json in Resources */,
 				9ADB03E7243D4A1200A8EE5B /* Kranky-Regular.ttf in Resources */,
+				9AAF5D14245DC3B500C3EFB2 /* initial-cards.json in Resources */,
 				9AAF5D0A244D048800C3EFB2 /* card-fronts.txt in Resources */,
 				9ADB03E5243C160D00A8EE5B /* ClickerScript-Regular.ttf in Resources */,
 				9A85B8BB242A6AE10036CBDC /* Assets.xcassets in Resources */,

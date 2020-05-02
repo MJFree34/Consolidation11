@@ -49,7 +49,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         collectionView.alwaysBounceVertical = true
         
-        collectionView.register(CardCell.self, forCellWithReuseIdentifier: "Card")
+        collectionView.register(CardCell.self, forCellWithReuseIdentifier: Constants.cardCellReuseIdentifier)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -64,7 +64,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         customizeLabel.backgroundColor = .clear
         
         customizeLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        customizeLabel.font = UIFont(name: "FingerPaint-Regular", size: 36)
+        customizeLabel.font = UIFont(name: Constants.FontNames.fingerPaint, size: 36)
         customizeLabel.textAlignment = .center
         customizeLabel.text = "Customize Here:"
         
@@ -73,7 +73,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         // creating bottom buttons
         let customizeBackgroundButton = UIButton(type: .custom)
-        customizeBackgroundButton.setImage(UIImage(named: "BackgroundButton"), for: .normal)
+        customizeBackgroundButton.setImage(UIImage(named: Constants.ButtonNames.background), for: .normal)
         customizeBackgroundButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         customizeBackgroundButton.showsTouchWhenHighlighted = true
         customizeBackgroundButton.addTarget(self, action: #selector(moveToCustomizeBackgroundViewController), for: .touchUpInside)
@@ -81,7 +81,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.addSubview(customizeBackgroundButton)
         
         let customizeCardsButton = UIButton(type: .custom)
-        customizeCardsButton.setImage(UIImage(named: "CardButton"), for: .normal)
+        customizeCardsButton.setImage(UIImage(named: Constants.ButtonNames.card), for: .normal)
         customizeCardsButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         customizeCardsButton.showsTouchWhenHighlighted = true
         customizeCardsButton.addTarget(self, action: #selector(moveToCustomizeCardsViewController), for: .touchUpInside)
@@ -113,7 +113,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func resizeBackgrounds() {
-        guard defaults.data(forKey: "GreenBackground")?.isEmpty ?? true else {
+        guard defaults.data(forKey: Constants.BackgroundNames.green)?.isEmpty ?? true else {
             setCurrentBackground()
             
             return
@@ -145,19 +145,19 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             defaults.set(imageData, forKey: backgroundName)
         }
         
-        currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+        currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
     }
     
     func setCurrentBackground() {
-        switch defaults.string(forKey: "Background") {
+        switch defaults.string(forKey: Constants.UDKeys.background) {
         case "green":
-            currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
         case "red":
-            currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.red)!)
         case "blue":
-            currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.blue)!)
         default:
-            currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.pink)!)
         }
         
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
@@ -168,7 +168,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cardCellReuseIdentifier, for: indexPath) as? CardCell else { fatalError("Unable to dequeue a CardCell.") }
         
         cell.setCell(with: cardModel.card(at: indexPath.item))
         

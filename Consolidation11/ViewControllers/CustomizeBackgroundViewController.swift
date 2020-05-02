@@ -29,7 +29,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         resetSelectedBackgrounds()
         
-        switch defaults.string(forKey: "Background") {
+        switch defaults.string(forKey: Constants.UDKeys.background) {
         case "green":
             smallBackgroundOptions[0].isSelected = true
         case "red":
@@ -42,22 +42,22 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         resetSelectedBacks()
         
-        switch defaults.string(forKey: "Back") {
-        case "BlueBack":
+        switch defaults.string(forKey: Constants.UDKeys.cardBack) {
+        case Constants.CardBackNames.blue:
             cardBackOptions[0].isSelected = true
-        case "RedBack":
+        case Constants.CardBackNames.red:
             cardBackOptions[1].isSelected = true
-        case "GreenBack":
+        case Constants.CardBackNames.green:
             cardBackOptions[2].isSelected = true
-        case "PurpleBack":
+        case Constants.CardBackNames.purple:
             cardBackOptions[3].isSelected = true
-        case "OrangeBack":
+        case Constants.CardBackNames.orange:
             cardBackOptions[4].isSelected = true
-        case "YellowBack":
+        case Constants.CardBackNames.yellow:
             cardBackOptions[5].isSelected = true
-        case "PinkBack":
+        case Constants.CardBackNames.pink:
             cardBackOptions[6].isSelected = true
-        case "CircleBack":
+        case Constants.CardBackNames.circle:
             cardBackOptions[7].isSelected = true
         default:
             cardBackOptions[8].isSelected = true
@@ -79,7 +79,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         // creating backButton
         let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "ArrowButton"), for: .normal)
+        backButton.setImage(UIImage(named: Constants.ButtonNames.arrow), for: .normal)
         backButton.addTarget(self, action: #selector(moveToGameViewController), for: .touchUpInside)
         backButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         backButton.showsTouchWhenHighlighted = true
@@ -87,7 +87,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         scrollView.addSubview(backButton)
         
         // creating the background logo at the top
-        let backgroundIcon = UIImageView(image: UIImage(named: "BackgroundButton"))
+        let backgroundIcon = UIImageView(image: UIImage(named: Constants.ButtonNames.background))
         backgroundIcon.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         backgroundIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(backgroundIcon)
@@ -95,7 +95,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         // creating the background title label
         let backgroundTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         backgroundTitleLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        backgroundTitleLabel.font = UIFont(name: "Courgette-Regular", size: 36)
+        backgroundTitleLabel.font = UIFont(name: Constants.FontNames.courgette, size: 36)
         backgroundTitleLabel.textAlignment = .center
         backgroundTitleLabel.text = "Background:"
         backgroundTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +104,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         // creating the color labels
         let greenLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 40))
         greenLabel.textColor = UIColor(red: 0, green: 1, blue: 0.1, alpha: 1)
-        greenLabel.font = UIFont(name: "ClickerScript-Regular", size: 30)
+        greenLabel.font = UIFont(name: Constants.FontNames.clickerScript, size: 30)
         greenLabel.textAlignment = .center
         greenLabel.text = "Green"
         greenLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -112,7 +112,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         let redLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 40))
         redLabel.textColor = UIColor(red: 1, green: 0.337, blue: 0.337, alpha: 1)
-        redLabel.font = UIFont(name: "ClickerScript-Regular", size: 30)
+        redLabel.font = UIFont(name: Constants.FontNames.clickerScript, size: 30)
         redLabel.textAlignment = .center
         redLabel.text = "Red"
         redLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +120,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         let blueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 40))
         blueLabel.textColor = UIColor(red: 0, green: 0.82, blue: 1, alpha: 1)
-        blueLabel.font = UIFont(name: "ClickerScript-Regular", size: 30)
+        blueLabel.font = UIFont(name: Constants.FontNames.clickerScript, size: 30)
         blueLabel.textAlignment = .center
         blueLabel.text = "Blue"
         blueLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +128,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         let pinkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 40))
         pinkLabel.textColor = UIColor(red: 1, green: 0.567, blue: 0.905, alpha: 1)
-        pinkLabel.font = UIFont(name: "ClickerScript-Regular", size: 30)
+        pinkLabel.font = UIFont(name: Constants.FontNames.clickerScript, size: 30)
         pinkLabel.textAlignment = .center
         pinkLabel.text = "Pink"
         pinkLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -149,8 +149,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         // creating the background options
         let greenSmallBackground = UIButton(type: .custom)
-        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
-        greenSmallBackground.setImage(UIImage(named: "SmallGreenBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
+        greenSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.green)?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        greenSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.green)?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         greenSmallBackground.adjustsImageWhenHighlighted = false
         greenSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         greenSmallBackground.tag = 0
@@ -158,8 +158,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         smallBackgroundOptions.append(greenSmallBackground)
         
         let redSmallBackground = UIButton(type: .custom)
-        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
-        redSmallBackground.setImage(UIImage(named: "SmallRedBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
+        redSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.red)?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        redSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.red)?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         redSmallBackground.adjustsImageWhenHighlighted = false
         redSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         redSmallBackground.tag = 1
@@ -167,8 +167,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         smallBackgroundOptions.append(redSmallBackground)
         
         let blueSmallBackground = UIButton(type: .custom)
-        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
-        blueSmallBackground.setImage(UIImage(named: "SmallBlueBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
+        blueSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.blue)?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        blueSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.blue)?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         blueSmallBackground.adjustsImageWhenHighlighted = false
         blueSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         blueSmallBackground.tag = 2
@@ -176,8 +176,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         smallBackgroundOptions.append(blueSmallBackground)
         
         let pinkSmallBackground = UIButton(type: .custom)
-        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
-        pinkSmallBackground.setImage(UIImage(named: "SmallPinkBackground")?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
+        pinkSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.pink)?.imageWithBorder(width: 2, radius: 5, color: .white), for: .normal)
+        pinkSmallBackground.setImage(UIImage(named: Constants.SmallBackgroundNames.pink)?.imageWithBorder(width: 4, radius: 5, color: .blue), for: .selected)
         pinkSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
         pinkSmallBackground.tag = 3
         pinkSmallBackground.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
@@ -201,7 +201,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         // creating the backs title label
         let backsTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 110, height: 50))
         backsTitleLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        backsTitleLabel.font = UIFont(name: "Courgette-Regular", size: 36)
+        backsTitleLabel.font = UIFont(name: Constants.FontNames.courgette, size: 36)
         backsTitleLabel.textAlignment = .center
         backsTitleLabel.text = "Backs:"
         backsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -209,8 +209,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         // creating all the back styles
         let blueBack = UIButton(type: .custom)
-        blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        blueBack.setImage(UIImage(named: "BlueBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        blueBack.setImage(UIImage(named: Constants.CardBackNames.blue)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        blueBack.setImage(UIImage(named: Constants.CardBackNames.blue)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         blueBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         blueBack.adjustsImageWhenHighlighted = false
         blueBack.tag = 0
@@ -218,8 +218,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(blueBack)
         
         let redBack = UIButton(type: .custom)
-        redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        redBack.setImage(UIImage(named: "RedBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        redBack.setImage(UIImage(named: Constants.CardBackNames.red)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        redBack.setImage(UIImage(named: Constants.CardBackNames.red)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         redBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         redBack.adjustsImageWhenHighlighted = false
         redBack.tag = 1
@@ -227,8 +227,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(redBack)
         
         let greenBack = UIButton(type: .custom)
-        greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        greenBack.setImage(UIImage(named: "GreenBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        greenBack.setImage(UIImage(named: Constants.CardBackNames.green)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        greenBack.setImage(UIImage(named: Constants.CardBackNames.green)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         greenBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         greenBack.adjustsImageWhenHighlighted = false
         greenBack.tag = 2
@@ -236,8 +236,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(greenBack)
         
         let purpleBack = UIButton(type: .custom)
-        purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        purpleBack.setImage(UIImage(named: "PurpleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        purpleBack.setImage(UIImage(named: Constants.CardBackNames.purple)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        purpleBack.setImage(UIImage(named: Constants.CardBackNames.purple)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         purpleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         purpleBack.adjustsImageWhenHighlighted = false
         purpleBack.tag = 3
@@ -245,8 +245,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(purpleBack)
         
         let orangeBack = UIButton(type: .custom)
-        orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        orangeBack.setImage(UIImage(named: "OrangeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        orangeBack.setImage(UIImage(named: Constants.CardBackNames.orange)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        orangeBack.setImage(UIImage(named: Constants.CardBackNames.orange)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         orangeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         orangeBack.adjustsImageWhenHighlighted = false
         orangeBack.tag = 4
@@ -254,8 +254,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(orangeBack)
         
         let yellowBack = UIButton(type: .custom)
-        yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        yellowBack.setImage(UIImage(named: "YellowBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        yellowBack.setImage(UIImage(named: Constants.CardBackNames.yellow)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        yellowBack.setImage(UIImage(named: Constants.CardBackNames.yellow)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         yellowBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         yellowBack.adjustsImageWhenHighlighted = false
         yellowBack.tag = 5
@@ -263,8 +263,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(yellowBack)
         
         let pinkBack = UIButton(type: .custom)
-        pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        pinkBack.setImage(UIImage(named: "PinkBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        pinkBack.setImage(UIImage(named: Constants.CardBackNames.pink)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        pinkBack.setImage(UIImage(named: Constants.CardBackNames.pink)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         pinkBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         pinkBack.adjustsImageWhenHighlighted = false
         pinkBack.tag = 6
@@ -272,8 +272,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(pinkBack)
         
         let circleBack = UIButton(type: .custom)
-        circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        circleBack.setImage(UIImage(named: "CircleBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        circleBack.setImage(UIImage(named: Constants.CardBackNames.circle)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        circleBack.setImage(UIImage(named: Constants.CardBackNames.circle)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         circleBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         circleBack.adjustsImageWhenHighlighted = false
         circleBack.tag = 7
@@ -281,8 +281,8 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         cardBackOptions.append(circleBack)
         
         let eyeBack = UIButton(type: .custom)
-        eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        eyeBack.setImage(UIImage(named: "EyeBack")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        eyeBack.setImage(UIImage(named: Constants.CardBackNames.eye)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        eyeBack.setImage(UIImage(named: Constants.CardBackNames.eye)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         eyeBack.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
         eyeBack.adjustsImageWhenHighlighted = false
         eyeBack.tag = 8
@@ -369,21 +369,21 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         switch sender.tag {
         case 0:
-            defaults.set("green", forKey: "Background")
+            defaults.set("green", forKey: Constants.UDKeys.background)
             smallBackgroundOptions[0].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: "GreenBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
         case 1:
-            defaults.set("red", forKey: "Background")
+            defaults.set("red", forKey: Constants.UDKeys.background)
             smallBackgroundOptions[1].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: "RedBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.red)!)
         case 2:
-            defaults.set("blue", forKey: "Background")
+            defaults.set("blue", forKey: Constants.UDKeys.background)
             smallBackgroundOptions[2].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: "BlueBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.blue)!)
         default:
-            defaults.set("pink", forKey: "Background")
+            defaults.set("pink", forKey: Constants.UDKeys.background)
             smallBackgroundOptions[3].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: "PinkBackground")!)
+            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.pink)!)
         }
         
         setBackground()
@@ -404,42 +404,35 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         switch cardBack.tag {
         case 0:
-            defaults.set("BlueBack", forKey: "Back")
-            cardModel.setCardBacks(to: "BlueBack")
+            defaults.set(Constants.CardBackNames.blue, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[0].isSelected = true
         case 1:
-            defaults.set("RedBack", forKey: "Back")
-            cardModel.setCardBacks(to: "RedBack")
+            defaults.set(Constants.CardBackNames.red, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[1].isSelected = true
         case 2:
-            defaults.set("GreenBack", forKey: "Back")
-            cardModel.setCardBacks(to: "GreenBack")
+            defaults.set(Constants.CardBackNames.green, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[2].isSelected = true
         case 3:
-            defaults.set("PurpleBack", forKey: "Back")
-            cardModel.setCardBacks(to: "PurpleBack")
+            defaults.set(Constants.CardBackNames.purple, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[3].isSelected = true
         case 4:
-            defaults.set("OrangeBack", forKey: "Back")
-            cardModel.setCardBacks(to: "OrangeBack")
+            defaults.set(Constants.CardBackNames.orange, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[4].isSelected = true
         case 5:
-            defaults.set("YellowBack", forKey: "Back")
-            cardModel.setCardBacks(to: "YellowBack")
+            defaults.set(Constants.CardBackNames.yellow, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[5].isSelected = true
         case 6:
-            defaults.set("PinkBack", forKey: "Back")
-            cardModel.setCardBacks(to: "PinkBack")
+            defaults.set(Constants.CardBackNames.pink, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[6].isSelected = true
         case 7:
-            defaults.set("CircleBack", forKey: "Back")
-            cardModel.setCardBacks(to: "CircleBack")
+            defaults.set(Constants.CardBackNames.circle, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[7].isSelected = true
         default:
-            defaults.set("EyeBack", forKey: "Back")
-            cardModel.setCardBacks(to: "EyeBack")
+            defaults.set(Constants.CardBackNames.eye, forKey: Constants.UDKeys.cardBack)
             cardBackOptions[8].isSelected = true
         }
+        
+        cardModel.setCardBacks()
     }
     
     @objc func moveToGameViewController() {

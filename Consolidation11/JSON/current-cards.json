@@ -95,5 +95,29 @@
         "isMatched": false,
         "isFlipped": false
     },
+    {
+        "frontImageName": "DogCard",
+        "backImageName": "BlueBack",
+        "isMatched": false,
+        "isFlipped": false
+    },
+    {
+        "frontImageName": "FlowerCard",
+        "backImageName": "BlueBack",
+        "isMatched": false,
+        "isFlipped": false
+    },
+    {
+        "frontImageName": "PalmCard",
+        "backImageName": "BlueBack",
+        "isMatched": false,
+        "isFlipped": false
+    },
+    {
+        "frontImageName": "BagelCard",
+        "backImageName": "BlueBack",
+        "isMatched": false,
+        "isFlipped": false
+    },
 ]
 

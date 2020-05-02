@@ -39,7 +39,7 @@ class CustomizeCardsViewController: UIViewController {
         // setting the number of cards from saved state
         resetSelectedNumbers()
         
-        switch defaults.integer(forKey: "NumberOfCards") {
+        switch defaults.integer(forKey: Constants.UDKeys.cardNumber) {
         case 8:
             numberOptions[0].isSelected = true
             currentNumberOfCards = 8
@@ -58,7 +58,7 @@ class CustomizeCardsViewController: UIViewController {
         }
         
         // setting the selected card fronts from saved state
-        if let frontCardsTags = defaults.array(forKey: "CardFrontTags") as? [Int] {
+        if let frontCardsTags = defaults.array(forKey: Constants.UDKeys.cardFrontTags) as? [Int] {
             selectedCardTags = frontCardsTags
         }
         
@@ -80,7 +80,7 @@ class CustomizeCardsViewController: UIViewController {
         
         // creating backButton
         let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "ArrowButton"), for: .normal)
+        backButton.setImage(UIImage(named: Constants.ButtonNames.arrow), for: .normal)
         backButton.addTarget(self, action: #selector(moveToGameViewController), for: .touchUpInside)
         backButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         backButton.showsTouchWhenHighlighted = true
@@ -88,7 +88,7 @@ class CustomizeCardsViewController: UIViewController {
         scrollView.addSubview(backButton)
         
         // creating the card logo at the top
-        let cardIcon = UIImageView(image: UIImage(named: "CardButton"))
+        let cardIcon = UIImageView(image: UIImage(named: Constants.ButtonNames.card))
         cardIcon.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         cardIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(cardIcon)
@@ -96,7 +96,7 @@ class CustomizeCardsViewController: UIViewController {
         // creating the numberOfCards title label
         let numberOfCardsTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
         numberOfCardsTitleLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        numberOfCardsTitleLabel.font = UIFont(name: "Courgette-Regular", size: 36)
+        numberOfCardsTitleLabel.font = UIFont(name: Constants.FontNames.courgette, size: 36)
         numberOfCardsTitleLabel.textAlignment = .center
         numberOfCardsTitleLabel.text = "Number of Cards:"
         numberOfCardsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +117,7 @@ class CustomizeCardsViewController: UIViewController {
         sixteenOption.setTitleColor(.white, for: .normal)
         sixteenOption.setTitleColor(UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), for: .selected)
         sixteenOption.setTitle("16", for: .normal)
-        sixteenOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        sixteenOption.titleLabel?.font = UIFont(name: Constants.FontNames.kranky, size: 36)
         sixteenOption.titleLabel?.textAlignment = .center
         sixteenOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         sixteenOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -127,7 +127,7 @@ class CustomizeCardsViewController: UIViewController {
         twentyFourOption.setTitleColor(.white, for: .normal)
         twentyFourOption.setTitleColor(UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), for: .selected)
         twentyFourOption.setTitle("24", for: .normal)
-        twentyFourOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        twentyFourOption.titleLabel?.font = UIFont(name: Constants.FontNames.kranky, size: 36)
         twentyFourOption.titleLabel?.textAlignment = .center
         twentyFourOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         twentyFourOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -137,7 +137,7 @@ class CustomizeCardsViewController: UIViewController {
         thirtyTwoOption.setTitleColor(.white, for: .normal)
         thirtyTwoOption.setTitleColor(UIColor(red: 0.827, green: 1, blue: 0.333, alpha: 1), for: .selected)
         thirtyTwoOption.setTitle("32", for: .normal)
-        thirtyTwoOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        thirtyTwoOption.titleLabel?.font = UIFont(name: Constants.FontNames.kranky, size: 36)
         thirtyTwoOption.titleLabel?.textAlignment = .center
         thirtyTwoOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         thirtyTwoOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -147,7 +147,7 @@ class CustomizeCardsViewController: UIViewController {
         fortyOption.setTitleColor(.white, for: .normal)
         fortyOption.setTitleColor(UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), for:.selected )
         fortyOption.setTitle("40", for: .normal)
-        fortyOption.titleLabel?.font = UIFont(name: "Kranky-Regular", size: 36)
+        fortyOption.titleLabel?.font = UIFont(name: Constants.FontNames.kranky, size: 36)
         fortyOption.titleLabel?.textAlignment = .center
         fortyOption.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         fortyOption.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -165,7 +165,7 @@ class CustomizeCardsViewController: UIViewController {
         frontsTitleLabel = UILabel()
         frontsTitleLabel.textColor = .white
         frontsTitleLabel.text = "Fronts (Pick 12):"
-        frontsTitleLabel.font = UIFont(name: "Courgette-Regular", size: 36)
+        frontsTitleLabel.font = UIFont(name: Constants.FontNames.courgette, size: 36)
         frontsTitleLabel.textAlignment = .center
         frontsTitleLabel.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
         frontsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -173,8 +173,8 @@ class CustomizeCardsViewController: UIViewController {
         
         // creating all the front styles
         let biohazardCard = UIButton(type: .custom)
-        biohazardCard.setImage(UIImage(named: "BiohazardCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        biohazardCard.setImage(UIImage(named: "BiohazardCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        biohazardCard.setImage(UIImage(named: Constants.CardFrontNames.biohazard)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        biohazardCard.setImage(UIImage(named: Constants.CardFrontNames.biohazard)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         biohazardCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         biohazardCard.adjustsImageWhenHighlighted = false
         biohazardCard.tag = 0
@@ -182,8 +182,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(biohazardCard)
         
         let targetCard = UIButton(type: .custom)
-        targetCard.setImage(UIImage(named: "TargetCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        targetCard.setImage(UIImage(named: "TargetCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        targetCard.setImage(UIImage(named: Constants.CardFrontNames.target)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        targetCard.setImage(UIImage(named: Constants.CardFrontNames.target)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         targetCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         targetCard.adjustsImageWhenHighlighted = false
         targetCard.tag = 1
@@ -191,8 +191,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(targetCard)
         
         let crossCard = UIButton(type: .custom)
-        crossCard.setImage(UIImage(named: "CrossCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        crossCard.setImage(UIImage(named: "CrossCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        crossCard.setImage(UIImage(named: Constants.CardFrontNames.cross)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        crossCard.setImage(UIImage(named: Constants.CardFrontNames.cross)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         crossCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         crossCard.adjustsImageWhenHighlighted = false
         crossCard.tag = 2
@@ -200,8 +200,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(crossCard)
         
         let heartCard = UIButton(type: .custom)
-        heartCard.setImage(UIImage(named: "HeartCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        heartCard.setImage(UIImage(named: "HeartCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        heartCard.setImage(UIImage(named: Constants.CardFrontNames.heart)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        heartCard.setImage(UIImage(named: Constants.CardFrontNames.heart)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         heartCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         heartCard.adjustsImageWhenHighlighted = false
         heartCard.tag = 3
@@ -209,8 +209,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(heartCard)
         
         let basketballCard = UIButton(type: .custom)
-        basketballCard.setImage(UIImage(named: "BasketballCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        basketballCard.setImage(UIImage(named: "BasketballCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        basketballCard.setImage(UIImage(named: Constants.CardFrontNames.basketball)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        basketballCard.setImage(UIImage(named: Constants.CardFrontNames.basketball)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         basketballCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         basketballCard.adjustsImageWhenHighlighted = false
         basketballCard.tag = 4
@@ -218,8 +218,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(basketballCard)
         
         let fleurDeLisCard = UIButton(type: .custom)
-        fleurDeLisCard.setImage(UIImage(named: "FleurDeLisCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        fleurDeLisCard.setImage(UIImage(named: "FleurDeLisCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        fleurDeLisCard.setImage(UIImage(named: Constants.CardFrontNames.fleurDeLis)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        fleurDeLisCard.setImage(UIImage(named: Constants.CardFrontNames.fleurDeLis)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         fleurDeLisCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         fleurDeLisCard.adjustsImageWhenHighlighted = false
         fleurDeLisCard.tag = 5
@@ -227,8 +227,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(fleurDeLisCard)
         
         let tulipCard = UIButton(type: .custom)
-        tulipCard.setImage(UIImage(named: "TulipCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        tulipCard.setImage(UIImage(named: "TulipCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        tulipCard.setImage(UIImage(named: Constants.CardFrontNames.tulip)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        tulipCard.setImage(UIImage(named: Constants.CardFrontNames.tulip)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         tulipCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         tulipCard.adjustsImageWhenHighlighted = false
         tulipCard.tag = 6
@@ -236,8 +236,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(tulipCard)
         
         let imperialCard = UIButton(type: .custom)
-        imperialCard.setImage(UIImage(named: "ImperialCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        imperialCard.setImage(UIImage(named: "ImperialCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        imperialCard.setImage(UIImage(named: Constants.CardFrontNames.imperial)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        imperialCard.setImage(UIImage(named: Constants.CardFrontNames.imperial)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         imperialCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         imperialCard.adjustsImageWhenHighlighted = false
         imperialCard.tag = 7
@@ -245,8 +245,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(imperialCard)
         
         let rebelCard = UIButton(type: .custom)
-        rebelCard.setImage(UIImage(named: "RebelCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        rebelCard.setImage(UIImage(named: "RebelCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        rebelCard.setImage(UIImage(named: Constants.CardFrontNames.rebel)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        rebelCard.setImage(UIImage(named: Constants.CardFrontNames.rebel)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         rebelCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         rebelCard.adjustsImageWhenHighlighted = false
         rebelCard.tag = 8
@@ -254,8 +254,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(rebelCard)
         
         let snowflakeCard = UIButton(type: .custom)
-        snowflakeCard.setImage(UIImage(named: "SnowflakeCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        snowflakeCard.setImage(UIImage(named: "SnowflakeCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        snowflakeCard.setImage(UIImage(named: Constants.CardFrontNames.snowflake)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        snowflakeCard.setImage(UIImage(named: Constants.CardFrontNames.snowflake)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         snowflakeCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         snowflakeCard.adjustsImageWhenHighlighted = false
         snowflakeCard.tag = 9
@@ -263,8 +263,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(snowflakeCard)
         
         let atomCard = UIButton(type: .custom)
-        atomCard.setImage(UIImage(named: "AtomCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        atomCard.setImage(UIImage(named: "AtomCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        atomCard.setImage(UIImage(named: Constants.CardFrontNames.atom)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        atomCard.setImage(UIImage(named: Constants.CardFrontNames.atom)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         atomCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         atomCard.adjustsImageWhenHighlighted = false
         atomCard.tag = 10
@@ -272,8 +272,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(atomCard)
         
         let appleCard = UIButton(type: .custom)
-        appleCard.setImage(UIImage(named: "AppleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        appleCard.setImage(UIImage(named: "AppleCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        appleCard.setImage(UIImage(named: Constants.CardFrontNames.apple)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        appleCard.setImage(UIImage(named: Constants.CardFrontNames.apple)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         appleCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         appleCard.adjustsImageWhenHighlighted = false
         appleCard.tag = 11
@@ -281,8 +281,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(appleCard)
         
         let bookCard = UIButton(type: .custom)
-        bookCard.setImage(UIImage(named: "BookCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        bookCard.setImage(UIImage(named: "BookCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        bookCard.setImage(UIImage(named: Constants.CardFrontNames.book)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        bookCard.setImage(UIImage(named: Constants.CardFrontNames.book)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         bookCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         bookCard.adjustsImageWhenHighlighted = false
         bookCard.tag = 12
@@ -290,8 +290,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(bookCard)
         
         let cowboyHatCard = UIButton(type: .custom)
-        cowboyHatCard.setImage(UIImage(named: "CowboyHatCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        cowboyHatCard.setImage(UIImage(named: "CowboyHatCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        cowboyHatCard.setImage(UIImage(named: Constants.CardFrontNames.cowboyHat)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        cowboyHatCard.setImage(UIImage(named: Constants.CardFrontNames.cowboyHat)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         cowboyHatCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         cowboyHatCard.adjustsImageWhenHighlighted = false
         cowboyHatCard.tag = 13
@@ -299,8 +299,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(cowboyHatCard)
         
         let sunglassesCard = UIButton(type: .custom)
-        sunglassesCard.setImage(UIImage(named: "SunglassesCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        sunglassesCard.setImage(UIImage(named: "SunglassesCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        sunglassesCard.setImage(UIImage(named: Constants.CardFrontNames.sunglasses)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        sunglassesCard.setImage(UIImage(named: Constants.CardFrontNames.sunglasses)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         sunglassesCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         sunglassesCard.adjustsImageWhenHighlighted = false
         sunglassesCard.tag = 14
@@ -308,8 +308,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(sunglassesCard)
         
         let usFlagCard = UIButton(type: .custom)
-        usFlagCard.setImage(UIImage(named: "USFlagCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        usFlagCard.setImage(UIImage(named: "USFlagCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        usFlagCard.setImage(UIImage(named: Constants.CardFrontNames.usFlag)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        usFlagCard.setImage(UIImage(named: Constants.CardFrontNames.usFlag)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         usFlagCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         usFlagCard.adjustsImageWhenHighlighted = false
         usFlagCard.tag = 15
@@ -317,8 +317,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(usFlagCard)
         
         let dogCard = UIButton(type: .custom)
-        dogCard.setImage(UIImage(named: "DogCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        dogCard.setImage(UIImage(named: "DogCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        dogCard.setImage(UIImage(named: Constants.CardFrontNames.dog)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        dogCard.setImage(UIImage(named: Constants.CardFrontNames.dog)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         dogCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         dogCard.adjustsImageWhenHighlighted = false
         dogCard.tag = 16
@@ -326,8 +326,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(dogCard)
         
         let flowerCard = UIButton(type: .custom)
-        flowerCard.setImage(UIImage(named: "FlowerCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        flowerCard.setImage(UIImage(named: "FlowerCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        flowerCard.setImage(UIImage(named: Constants.CardFrontNames.flower)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        flowerCard.setImage(UIImage(named: Constants.CardFrontNames.flower)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         flowerCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         flowerCard.adjustsImageWhenHighlighted = false
         flowerCard.tag = 17
@@ -335,8 +335,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(flowerCard)
         
         let palmCard = UIButton(type: .custom)
-        palmCard.setImage(UIImage(named: "PalmCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        palmCard.setImage(UIImage(named: "PalmCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        palmCard.setImage(UIImage(named: Constants.CardFrontNames.palm)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        palmCard.setImage(UIImage(named: Constants.CardFrontNames.palm)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         palmCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         palmCard.adjustsImageWhenHighlighted = false
         palmCard.tag = 18
@@ -344,8 +344,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(palmCard)
         
         let bagelCard = UIButton(type: .custom)
-        bagelCard.setImage(UIImage(named: "BagelCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        bagelCard.setImage(UIImage(named: "BagelCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        bagelCard.setImage(UIImage(named: Constants.CardFrontNames.bagel)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        bagelCard.setImage(UIImage(named: Constants.CardFrontNames.bagel)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         bagelCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         bagelCard.adjustsImageWhenHighlighted = false
         bagelCard.tag = 19
@@ -353,8 +353,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(bagelCard)
         
         let mountainCard = UIButton(type: .custom)
-        mountainCard.setImage(UIImage(named: "MountainCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        mountainCard.setImage(UIImage(named: "MountainCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        mountainCard.setImage(UIImage(named: Constants.CardFrontNames.mountain)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        mountainCard.setImage(UIImage(named: Constants.CardFrontNames.mountain)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         mountainCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         mountainCard.adjustsImageWhenHighlighted = false
         mountainCard.tag = 20
@@ -362,8 +362,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(mountainCard)
         
         let purpleCard = UIButton(type: .custom)
-        purpleCard.setImage(UIImage(named: "PurpleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        purpleCard.setImage(UIImage(named: "PurpleCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        purpleCard.setImage(UIImage(named: Constants.CardFrontNames.purple)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        purpleCard.setImage(UIImage(named: Constants.CardFrontNames.purple)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         purpleCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         purpleCard.adjustsImageWhenHighlighted = false
         purpleCard.tag = 21
@@ -371,8 +371,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(purpleCard)
         
         let sunsetCard = UIButton(type: .custom)
-        sunsetCard.setImage(UIImage(named: "SunsetCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        sunsetCard.setImage(UIImage(named: "SunsetCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        sunsetCard.setImage(UIImage(named: Constants.CardFrontNames.sunset)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        sunsetCard.setImage(UIImage(named: Constants.CardFrontNames.sunset)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         sunsetCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         sunsetCard.adjustsImageWhenHighlighted = false
         sunsetCard.tag = 22
@@ -380,8 +380,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(sunsetCard)
         
         let turtleCard = UIButton(type: .custom)
-        turtleCard.setImage(UIImage(named: "TurtleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        turtleCard.setImage(UIImage(named: "TurtleCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        turtleCard.setImage(UIImage(named: Constants.CardFrontNames.turtle)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        turtleCard.setImage(UIImage(named: Constants.CardFrontNames.turtle)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         turtleCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         turtleCard.adjustsImageWhenHighlighted = false
         turtleCard.tag = 23
@@ -389,8 +389,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(turtleCard)
         
         let carCard = UIButton(type: .custom)
-        carCard.setImage(UIImage(named: "CarCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        carCard.setImage(UIImage(named: "CarCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        carCard.setImage(UIImage(named: Constants.CardFrontNames.car)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        carCard.setImage(UIImage(named: Constants.CardFrontNames.car)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         carCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         carCard.adjustsImageWhenHighlighted = false
         carCard.tag = 24
@@ -398,8 +398,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(carCard)
         
         let motorcycleCard = UIButton(type: .custom)
-        motorcycleCard.setImage(UIImage(named: "MotorcycleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        motorcycleCard.setImage(UIImage(named: "MotorcycleCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        motorcycleCard.setImage(UIImage(named: Constants.CardFrontNames.motorcycle)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        motorcycleCard.setImage(UIImage(named: Constants.CardFrontNames.motorcycle)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         motorcycleCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         motorcycleCard.adjustsImageWhenHighlighted = false
         motorcycleCard.tag = 25
@@ -407,8 +407,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(motorcycleCard)
         
         let catCard = UIButton(type: .custom)
-        catCard.setImage(UIImage(named: "CatCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        catCard.setImage(UIImage(named: "CatCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        catCard.setImage(UIImage(named: Constants.CardFrontNames.cat)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        catCard.setImage(UIImage(named: Constants.CardFrontNames.cat)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         catCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         catCard.adjustsImageWhenHighlighted = false
         catCard.tag = 26
@@ -416,8 +416,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(catCard)
         
         let waterfallCard = UIButton(type: .custom)
-        waterfallCard.setImage(UIImage(named: "WaterfallCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        waterfallCard.setImage(UIImage(named: "WaterfallCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        waterfallCard.setImage(UIImage(named: Constants.CardFrontNames.waterfall)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        waterfallCard.setImage(UIImage(named: Constants.CardFrontNames.waterfall)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         waterfallCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         waterfallCard.adjustsImageWhenHighlighted = false
         waterfallCard.tag = 27
@@ -425,8 +425,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(waterfallCard)
         
         let roadCard = UIButton(type: .custom)
-        roadCard.setImage(UIImage(named: "RoadCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        roadCard.setImage(UIImage(named: "RoadCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        roadCard.setImage(UIImage(named: Constants.CardFrontNames.road)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        roadCard.setImage(UIImage(named: Constants.CardFrontNames.road)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         roadCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         roadCard.adjustsImageWhenHighlighted = false
         roadCard.tag = 28
@@ -434,8 +434,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(roadCard)
         
         let templeCard = UIButton(type: .custom)
-        templeCard.setImage(UIImage(named: "TempleCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        templeCard.setImage(UIImage(named: "TempleCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        templeCard.setImage(UIImage(named: Constants.CardFrontNames.temple)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        templeCard.setImage(UIImage(named: Constants.CardFrontNames.temple)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         templeCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         templeCard.adjustsImageWhenHighlighted = false
         templeCard.tag = 29
@@ -443,8 +443,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(templeCard)
         
         let storkCard = UIButton(type: .custom)
-        storkCard.setImage(UIImage(named: "StorkCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        storkCard.setImage(UIImage(named: "StorkCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        storkCard.setImage(UIImage(named: Constants.CardFrontNames.stork)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        storkCard.setImage(UIImage(named: Constants.CardFrontNames.stork)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         storkCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         storkCard.adjustsImageWhenHighlighted = false
         storkCard.tag = 30
@@ -452,8 +452,8 @@ class CustomizeCardsViewController: UIViewController {
         cardOptions.append(storkCard)
         
         let toiletPaperCard = UIButton(type: .custom)
-        toiletPaperCard.setImage(UIImage(named: "ToiletPaperCard")?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        toiletPaperCard.setImage(UIImage(named: "ToiletPaperCard")?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        toiletPaperCard.setImage(UIImage(named: Constants.CardFrontNames.toiletPaper)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
+        toiletPaperCard.setImage(UIImage(named: Constants.CardFrontNames.toiletPaper)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
         toiletPaperCard.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
         toiletPaperCard.adjustsImageWhenHighlighted = false
         toiletPaperCard.tag = 31
@@ -553,32 +553,28 @@ class CustomizeCardsViewController: UIViewController {
         
         switch sender.title(for: .normal) {
         case "8":
-            defaults.set(8, forKey: "NumberOfCards")
-            cardModel.saveTotalCards()
+            defaults.set(8, forKey: Constants.UDKeys.cardNumber)
             numberOptions[0].isSelected = true
             currentNumberOfCards = 8
         case "16":
-            defaults.set(16, forKey: "NumberOfCards")
-            cardModel.saveTotalCards()
+            defaults.set(16, forKey: Constants.UDKeys.cardNumber)
             numberOptions[1].isSelected = true
             currentNumberOfCards = 16
         case "24":
-            defaults.set(24, forKey: "NumberOfCards")
-            cardModel.saveTotalCards()
+            defaults.set(24, forKey: Constants.UDKeys.cardNumber)
             numberOptions[2].isSelected = true
             currentNumberOfCards = 24
         case "32":
-            defaults.set(32, forKey: "NumberOfCards")
-            cardModel.saveTotalCards()
+            defaults.set(32, forKey: Constants.UDKeys.cardNumber)
             numberOptions[3].isSelected = true
             currentNumberOfCards = 32
         default:
-            defaults.set(40, forKey: "NumberOfCards")
-            cardModel.saveTotalCards()
+            defaults.set(40, forKey: Constants.UDKeys.cardNumber)
             numberOptions[4].isSelected = true
             currentNumberOfCards = 40
         }
         
+        cardModel.saveTotalCards()
         fillCardsSelected()
     }
     
@@ -617,7 +613,7 @@ class CustomizeCardsViewController: UIViewController {
         
         setSelectedCards()
         
-        defaults.set(selectedCardTags, forKey: "CardFrontTags")
+        defaults.set(selectedCardTags, forKey: Constants.UDKeys.cardFrontTags)
         cardModel.setCardFronts()
     }
     

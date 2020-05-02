@@ -62,18 +62,18 @@ struct CardModel {
     
     init() {
         // getting all the types of card fronts
-        guard let cardFrontsURL = Bundle.main.url(forResource: "card-fronts", withExtension: "txt") else {
-            fatalError("Could not find card-fronts.txt in app bundle.")
+        guard let cardFrontsURL = Bundle.main.url(forResource: Constants.FileNames.cardFrontsTXT, withExtension: "txt") else {
+            fatalError("Could not find \(Constants.FileNames.cardFrontsTXT).txt in app bundle.")
         }
         guard let cardFrontsString = try? String.init(contentsOf: cardFrontsURL) else {
-            fatalError("Could not load card-fronts.txt from app bundle.")
+            fatalError("Could not load \(Constants.FileNames.cardFrontsTXT).txt from app bundle.")
         }
         
         cardFrontTypes = cardFrontsString.components(separatedBy: "\n")
         
         // setting the total matches
-        if UserDefaults.standard.integer(forKey: "NumberOfCards") != 0 {
-            totalCards = UserDefaults.standard.integer(forKey: "NumberOfCards")
+        if UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber) != 0 {
+            totalCards = UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber)
         } else {
             totalCards = 40
         }
@@ -88,7 +88,7 @@ struct CardModel {
 extension CardModel {
     private func saveCardsToDisk() {
         // create url
-        let url = Bundle.main.url(forResource: "current-cards", withExtension: "json")
+        let url = Bundle.main.url(forResource: Constants.FileNames.currentCardsJSON, withExtension: "json")
         let encoder = JSONEncoder()
         
         do {
@@ -101,7 +101,7 @@ extension CardModel {
     
     private mutating func getCardsFromDisk() {
         // create url
-        let url = Bundle.main.url(forResource: "current-cards", withExtension: "json")
+        let url = Bundle.main.url(forResource: Constants.FileNames.currentCardsJSON, withExtension: "json")
         let decoder = JSONDecoder()
         
         do {
@@ -120,6 +120,10 @@ extension CardModel {
         } catch {
             fatalError(error.localizedDescription)
         }
+        
+        // setting the backs to the correct color
+        setCardBacks()
+        
         // shuffling and setting the deck
         setCards()
     }
@@ -127,7 +131,9 @@ extension CardModel {
 
 // MARK: - Edit Cards
 extension CardModel {
-    mutating func setCardBacks(to backName: String) {
+    mutating func setCardBacks() {
+        let backName = UserDefaults.standard.string(forKey: Constants.UDKeys.cardBack) ?? Constants.CardBackNames.blue
+        
         for index in 0..<cardSet.count {
             cardSet[index].backImageName = backName
         }
@@ -136,18 +142,18 @@ extension CardModel {
     }
     
     mutating func setCardFronts() {
-        let cardFrontIndexes = UserDefaults.standard.array(forKey: "CardFrontTags") as! [Int]
+        let cardFrontIndexes = UserDefaults.standard.array(forKey: Constants.UDKeys.cardFrontTags) as! [Int]
         
         cardSet = [Card]()
         
         for index in cardFrontIndexes {
-            cardSet.append(Card(frontImageName: cardFrontTypes[index], backImageName: UserDefaults.standard.string(forKey: "Back") ?? "BlueBack", isMatched: false, isFlipped: false))
+            cardSet.append(Card(frontImageName: cardFrontTypes[index], backImageName: UserDefaults.standard.string(forKey: Constants.UDKeys.cardBack) ?? Constants.CardBackNames.blue, isMatched: false, isFlipped: false))
         }
         
         saveCardsToDisk()
     }
     
     mutating func saveTotalCards() {
-        totalCards = UserDefaults.standard.integer(forKey: "Number of Cards")
+        totalCards = UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber)
     }
 }
