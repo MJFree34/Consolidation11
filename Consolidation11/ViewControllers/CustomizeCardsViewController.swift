@@ -12,12 +12,6 @@ class CustomizeCardsViewController: UIViewController {
     var currentBackground: UIImage!
     var cardModel: CardModel!
     
-    var currentNumberOfCards: Int = 0 {
-        didSet {
-            frontsTitleLabel.text = "Fronts (Pick \(currentNumberOfCards / 2)):"
-        }
-    }
-    
     var numberOptions = [UIButton]()
     var cardOptions = [UIButton]()
     
@@ -42,20 +36,17 @@ class CustomizeCardsViewController: UIViewController {
         switch defaults.integer(forKey: Constants.UDKeys.cardNumber) {
         case 8:
             numberOptions[0].isSelected = true
-            currentNumberOfCards = 8
         case 16:
             numberOptions[1].isSelected = true
-            currentNumberOfCards = 16
         case 24:
             numberOptions[2].isSelected = true
-            currentNumberOfCards = 24
         case 32:
             numberOptions[3].isSelected = true
-            currentNumberOfCards = 32
         default:
             numberOptions[4].isSelected = true
-            currentNumberOfCards = 40
         }
+        
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
         
         // setting the selected card fronts from saved state
         if let frontCardsTags = defaults.array(forKey: Constants.UDKeys.cardFrontTags) as? [Int] {
@@ -555,23 +546,18 @@ class CustomizeCardsViewController: UIViewController {
         case "8":
             defaults.set(8, forKey: Constants.UDKeys.cardNumber)
             numberOptions[0].isSelected = true
-            currentNumberOfCards = 8
         case "16":
             defaults.set(16, forKey: Constants.UDKeys.cardNumber)
             numberOptions[1].isSelected = true
-            currentNumberOfCards = 16
         case "24":
             defaults.set(24, forKey: Constants.UDKeys.cardNumber)
             numberOptions[2].isSelected = true
-            currentNumberOfCards = 24
         case "32":
             defaults.set(32, forKey: Constants.UDKeys.cardNumber)
             numberOptions[3].isSelected = true
-            currentNumberOfCards = 32
         default:
             defaults.set(40, forKey: Constants.UDKeys.cardNumber)
             numberOptions[4].isSelected = true
-            currentNumberOfCards = 40
         }
         
         cardModel.saveTotalCards()
@@ -593,20 +579,20 @@ class CustomizeCardsViewController: UIViewController {
     }
     
     func fillCardsSelected() {
-        if selectedCardTags.count < currentNumberOfCards / 2 {
+        if selectedCardTags.count < cardModel.getTotalCards() / 2 {
             // fills space up to amount of cards necessary in tags
-            while selectedCardTags.count < currentNumberOfCards / 2 || selectedCardTags.isEmpty {
+            while selectedCardTags.count < cardModel.getTotalCards() / 2 || selectedCardTags.isEmpty {
                 var i = 0
                 while selectedCardTags.contains(cardOptions[i].tag) {
                     i += 1
                 }
                 selectedCardTags.append(cardOptions[i].tag)
             }
-        } else if selectedCardTags.count == currentNumberOfCards / 2 {
+        } else if selectedCardTags.count == cardModel.getTotalCards() / 2 {
             // do nothing this is state we want
         } else {
             // removes the excess
-            while selectedCardTags.count > currentNumberOfCards / 2 {
+            while selectedCardTags.count > cardModel.getTotalCards() / 2 {
                 selectedCardTags.removeFirst()
             }
         }

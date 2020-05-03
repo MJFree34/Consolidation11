@@ -16,12 +16,12 @@ struct CardModel {
     private var flippedIndex: IndexPath?
     private let cardFrontTypes: [String]
     
-    var count: Int {
-        return cards.count
-    }
-    
     func card(at index: Int) -> Card {
         return cards[index]
+    }
+    
+    func getTotalCards() -> Int {
+        return totalCards
     }
     
     func getFlippedIndex() -> IndexPath? {
@@ -80,7 +80,7 @@ struct CardModel {
         
         getCardsFromDisk()
         
-        assert(totalCards == count)
+        assert(totalCards == cards.count)
     }
 }
 
