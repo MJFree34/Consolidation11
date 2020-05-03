@@ -9,7 +9,6 @@
 import UIKit
 
 class CardCell: UICollectionViewCell {
-    
     var cardBackImage: UIImageView = {
         let image = UIImage(named: "BlueBack")! // sample image
         let imageView = UIImageView(image: image)
@@ -26,6 +25,12 @@ class CardCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        addViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         
         addViews()
     }
@@ -85,9 +90,5 @@ class CardCell: UICollectionViewCell {
         cardFrontImage.alpha = 0
         
         flipBackImmediately()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) not implemented")
     }
 }

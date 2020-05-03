@@ -15,6 +15,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     let defaults = UserDefaults.standard
     
     var currentBackground: UIImage!
+    var newGameButton: NewGameButton!
     
     var collectionView: UICollectionView!
     
@@ -31,7 +32,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             
-        cardModel = CardModel()
+        cardModel.newGame()
         setCurrentBackground()
         collectionView.reloadData()
     }
@@ -57,6 +58,11 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         // setting background picture
         resizeBackgrounds()
         collectionView.backgroundColor = .clear
+        
+        // creating newGameButton
+        newGameButton = NewGameButton()
+        newGameButton.addTarget(self, action: #selector(newGame), for: .touchUpInside)
+        view.addSubview(newGameButton)
         
         // creating customize label
         let customizeLabel = UILabel()
@@ -94,6 +100,11 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+            
+            newGameButton.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            newGameButton.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            newGameButton.widthAnchor.constraint(equalToConstant: 200),
+            newGameButton.heightAnchor.constraint(equalToConstant: 88),
             
             customizeBackgroundButton.widthAnchor.constraint(equalToConstant: 44),
             customizeBackgroundButton.heightAnchor.constraint(equalToConstant: 44),
@@ -163,6 +174,13 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
     }
     
+    @objc func newGame() {
+        cardModel.newGame()
+        collectionView.reloadData()
+        
+        newGameButton.hide()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cardModel.getTotalCards()
     }
@@ -224,6 +242,10 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                 cardModel.toggleFlip(for: indexPath.item)
                 cell.flip()
             }
+        }
+        
+        if cardModel.allMatched() {
+            newGameButton.show()
         }
     }
     

@@ -49,6 +49,16 @@ struct CardModel {
         return false
     }
     
+    func allMatched() -> Bool {
+        for card in cards {
+            if !card.isMatched {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     private mutating func setCards() {
         // makes pairs
         cards = cardSet + cardSet
@@ -155,5 +165,12 @@ extension CardModel {
     
     mutating func saveTotalCards() {
         totalCards = UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber)
+    }
+    
+    mutating func newGame() {
+        saveTotalCards()
+        getCardsFromDisk()
+        
+        assert(totalCards == cards.count)
     }
 }
