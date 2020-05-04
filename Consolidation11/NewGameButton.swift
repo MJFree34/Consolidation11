@@ -50,6 +50,8 @@ class NewGameButton: UIButton {
             self.alpha = 0
         }
         
-        isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.isHidden = true
+        }
     }
 }

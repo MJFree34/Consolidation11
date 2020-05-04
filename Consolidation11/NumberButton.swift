@@ -1,5 +1,5 @@
 //
-//  NumberLabel.swift
+//  NumberButton.swift
 //  Consolidation11
 //
 //  Created by Matt Free on 5/3/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NumberLabel: UIButton {
+class NumberButton: UIButton {
     init(color: UIColor, numberText: String) {
         super.init(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         setTitleColor(.white, for: .normal)

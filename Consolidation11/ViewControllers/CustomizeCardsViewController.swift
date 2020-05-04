@@ -12,7 +12,7 @@ class CustomizeCardsViewController: UIViewController {
     var currentBackground: UIImage!
     var cardModel: CardModel!
     
-    var numberOptions = [NumberLabel]()
+    var numberOptions = [NumberButton]()
     var cardOptions = [CardOptionButton]()
     
     var frontsTitleLabel: UILabel!
@@ -53,6 +53,10 @@ class CustomizeCardsViewController: UIViewController {
             selectedCardTags = frontCardsTags
         }
         
+        setSelectedCards()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
         fillCardsSelected()
     }
     
@@ -83,20 +87,22 @@ class CustomizeCardsViewController: UIViewController {
         scrollView.addSubview(numberOfCardsTitleLabel)
         
         // creating the number options
-        let eightOption = NumberLabel(color: UIColor(red: 0, green: 0.94, blue: 1, alpha: 1), numberText: "8")
+        let eightOption = NumberButton(color: UIColor(red: 0, green: 0.94, blue: 1, alpha: 1), numberText: "8")
         numberOptions.append(eightOption)
         
-        let sixteenOption = NumberLabel(color: UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), numberText: "16")
+        let sixteenOption = NumberButton(color: UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), numberText: "16")
         numberOptions.append(sixteenOption)
         
-        let twentyFourOption = NumberLabel(color: UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), numberText: "24")
+        let twentyFourOption = NumberButton(color: UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), numberText: "24")
         numberOptions.append(twentyFourOption)
         
-        let thirtyTwoOption = NumberLabel(color: UIColor(red: 0.827, green: 1, blue: 0.333, alpha: 1), numberText: "32")
+        let thirtyTwoOption = NumberButton(color: UIColor(red: 0.827, green: 1, blue: 0.333, alpha: 1), numberText: "32")
         numberOptions.append(thirtyTwoOption)
         
-        let fortyOption = NumberLabel(color: UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), numberText: "40")
+        let fortyOption = NumberButton(color: UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), numberText: "40")
         numberOptions.append(fortyOption)
+        
+        addTargetsToNumberOptions()
         
         // creating the numbers' stackView
         let numbersStackView = UIStackView(arrangedSubviews: [eightOption, sixteenOption, twentyFourOption, thirtyTwoOption, fortyOption])
@@ -207,6 +213,8 @@ class CustomizeCardsViewController: UIViewController {
         let toiletPaperCard = CardOptionButton(imageName: Constants.CardFrontNames.toiletPaper, tagNumber: 31)
         cardOptions.append(toiletPaperCard)
         
+        addTargetsToCardOptions()
+        
         // creating each row horizontalStackView to hold the cards
         let row1StackView = UIStackView(arrangedSubviews: [biohazardCard, targetCard, crossCard, heartCard])
         row1StackView.alignment = .center
@@ -296,7 +304,7 @@ class CustomizeCardsViewController: UIViewController {
     }
     
     func addTargetsToNumberOptions() {
-        for option in cardOptions {
+        for option in numberOptions {
             option.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         }
     }
@@ -329,7 +337,8 @@ class CustomizeCardsViewController: UIViewController {
         }
         
         cardModel.saveTotalCards()
-        fillCardsSelected()
+        setSelectedCards()
+        adjustSelectedCards()
     }
     
     @objc func saveAndAdjustCards(_ sender: UIButton) {
@@ -343,7 +352,13 @@ class CustomizeCardsViewController: UIViewController {
             selectedCardTags.append(sender.tag)
         }
         
-        fillCardsSelected()
+        setSelectedCards()
+    }
+    
+    func adjustSelectedCards() {
+        while selectedCardTags.count > cardModel.getTotalCards() / 2 {
+            selectedCardTags.removeFirst()
+        }
     }
     
     func fillCardsSelected() {
@@ -356,16 +371,7 @@ class CustomizeCardsViewController: UIViewController {
                 }
                 selectedCardTags.append(cardOptions[i].tag)
             }
-        } else if selectedCardTags.count == cardModel.getTotalCards() / 2 {
-            // do nothing this is state we want
-        } else {
-            // removes the excess
-            while selectedCardTags.count > cardModel.getTotalCards() / 2 {
-                selectedCardTags.removeFirst()
-            }
         }
-        
-        setSelectedCards()
         
         defaults.set(selectedCardTags, forKey: Constants.UDKeys.cardFrontTags)
         cardModel.setCardFronts()

@@ -24,7 +24,7 @@
 		9AAF5D19245F4B3F00C3EFB2 /* ColorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D18245F4B3F00C3EFB2 /* ColorLabel.swift */; };
 		9AAF5D1B245F542200C3EFB2 /* SmallBackgroundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D1A245F542200C3EFB2 /* SmallBackgroundButton.swift */; };
 		9AAF5D1D245F56B600C3EFB2 /* CardOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D1C245F56B600C3EFB2 /* CardOptionButton.swift */; };
-		9AAF5D1F245F5B9400C3EFB2 /* NumberLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D1E245F5B9400C3EFB2 /* NumberLabel.swift */; };
+		9AAF5D1F245F5B9400C3EFB2 /* NumberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D1E245F5B9400C3EFB2 /* NumberButton.swift */; };
 		9AAF5D21245F5DAB00C3EFB2 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D20245F5DAB00C3EFB2 /* BackButton.swift */; };
 		9AAF5D23245F5E5200C3EFB2 /* TopIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D22245F5E5200C3EFB2 /* TopIcon.swift */; };
 		9AAF5D25245F5F0800C3EFB2 /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D24245F5F0800C3EFB2 /* HeaderLabel.swift */; };
@@ -54,7 +54,7 @@
 		9AAF5D18245F4B3F00C3EFB2 /* ColorLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLabel.swift; sourceTree = "<group>"; };
 		9AAF5D1A245F542200C3EFB2 /* SmallBackgroundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallBackgroundButton.swift; sourceTree = "<group>"; };
 		9AAF5D1C245F56B600C3EFB2 /* CardOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOptionButton.swift; sourceTree = "<group>"; };
-		9AAF5D1E245F5B9400C3EFB2 /* NumberLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLabel.swift; sourceTree = "<group>"; };
+		9AAF5D1E245F5B9400C3EFB2 /* NumberButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberButton.swift; sourceTree = "<group>"; };
 		9AAF5D20245F5DAB00C3EFB2 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		9AAF5D22245F5E5200C3EFB2 /* TopIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopIcon.swift; sourceTree = "<group>"; };
 		9AAF5D24245F5F0800C3EFB2 /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 			children = (
 				9A0D378C2438324600DCF45B /* CardCell.swift */,
 				9AAF5D18245F4B3F00C3EFB2 /* ColorLabel.swift */,
-				9AAF5D1E245F5B9400C3EFB2 /* NumberLabel.swift */,
+				9AAF5D1E245F5B9400C3EFB2 /* NumberButton.swift */,
 				9AAF5D24245F5F0800C3EFB2 /* HeaderLabel.swift */,
 				9AAF5D15245F417E00C3EFB2 /* NewGameButton.swift */,
 				9AAF5D20245F5DAB00C3EFB2 /* BackButton.swift */,
@@ -247,7 +247,7 @@
 				9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */,
 				9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */,
 				9AAF5D25245F5F0800C3EFB2 /* HeaderLabel.swift in Sources */,
-				9AAF5D1F245F5B9400C3EFB2 /* NumberLabel.swift in Sources */,
+				9AAF5D1F245F5B9400C3EFB2 /* NumberButton.swift in Sources */,
 				9AAF5D12245CF9B400C3EFB2 /* Constants.swift in Sources */,
 				9AAF5D21245F5DAB00C3EFB2 /* BackButton.swift in Sources */,
 				9AAF5D19245F4B3F00C3EFB2 /* ColorLabel.swift in Sources */,
