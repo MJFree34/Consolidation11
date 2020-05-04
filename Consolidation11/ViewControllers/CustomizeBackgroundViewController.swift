@@ -8,16 +8,25 @@
 
 import UIKit
 
-class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
+class CustomizeBackgroundViewController: UIViewController {
+    /// The background displayed
     var currentBackground: UIImage!
+    
+    /// The model for the cards
     var cardModel: CardModel!
     
+    /// The background option buttons
     var smallBackgroundOptions = [UIButton]()
+    
+    /// The card back option buttons
     var cardBackOptions = [CardOptionButton]()
     
+    /// The standard UserDefaults
     let defaults = UserDefaults.standard
     
-    // makes the top status bar white
+    // MARK: - Setup UI
+    
+    /// Makes the contents of the status bar white
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -26,46 +35,12 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         super.viewDidLoad()
         
         setupView()
-        
-        resetSelectedBackgrounds()
-        
-        switch defaults.string(forKey: Constants.UDKeys.background) {
-        case "green":
-            smallBackgroundOptions[0].isSelected = true
-        case "red":
-            smallBackgroundOptions[1].isSelected = true
-        case "blue":
-            smallBackgroundOptions[2].isSelected = true
-        default:
-            smallBackgroundOptions[3].isSelected = true
-        }
-        
-        resetSelectedBacks()
-        
-        switch defaults.string(forKey: Constants.UDKeys.cardBack) {
-        case Constants.CardBackNames.blue:
-            cardBackOptions[0].isSelected = true
-        case Constants.CardBackNames.red:
-            cardBackOptions[1].isSelected = true
-        case Constants.CardBackNames.green:
-            cardBackOptions[2].isSelected = true
-        case Constants.CardBackNames.purple:
-            cardBackOptions[3].isSelected = true
-        case Constants.CardBackNames.orange:
-            cardBackOptions[4].isSelected = true
-        case Constants.CardBackNames.yellow:
-            cardBackOptions[5].isSelected = true
-        case Constants.CardBackNames.pink:
-            cardBackOptions[6].isSelected = true
-        case Constants.CardBackNames.circle:
-            cardBackOptions[7].isSelected = true
-        default:
-            cardBackOptions[8].isSelected = true
-        }
+        selectSavedBackground()
+        selectSavedCardBack()
     }
     
+    /// Sets up the entire rendered screen
     func setupView() {
-        // setting background pic
         setBackground()
         
         // giving the ability to swipe from the left of screen to pop to rootView
@@ -92,119 +67,39 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         // creating the color labels
         let greenLabel = ColorLabel(color: UIColor(red: 0, green: 1, blue: 0.1, alpha: 1), colorText: "Green")
-        scrollView.addSubview(greenLabel)
-        
         let redLabel = ColorLabel(color: UIColor(red: 1, green: 0.337, blue: 0.337, alpha: 1), colorText: "Red")
-        scrollView.addSubview(redLabel)
-        
         let blueLabel = ColorLabel(color: UIColor(red: 0, green: 0.82, blue: 1, alpha: 1), colorText: "Blue")
-        scrollView.addSubview(blueLabel)
-        
         let pinkLabel = ColorLabel(color: UIColor(red: 1, green: 0.567, blue: 0.905, alpha: 1), colorText: "Pink")
-        scrollView.addSubview(pinkLabel)
         
         // creating the stackViews for the backgroundLabels
-        let backgroundLabels1StackView = UIStackView(arrangedSubviews: [greenLabel, redLabel])
-        backgroundLabels1StackView.alignment = .center
-        backgroundLabels1StackView.spacing = 135
-        backgroundLabels1StackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgroundLabels1StackView)
+        let backgroundLabels1StackView = UIStackView(arrangedSubviews: [greenLabel, redLabel], spacing: 135, axis: .horizontal, tamic: false)
+        scrollView.addSubview(backgroundLabels1StackView)
         
-        let backgroundLabels2StackView = UIStackView(arrangedSubviews: [blueLabel, pinkLabel])
-        backgroundLabels2StackView.alignment = .center
-        backgroundLabels2StackView.spacing = 135
-        backgroundLabels2StackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgroundLabels2StackView)
+        let backgroundLabels2StackView = UIStackView(arrangedSubviews: [blueLabel, pinkLabel], spacing: 135, axis: .horizontal, tamic: false)
+        scrollView.addSubview(backgroundLabels2StackView)
         
-        // creating the background options
-        let greenSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.green, tagNumber: 0)
-        greenSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
-        smallBackgroundOptions.append(greenSmallBackground)
-        
-        let redSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.red, tagNumber: 1)
-        redSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
-        smallBackgroundOptions.append(redSmallBackground)
-        
-        let blueSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.blue, tagNumber: 2)
-        blueSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
-        smallBackgroundOptions.append(blueSmallBackground)
-        
-        let pinkSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.pink, tagNumber: 3)
-        pinkSmallBackground.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
-        smallBackgroundOptions.append(pinkSmallBackground)
+        createSmallBackgrounds()
         
         // creating the stackViews for the smallBackgrounds
-        let backgrounds1StackView = UIStackView(arrangedSubviews: [greenSmallBackground, redSmallBackground])
-        backgrounds1StackView.alignment = .center
-        backgrounds1StackView.axis = .horizontal
-        backgrounds1StackView.spacing = 45
-        backgrounds1StackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgrounds1StackView)
+        let backgrounds1StackView = UIStackView(arrangedSubviews: [smallBackgroundOptions[0], smallBackgroundOptions[1]], spacing: 45, axis: .horizontal, tamic: false)
+        scrollView.addSubview(backgrounds1StackView)
         
-        let backgrounds2StackView = UIStackView(arrangedSubviews: [blueSmallBackground, pinkSmallBackground])
-        backgrounds2StackView.alignment = .center
-        backgrounds2StackView.axis = .horizontal
-        backgrounds2StackView.spacing = 45
-        backgrounds2StackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgrounds2StackView)
+        let backgrounds2StackView = UIStackView(arrangedSubviews: [smallBackgroundOptions[2], smallBackgroundOptions[3]], spacing: 45, axis: .horizontal, tamic: false)
+        scrollView.addSubview(backgrounds2StackView)
         
         // creating the backs title label
         let backsTitleLabel = HeaderLabel(title: "Back:")
         scrollView.addSubview(backsTitleLabel)
         
-        // creating all the back styles
-        let blueBack = CardOptionButton(imageName: Constants.CardBackNames.blue, tagNumber: 0)
-        cardBackOptions.append(blueBack)
-        
-        let redBack = CardOptionButton(imageName: Constants.CardBackNames.red, tagNumber: 1)
-        cardBackOptions.append(redBack)
-        
-        let greenBack = CardOptionButton(imageName: Constants.CardBackNames.green, tagNumber: 2)
-        cardBackOptions.append(greenBack)
-        
-        let purpleBack = CardOptionButton(imageName: Constants.CardBackNames.purple, tagNumber: 3)
-        cardBackOptions.append(purpleBack)
-        
-        let orangeBack = CardOptionButton(imageName: Constants.CardBackNames.orange, tagNumber: 4)
-        cardBackOptions.append(orangeBack)
-        
-        let yellowBack = CardOptionButton(imageName: Constants.CardBackNames.yellow, tagNumber: 5)
-        cardBackOptions.append(yellowBack)
-        
-        let pinkBack = CardOptionButton(imageName: Constants.CardBackNames.pink, tagNumber: 6)
-        cardBackOptions.append(pinkBack)
-        
-        let circleBack = CardOptionButton(imageName: Constants.CardBackNames.circle, tagNumber: 7)
-        cardBackOptions.append(circleBack)
-        
-        let eyeBack = CardOptionButton(imageName: Constants.CardBackNames.eye, tagNumber: 8)
-        cardBackOptions.append(eyeBack)
-        
-        // adds target to all cardOptions
-        addTargetToCardBackOptions()
+        createCardBackOptions()
         
         // creating each row horizontalStackView to hold the cards
-        let row1StackView = UIStackView(arrangedSubviews: [blueBack, redBack, greenBack])
-        row1StackView.alignment = .center
-        row1StackView.axis = .horizontal
-        row1StackView.spacing = 50
-        
-        let row2StackView = UIStackView(arrangedSubviews: [purpleBack, orangeBack, yellowBack])
-        row2StackView.alignment = .center
-        row2StackView.axis = .horizontal
-        row2StackView.spacing = 50
-        
-        let row3StackView = UIStackView(arrangedSubviews: [pinkBack, circleBack, eyeBack])
-        row3StackView.alignment = .center
-        row3StackView.axis = .horizontal
-        row3StackView.spacing = 50
+        let row1StackView = UIStackView(arrangedSubviews: [cardBackOptions[0], cardBackOptions[1], cardBackOptions[2]], spacing: 50, axis: .horizontal, tamic: true)
+        let row2StackView = UIStackView(arrangedSubviews: [cardBackOptions[3], cardBackOptions[4], cardBackOptions[5]], spacing: 50, axis: .horizontal, tamic: true)
+        let row3StackView = UIStackView(arrangedSubviews: [cardBackOptions[6], cardBackOptions[7], cardBackOptions[8]], spacing: 50, axis: .horizontal, tamic: true)
         
         // creating the verticalStackView to hold the stackViews
-        let cardStackView = UIStackView(arrangedSubviews: [row1StackView, row2StackView, row3StackView])
-        cardStackView.alignment = .center
-        cardStackView.axis = .vertical
-        cardStackView.spacing = 35
-        cardStackView.translatesAutoresizingMaskIntoConstraints = false
+        let cardStackView = UIStackView(arrangedSubviews: [row1StackView, row2StackView, row3StackView], spacing: 35, axis: .vertical, tamic: false)
         scrollView.addSubview(cardStackView)
 
         // all constraints
@@ -244,7 +139,7 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
             backsTitleLabel.widthAnchor.constraint(equalToConstant: 110),
             backsTitleLabel.heightAnchor.constraint(equalToConstant: 50),
             backsTitleLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            backsTitleLabel.topAnchor.constraint(equalTo: blueSmallBackground.bottomAnchor, constant: 15),
+            backsTitleLabel.topAnchor.constraint(equalTo: backgrounds2StackView.bottomAnchor, constant: 15),
             
             cardStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             cardStackView.topAnchor.constraint(equalTo: backsTitleLabel.bottomAnchor, constant: 20),
@@ -252,16 +147,120 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         ])
     }
     
+    /// Selects the chosen background
+    func selectSavedBackground() {
+        switch defaults.string(forKey: Constants.UDKeys.background) {
+        case "green":
+            smallBackgroundOptions[0].isSelected = true
+        case "red":
+            smallBackgroundOptions[1].isSelected = true
+        case "blue":
+            smallBackgroundOptions[2].isSelected = true
+        default:
+            smallBackgroundOptions[3].isSelected = true
+        }
+    }
+    
+    /// Selects the chosen card back
+    func selectSavedCardBack() {
+        switch defaults.string(forKey: Constants.UDKeys.cardBack) {
+        case Constants.CardBackNames.blue:
+            cardBackOptions[0].isSelected = true
+        case Constants.CardBackNames.red:
+            cardBackOptions[1].isSelected = true
+        case Constants.CardBackNames.green:
+            cardBackOptions[2].isSelected = true
+        case Constants.CardBackNames.purple:
+            cardBackOptions[3].isSelected = true
+        case Constants.CardBackNames.orange:
+            cardBackOptions[4].isSelected = true
+        case Constants.CardBackNames.yellow:
+            cardBackOptions[5].isSelected = true
+        case Constants.CardBackNames.pink:
+            cardBackOptions[6].isSelected = true
+        case Constants.CardBackNames.circle:
+            cardBackOptions[7].isSelected = true
+        default:
+            cardBackOptions[8].isSelected = true
+        }
+    }
+    
+    /// Creates the small background buttons and adds them to smallBackgroundOptions array
+    func createSmallBackgrounds() {
+        let greenSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.green, tagNumber: 0)
+        smallBackgroundOptions.append(greenSmallBackground)
+        
+        let redSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.red, tagNumber: 1)
+        smallBackgroundOptions.append(redSmallBackground)
+        
+        let blueSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.blue, tagNumber: 2)
+        smallBackgroundOptions.append(blueSmallBackground)
+        
+        let pinkSmallBackground = SmallBackgroundButton(imageName: Constants.SmallBackgroundNames.pink, tagNumber: 3)
+        smallBackgroundOptions.append(pinkSmallBackground)
+        
+        // adds target to all of them
+        for option in smallBackgroundOptions {
+            option.addTarget(self, action: #selector(saveBackground), for: .touchUpInside)
+        }
+    }
+    
+    /// Creates the card back buttons and adds them to cardBackOptions array
+    func createCardBackOptions() {
+        let blueBack = CardOptionButton(imageName: Constants.CardBackNames.blue, tagNumber: 0)
+        cardBackOptions.append(blueBack)
+        
+        let redBack = CardOptionButton(imageName: Constants.CardBackNames.red, tagNumber: 1)
+        cardBackOptions.append(redBack)
+        
+        let greenBack = CardOptionButton(imageName: Constants.CardBackNames.green, tagNumber: 2)
+        cardBackOptions.append(greenBack)
+        
+        let purpleBack = CardOptionButton(imageName: Constants.CardBackNames.purple, tagNumber: 3)
+        cardBackOptions.append(purpleBack)
+        
+        let orangeBack = CardOptionButton(imageName: Constants.CardBackNames.orange, tagNumber: 4)
+        cardBackOptions.append(orangeBack)
+        
+        let yellowBack = CardOptionButton(imageName: Constants.CardBackNames.yellow, tagNumber: 5)
+        cardBackOptions.append(yellowBack)
+        
+        let pinkBack = CardOptionButton(imageName: Constants.CardBackNames.pink, tagNumber: 6)
+        cardBackOptions.append(pinkBack)
+        
+        let circleBack = CardOptionButton(imageName: Constants.CardBackNames.circle, tagNumber: 7)
+        cardBackOptions.append(circleBack)
+        
+        let eyeBack = CardOptionButton(imageName: Constants.CardBackNames.eye, tagNumber: 8)
+        cardBackOptions.append(eyeBack)
+        
+        // adds target to all of them
+        for option in cardBackOptions {
+            option.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
+        }
+    }
+    
+    /// Sets the background to the currentBackground
+    func setBackground() {
+        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+    }
+}
+
+// MARK: - Saving and Selecting
+extension CustomizeBackgroundViewController {
+    /// Resets the smallBackgroundOptions to not be selected
     func resetSelectedBackgrounds() {
         for option in smallBackgroundOptions {
             option.isSelected = false
         }
     }
     
-    @objc func saveBackground(_ sender: UIButton) {
+    /// Saves the background that is tapped and updates the currentBackground
+    /// - Parameter smallBackground: The small background button that was tapped and is to be selected as the currentBackground
+    @objc func saveBackground(_ smallBackground: UIButton) {
         resetSelectedBackgrounds()
         
-        switch sender.tag {
+        switch smallBackground.tag {
         case 0:
             defaults.set("green", forKey: Constants.UDKeys.background)
             smallBackgroundOptions[0].isSelected = true
@@ -283,22 +282,15 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         setBackground()
     }
     
-    func setBackground() {
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
-    }
-    
-    func addTargetToCardBackOptions() {
-        for option in cardBackOptions {
-            option.addTarget(self, action: #selector(saveCardBack), for: .touchUpInside)
-        }
-    }
-    
+    /// Resets the cardBackOptions to not be selected
     func resetSelectedBacks() {
         for option in cardBackOptions {
             option.isSelected = false
         }
     }
     
+    /// Saves the card back that is tapped and updates the cardModel
+    /// - Parameter cardBack: The card back button that was tapped and is to be selected as the current card back
     @objc func saveCardBack(_ cardBack: UIButton) {
         resetSelectedBacks()
         
@@ -334,7 +326,11 @@ class CustomizeBackgroundViewController: UIViewController, UIGestureRecognizerDe
         
         cardModel.setCardBacks()
     }
-    
+}
+
+// MARK: - Navigation
+extension CustomizeBackgroundViewController {
+    /// Pushes to GameViewController
     @objc func moveToGameViewController() {
         navigationController?.popViewController(animated: true)
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Card with front and back images that can be flipped and matched
 struct Card: Codable {
     var frontImageName: String
     var backImageName: String

@@ -9,18 +9,30 @@
 import UIKit
 
 class CustomizeCardsViewController: UIViewController {
+    /// The background displayed
     var currentBackground: UIImage!
+    
+    /// The model for the cards
     var cardModel: CardModel!
     
+    /// The options for number of displayable cards
     var numberOptions = [NumberButton]()
+    
+    /// The options for card fronts
     var cardOptions = [CardOptionButton]()
     
-    var frontsTitleLabel: UILabel!
+    /// The header of the card fronts section that changes based on the number of cards selected from numberOptions
+    var frontsTitleLabel: HeaderLabel!
     
+    /// The indexes of the selected card fronts in the cardOptions array
     var selectedCardTags = [Int]()
     
+    /// The standard UserDefaults
     let defaults = UserDefaults.standard
     
+    // MARK: - Setup UI
+    
+    /// Makes the contents of the status bar white
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -29,37 +41,11 @@ class CustomizeCardsViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
-        
-        // setting the number of cards from saved state
-        resetSelectedNumbers()
-        
-        switch defaults.integer(forKey: Constants.UDKeys.cardNumber) {
-        case 8:
-            numberOptions[0].isSelected = true
-        case 16:
-            numberOptions[1].isSelected = true
-        case 24:
-            numberOptions[2].isSelected = true
-        case 32:
-            numberOptions[3].isSelected = true
-        default:
-            numberOptions[4].isSelected = true
-        }
-        
-        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
-        
-        // setting the selected card fronts from saved state
-        if let frontCardsTags = defaults.array(forKey: Constants.UDKeys.cardFrontTags) as? [Int] {
-            selectedCardTags = frontCardsTags
-        }
-        
-        setSelectedCards()
+        selectSavedNumberOption()
+        selectCardFrontsFromSavedTags()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        fillCardsSelected()
-    }
-    
+    /// Sets up the entire rendered screen
     func setupView() {
         // setting background pic
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
@@ -86,183 +72,29 @@ class CustomizeCardsViewController: UIViewController {
         let numberOfCardsTitleLabel = HeaderLabel(title: "Number of Cards:")
         scrollView.addSubview(numberOfCardsTitleLabel)
         
-        // creating the number options
-        let eightOption = NumberButton(color: UIColor(red: 0, green: 0.94, blue: 1, alpha: 1), numberText: "8")
-        numberOptions.append(eightOption)
-        
-        let sixteenOption = NumberButton(color: UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), numberText: "16")
-        numberOptions.append(sixteenOption)
-        
-        let twentyFourOption = NumberButton(color: UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), numberText: "24")
-        numberOptions.append(twentyFourOption)
-        
-        let thirtyTwoOption = NumberButton(color: UIColor(red: 0.827, green: 1, blue: 0.333, alpha: 1), numberText: "32")
-        numberOptions.append(thirtyTwoOption)
-        
-        let fortyOption = NumberButton(color: UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), numberText: "40")
-        numberOptions.append(fortyOption)
-        
-        addTargetsToNumberOptions()
+        createNumberOptions()
         
         // creating the numbers' stackView
-        let numbersStackView = UIStackView(arrangedSubviews: [eightOption, sixteenOption, twentyFourOption, thirtyTwoOption, fortyOption])
-        numbersStackView.alignment = .center
-        numbersStackView.axis = .horizontal
-        numbersStackView.spacing = 30
-        numbersStackView.translatesAutoresizingMaskIntoConstraints = false
+        let numbersStackView = UIStackView(arrangedSubviews: [numberOptions[0], numberOptions[1], numberOptions[2], numberOptions[3], numberOptions[4]], spacing: 30, axis: .horizontal, tamic: false)
         scrollView.addSubview(numbersStackView)
         
         // creating the fronts label
         frontsTitleLabel = HeaderLabel(title: "Fronts (Pick 12):")
         scrollView.addSubview(frontsTitleLabel)
         
-        // creating all the front styles
-        let biohazardCard = CardOptionButton(imageName: Constants.CardFrontNames.biohazard, tagNumber: 0)
-        cardOptions.append(biohazardCard)
-        
-        let targetCard = CardOptionButton(imageName: Constants.CardFrontNames.target, tagNumber: 1)
-        cardOptions.append(targetCard)
-        
-        let crossCard = CardOptionButton(imageName: Constants.CardFrontNames.cross, tagNumber: 2)
-        cardOptions.append(crossCard)
-        
-        let heartCard = CardOptionButton(imageName: Constants.CardFrontNames.heart, tagNumber: 3)
-        cardOptions.append(heartCard)
-        
-        let basketballCard = CardOptionButton(imageName: Constants.CardFrontNames.basketball, tagNumber: 4)
-        cardOptions.append(basketballCard)
-        
-        let fleurDeLisCard = CardOptionButton(imageName: Constants.CardFrontNames.fleurDeLis, tagNumber: 5)
-        cardOptions.append(fleurDeLisCard)
-        
-        let tulipCard = CardOptionButton(imageName: Constants.CardFrontNames.tulip, tagNumber: 6)
-        cardOptions.append(tulipCard)
-        
-        let imperialCard = CardOptionButton(imageName: Constants.CardFrontNames.imperial, tagNumber: 7)
-        cardOptions.append(imperialCard)
-        
-        let rebelCard = CardOptionButton(imageName: Constants.CardFrontNames.rebel, tagNumber: 8)
-        cardOptions.append(rebelCard)
-        
-        let snowflakeCard = CardOptionButton(imageName: Constants.CardFrontNames.snowflake, tagNumber: 9)
-        cardOptions.append(snowflakeCard)
-        
-        let atomCard = CardOptionButton(imageName: Constants.CardFrontNames.atom, tagNumber: 10)
-        cardOptions.append(atomCard)
-        
-        let appleCard = CardOptionButton(imageName: Constants.CardFrontNames.apple, tagNumber: 11)
-        cardOptions.append(appleCard)
-        
-        let bookCard = CardOptionButton(imageName: Constants.CardFrontNames.book, tagNumber: 12)
-        cardOptions.append(bookCard)
-        
-        let cowboyHatCard = CardOptionButton(imageName: Constants.CardFrontNames.cowboyHat, tagNumber: 13)
-        cardOptions.append(cowboyHatCard)
-        
-        let sunglassesCard = CardOptionButton(imageName: Constants.CardFrontNames.sunglasses, tagNumber: 14)
-        cardOptions.append(sunglassesCard)
-        
-        let usFlagCard = CardOptionButton(imageName: Constants.CardFrontNames.usFlag, tagNumber: 15)
-        cardOptions.append(usFlagCard)
-        
-        let dogCard = CardOptionButton(imageName: Constants.CardFrontNames.dog, tagNumber: 16)
-        cardOptions.append(dogCard)
-        
-        let flowerCard = CardOptionButton(imageName: Constants.CardFrontNames.flower, tagNumber: 17)
-        cardOptions.append(flowerCard)
-        
-        let palmCard = CardOptionButton(imageName: Constants.CardFrontNames.palm, tagNumber: 18)
-        cardOptions.append(palmCard)
-        
-        let bagelCard = CardOptionButton(imageName: Constants.CardFrontNames.bagel, tagNumber: 19)
-        cardOptions.append(bagelCard)
-        
-        let mountainCard = CardOptionButton(imageName: Constants.CardFrontNames.mountain, tagNumber: 20)
-        cardOptions.append(mountainCard)
-        
-        let purpleCard = CardOptionButton(imageName: Constants.CardFrontNames.purple, tagNumber: 21)
-        cardOptions.append(purpleCard)
-        
-        let sunsetCard = CardOptionButton(imageName: Constants.CardFrontNames.sunset, tagNumber: 22)
-        cardOptions.append(sunsetCard)
-        
-        let turtleCard = CardOptionButton(imageName: Constants.CardFrontNames.turtle, tagNumber: 23)
-        cardOptions.append(turtleCard)
-        
-        let carCard = CardOptionButton(imageName: Constants.CardFrontNames.car, tagNumber: 24)
-        cardOptions.append(carCard)
-        
-        let motorcycleCard = CardOptionButton(imageName: Constants.CardFrontNames.motorcycle, tagNumber: 25)
-        cardOptions.append(motorcycleCard)
-        
-        let catCard = CardOptionButton(imageName: Constants.CardFrontNames.cat, tagNumber: 26)
-        cardOptions.append(catCard)
-        
-        let waterfallCard = CardOptionButton(imageName: Constants.CardFrontNames.waterfall, tagNumber: 27)
-        cardOptions.append(waterfallCard)
-        
-        let roadCard = CardOptionButton(imageName: Constants.CardFrontNames.road, tagNumber: 28)
-        cardOptions.append(roadCard)
-        
-        let templeCard = CardOptionButton(imageName: Constants.CardFrontNames.temple, tagNumber: 29)
-        cardOptions.append(templeCard)
-        
-        let storkCard = CardOptionButton(imageName: Constants.CardFrontNames.stork, tagNumber: 30)
-        cardOptions.append(storkCard)
-        
-        let toiletPaperCard = CardOptionButton(imageName: Constants.CardFrontNames.toiletPaper, tagNumber: 31)
-        cardOptions.append(toiletPaperCard)
-        
-        addTargetsToCardOptions()
-        
-        // creating each row horizontalStackView to hold the cards
-        let row1StackView = UIStackView(arrangedSubviews: [biohazardCard, targetCard, crossCard, heartCard])
-        row1StackView.alignment = .center
-        row1StackView.axis = .horizontal
-        row1StackView.spacing = 20
-        
-        let row2StackView = UIStackView(arrangedSubviews: [basketballCard, fleurDeLisCard, tulipCard, imperialCard])
-        row2StackView.alignment = .center
-        row2StackView.axis = .horizontal
-        row2StackView.spacing = 20
-        
-        let row3StackView = UIStackView(arrangedSubviews: [rebelCard, snowflakeCard, atomCard, appleCard])
-        row3StackView.alignment = .center
-        row3StackView.axis = .horizontal
-        row3StackView.spacing = 20
-        
-        let row4StackView = UIStackView(arrangedSubviews: [bookCard, cowboyHatCard, sunglassesCard, usFlagCard])
-        row4StackView.alignment = .center
-        row4StackView.axis = .horizontal
-        row4StackView.spacing = 20
-        
-        let row5StackView = UIStackView(arrangedSubviews: [dogCard, flowerCard, palmCard, bagelCard])
-        row5StackView.alignment = .center
-        row5StackView.axis = .horizontal
-        row5StackView.spacing = 20
-        
-        let row6StackView = UIStackView(arrangedSubviews: [mountainCard, purpleCard, sunsetCard, turtleCard])
-        row6StackView.alignment = .center
-        row6StackView.axis = .horizontal
-        row6StackView.spacing = 20
-        
-        let row7StackView = UIStackView(arrangedSubviews: [carCard, motorcycleCard, catCard, waterfallCard])
-        row7StackView.alignment = .center
-        row7StackView.axis = .horizontal
-        row7StackView.spacing = 20
-        
-        let row8StackView = UIStackView(arrangedSubviews: [roadCard, templeCard, storkCard, toiletPaperCard])
-        row8StackView.alignment = .center
-        row8StackView.axis = .horizontal
-        row8StackView.spacing = 20
+        createCardOptions()
         
         // creating the verticalStackView to hold the stackViews
-        let cardStackView = UIStackView(arrangedSubviews: [row1StackView, row2StackView, row3StackView, row4StackView, row5StackView, row6StackView, row7StackView, row8StackView])
-        cardStackView.alignment = .center
-        cardStackView.axis = .vertical
-        cardStackView.spacing = 20
-        cardStackView.translatesAutoresizingMaskIntoConstraints = false
+        let cardStackView = UIStackView(arrangedSubviews: [], spacing: 20, axis: .vertical, tamic: false)
         scrollView.addSubview(cardStackView)
+        
+        // creating each row a horizontalStackView to hold the cards
+        for i in 1...8 {
+            let rowStackView = UIStackView(arrangedSubviews: [cardOptions[i * 4 - 4], cardOptions[i * 4 - 3], cardOptions[i * 4 - 2], cardOptions[i * 4 - 1]], spacing: 20, axis: .horizontal, tamic: true)
+            
+            // adding the row to the verticalStackView
+            cardStackView.addArrangedSubview(rowStackView)
+        }
         
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
@@ -297,26 +129,75 @@ class CustomizeCardsViewController: UIViewController {
         ])
     }
     
-    func addTargetsToCardOptions() {
-        for option in cardOptions {
-            option.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
+    /// Selects the numberOption matching the cardNumber in the UserDefaults and sets the frontsTitleLabel's text to pick the right amount of cards
+    func selectSavedNumberOption() {
+        switch defaults.integer(forKey: Constants.UDKeys.cardNumber) {
+        case 8:
+            numberOptions[0].isSelected = true
+        case 16:
+            numberOptions[1].isSelected = true
+        case 24:
+            numberOptions[2].isSelected = true
+        case 32:
+            numberOptions[3].isSelected = true
+        default:
+            numberOptions[4].isSelected = true
         }
+        
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
     }
     
-    func addTargetsToNumberOptions() {
+    /// Sets the selectedCardTags to the saved version from UserDefaults and selects the cards using the tags
+    func selectCardFrontsFromSavedTags() {
+        if let frontCardsTags = defaults.array(forKey: Constants.UDKeys.cardFrontTags) as? [Int] {
+            selectedCardTags = frontCardsTags
+        }
+        
+        setSelectedCards()
+    }
+    
+    /// Creates all of the number option buttons and appends them to numberOptions
+    func createNumberOptions() {
+        let eightOption = NumberButton(color: UIColor(red: 0, green: 0.94, blue: 1, alpha: 1), numberText: "8")
+        numberOptions.append(eightOption)
+        
+        let sixteenOption = NumberButton(color: UIColor(red: 1, green: 0.9, blue: 0, alpha: 1), numberText: "16")
+        numberOptions.append(sixteenOption)
+        
+        let twentyFourOption = NumberButton(color: UIColor(red: 0.56, green: 1, blue: 0, alpha: 1), numberText: "24")
+        numberOptions.append(twentyFourOption)
+        
+        let thirtyTwoOption = NumberButton(color: UIColor(red: 0.827, green: 1, blue: 0.333, alpha: 1), numberText: "32")
+        numberOptions.append(thirtyTwoOption)
+        
+        let fortyOption = NumberButton(color: UIColor(red: 1, green: 0.584, blue: 0.2, alpha: 1), numberText: "40")
+        numberOptions.append(fortyOption)
+        
+        // adds target to all the options
         for option in numberOptions {
             option.addTarget(self, action: #selector(saveNumberOfCards), for: .touchUpInside)
         }
     }
     
-    func resetSelectedNumbers() {
+    /// Creates all of the card option buttons and appends them to cardOptions using the cardModel's cardFrontTypes from card-fronts.txt
+    func createCardOptions() {
+        for (index, cardFrontName) in cardModel.getCardFrontTypes().enumerated() {
+            let cardButton = CardOptionButton(imageName: cardFrontName, tagNumber: index)
+            cardButton.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
+            cardOptions.append(cardButton)
+        }
+    }
+}
+
+// MARK: - Saving and Selecting
+extension CustomizeCardsViewController {
+    /// Saves the number of cards to the cardModel and defaults, selects the button tapped, and adjusts the frontsTitleLabel's text accordingly
+    /// - Parameter sender: The number option button that was tapped and is to be selected as the current number of cards to be displayed
+    @objc func saveNumberOfCards(_ sender: UIButton) {
+        // unselects all number options
         for option in numberOptions {
             option.isSelected = false
         }
-    }
-    
-    @objc func saveNumberOfCards(_ sender: UIButton) {
-        resetSelectedNumbers()
         
         switch sender.title(for: .normal) {
         case "8":
@@ -336,18 +217,24 @@ class CustomizeCardsViewController: UIViewController {
             numberOptions[4].isSelected = true
         }
         
-        cardModel.saveTotalCards()
+        cardModel.updateTotalCards()
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
+        
         setSelectedCards()
-        adjustSelectedCards()
     }
     
+    /// Selects the tapped card front button or unselects it and appends it or removes it from selectedCardTags
+    /// - Parameter sender: The tapped card that is selected or unselected, depending on if it was selected beforehand
     @objc func saveAndAdjustCards(_ sender: UIButton) {
         if sender.isSelected {
             for (index, tag) in selectedCardTags.enumerated() {
                 if sender.tag == tag {
                     selectedCardTags.remove(at: index)
+                    sender.isSelected = false
                 }
             }
+            
+            assert(!sender.isSelected)
         } else {
             selectedCardTags.append(sender.tag)
         }
@@ -355,13 +242,23 @@ class CustomizeCardsViewController: UIViewController {
         setSelectedCards()
     }
     
-    func adjustSelectedCards() {
-        while selectedCardTags.count > cardModel.getTotalCards() / 2 {
-            selectedCardTags.removeFirst()
+    /// Selects the card front buttons that have not been selected yet but are in the selectedCardTags
+    func setSelectedCards() {
+        for tag in selectedCardTags {
+            cardOptions[tag].isSelected = true
         }
     }
+}
+
+// MARK: - Navigation
+extension CustomizeCardsViewController {
+    /// Pops to GameViewController
+    @objc func moveToGameViewController() {
+        navigationController?.popViewController(animated: true)
+    }
     
-    func fillCardsSelected() {
+    /// Curtails or adds to the card front choices depending on how many the user chose as well as saving that to the cardModel and the selectedCardTags to the defaults
+    override func viewWillDisappear(_ animated: Bool) {
         if selectedCardTags.count < cardModel.getTotalCards() / 2 {
             // fills space up to amount of cards necessary in tags
             while selectedCardTags.count < cardModel.getTotalCards() / 2 || selectedCardTags.isEmpty {
@@ -371,29 +268,13 @@ class CustomizeCardsViewController: UIViewController {
                 }
                 selectedCardTags.append(cardOptions[i].tag)
             }
+        } else {
+            while selectedCardTags.count > cardModel.getTotalCards() / 2 {
+                selectedCardTags.removeFirst()
+            }
         }
         
         defaults.set(selectedCardTags, forKey: Constants.UDKeys.cardFrontTags)
         cardModel.setCardFronts()
-    }
-    
-    func selectSavedCardsWithTags() {
-        for tag in selectedCardTags {
-            cardOptions[tag].isSelected = true
-        }
-    }
-    
-    func setSelectedCards() {
-        for card in cardOptions {
-            card.isSelected = false
-        }
-        
-        for tag in selectedCardTags {
-            cardOptions[tag].isSelected = true
-        }
-    }
-    
-    @objc func moveToGameViewController() {
-        navigationController?.popViewController(animated: true)
     }
 }

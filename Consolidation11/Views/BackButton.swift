@@ -8,7 +8,9 @@
 
 import UIKit
 
+/// Button to go back to GameViewController
 class BackButton: UIButton {
+    /// Initializes a standard frame of 44 by 44 and the arrow image
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         

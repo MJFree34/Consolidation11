@@ -9,6 +9,12 @@
 import UIKit
 
 extension UIImage {
+    /// Creates an image with a border
+    /// - Parameters:
+    ///   - width: The width of the border
+    ///   - radius: Corner radius of the border
+    ///   - color: Color of the border
+    /// - Returns: Image with border
     func imageWithBorder(width: CGFloat, radius: CGFloat, color: UIColor) -> UIImage? {
         let newSize = CGSize(width: size.width + width, height: size.height + width)
         

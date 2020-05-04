@@ -8,7 +8,12 @@
 
 import UIKit
 
+/// A label to describe the background colors
 class ColorLabel: UILabel {
+    /// Initializes with a standard frame, ClickerScript font, and center text alignment with customizable text color and text
+    /// - Parameters:
+    ///   - color: The color of the text
+    ///   - colorText: The text describing a color
     init(color: UIColor, colorText: String) {
         super.init(frame: CGRect(x: 0, y: 0, width: 60, height: 40))
         textColor = color

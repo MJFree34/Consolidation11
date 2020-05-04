@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Button to start a new game
 class NewGameButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +22,7 @@ class NewGameButton: UIButton {
         setupButton()
     }
     
+    /// Configures the button
     private func setupButton() {
         setTitleColor(.magenta, for: .normal)
         setTitle("New Game", for: .normal)
@@ -37,6 +39,7 @@ class NewGameButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
+    /// Shows the button
     func show() {
         isHidden = false
         
@@ -45,6 +48,7 @@ class NewGameButton: UIButton {
         }
     }
     
+    /// Hides the button
     func hide() {
         UIView.animate(withDuration: TimeInterval(0.5)) {
             self.alpha = 0

@@ -9,7 +9,7 @@
 import UIKit
 
 enum Constants {
-    enum CardBackNames: CaseIterable {
+    enum CardBackNames {
         static let blue = "BlueBack"
         static let circle = "CircleBack"
         static let eye = "EyeBack"
@@ -21,7 +21,7 @@ enum Constants {
         static let yellow = "YellowBack"
     }
     
-    enum CardFrontNames: CaseIterable {
+    enum CardFrontNames {
         static let apple = "AppleCard"
         static let biohazard = "BiohazardCard"
         static let target = "TargetCard"

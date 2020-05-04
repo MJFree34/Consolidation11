@@ -8,7 +8,10 @@
 
 import UIKit
 
+/// Label for each header of customization
 class HeaderLabel: UILabel {
+    /// Initializes based on standard frame, textColor, Courgette font, and center textAlignment and specified title
+    /// - Parameter title: Text to display in the header
     init(title: String) {
         super.init(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         
