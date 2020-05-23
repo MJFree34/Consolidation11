@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Model containing Cards
 struct CardModel {
     // MARK: - Properties
@@ -117,10 +116,10 @@ struct CardModel {
         cardFrontTypes.removeLast() // removes blank 33rd name
         
         // setting the total matches
-        if UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber) != 0 {
-            totalCards = UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber)
+        if UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber) != 0 {
+            totalCards = UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber)
         } else {
-            totalCards = 40
+            totalCards = 32
         }
         
         getCardsFromDisk()
@@ -180,7 +179,7 @@ extension CardModel {
 extension CardModel {
     /// Sets all card backs in cardSet to the image name in defaults
     mutating func setCardBacks() {
-        let backName = UserDefaults.standard.string(forKey: Constants.UDKeys.cardBack) ?? Constants.CardBackNames.blue
+        let backName = UserDefaults.standard.string(forKey: UserDefaults.Keys.cardBack) ?? Constants.CardBackNames.blue
         
         for index in 0..<cardSet.count {
             cardSet[index].backImageName = backName
@@ -191,12 +190,12 @@ extension CardModel {
     
     /// Clears cardSet and makes new cards using the saved cardFrontTags in defaults and saves to Disk
     mutating func setCardFronts() {
-        let cardFrontIndexes = UserDefaults.standard.array(forKey: Constants.UDKeys.cardFrontTags) as! [Int]
+        let cardFrontIndexes = UserDefaults.standard.array(forKey: UserDefaults.Keys.cardFrontTags) as! [Int]
         
         cardSet = [Card]()
         
         for index in cardFrontIndexes {
-            cardSet.append(Card(frontImageName: cardFrontTypes[index], backImageName: UserDefaults.standard.string(forKey: Constants.UDKeys.cardBack) ?? Constants.CardBackNames.blue, isMatched: false, isFlipped: false))
+            cardSet.append(Card(frontImageName: cardFrontTypes[index], backImageName: UserDefaults.standard.string(forKey: UserDefaults.Keys.cardBack) ?? Constants.CardBackNames.blue, isMatched: false, isFlipped: false))
         }
         
         saveCardsToDisk()
@@ -204,7 +203,8 @@ extension CardModel {
     
     /// Assigns totalCards to defaults' cardNumber
     mutating func updateTotalCards() {
-        totalCards = UserDefaults.standard.integer(forKey: Constants.UDKeys.cardNumber)
+        let userDefaultsCardNumber = UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber)
+        totalCards = userDefaultsCardNumber == 0 ? 32 : userDefaultsCardNumber
     }
     
     /// Starts new game with cards from Disk and totalCards from defaults

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9A0D378D2438324600DCF45B /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0D378C2438324600DCF45B /* CardCell.swift */; };
 		9A0D37912439394F00DCF45B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0D37902439394E00DCF45B /* Card.swift */; };
-		9A366954244223DB00F44033 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A366953244223DB00F44033 /* UIImageExtension.swift */; };
+		9A366954244223DB00F44033 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A366953244223DB00F44033 /* UIImage+Extensions.swift */; };
 		9A85B8B2242A6ADB0036CBDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */; };
 		9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */; };
 		9A85B8B6242A6ADB0036CBDC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B5242A6ADB0036CBDC /* GameViewController.swift */; };
@@ -28,7 +28,8 @@
 		9AAF5D21245F5DAB00C3EFB2 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D20245F5DAB00C3EFB2 /* BackButton.swift */; };
 		9AAF5D23245F5E5200C3EFB2 /* TopIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D22245F5E5200C3EFB2 /* TopIcon.swift */; };
 		9AAF5D25245F5F0800C3EFB2 /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D24245F5F0800C3EFB2 /* HeaderLabel.swift */; };
-		9AAF5D29245FB49000C3EFB2 /* UIStackViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D28245FB49000C3EFB2 /* UIStackViewExtension.swift */; };
+		9AAF5D29245FB49000C3EFB2 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF5D28245FB49000C3EFB2 /* UIStackView+Extensions.swift */; };
+		9AC8FB4A2479821B00CF5B5D /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC8FB492479821B00CF5B5D /* UserDefaults+Extensions.swift */; };
 		9ADB03D2243A457500A8EE5B /* FingerPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */; };
 		9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */; };
 		9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */; };
@@ -40,7 +41,7 @@
 /* Begin PBXFileReference section */
 		9A0D378C2438324600DCF45B /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		9A0D37902439394E00DCF45B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		9A366953244223DB00F44033 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		9A366953244223DB00F44033 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9A85B8AE242A6ADB0036CBDC /* MatchingPairs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchingPairs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +60,8 @@
 		9AAF5D20245F5DAB00C3EFB2 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		9AAF5D22245F5E5200C3EFB2 /* TopIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopIcon.swift; sourceTree = "<group>"; };
 		9AAF5D24245F5F0800C3EFB2 /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
-		9AAF5D28245FB49000C3EFB2 /* UIStackViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtension.swift; sourceTree = "<group>"; };
+		9AAF5D28245FB49000C3EFB2 /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		9AC8FB492479821B00CF5B5D /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		9ADB03D1243A443300A8EE5B /* FingerPaint-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FingerPaint-Regular.ttf"; sourceTree = "<group>"; };
 		9ADB03D5243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeBackgroundViewController.swift; sourceTree = "<group>"; };
 		9ADB03D7243A89D000A8EE5B /* CustomizeCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeCardsViewController.swift; sourceTree = "<group>"; };
@@ -145,8 +147,9 @@
 		9AAF5D2A24608A0B00C3EFB2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9AAF5D28245FB49000C3EFB2 /* UIStackViewExtension.swift */,
-				9A366953244223DB00F44033 /* UIImageExtension.swift */,
+				9AAF5D28245FB49000C3EFB2 /* UIStackView+Extensions.swift */,
+				9A366953244223DB00F44033 /* UIImage+Extensions.swift */,
+				9AC8FB492479821B00CF5B5D /* UserDefaults+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -265,17 +268,18 @@
 				9A0D37912439394F00DCF45B /* Card.swift in Sources */,
 				9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */,
 				9ADB03D8243A89D000A8EE5B /* CustomizeCardsViewController.swift in Sources */,
-				9AAF5D29245FB49000C3EFB2 /* UIStackViewExtension.swift in Sources */,
+				9AAF5D29245FB49000C3EFB2 /* UIStackView+Extensions.swift in Sources */,
 				9AAF5D25245F5F0800C3EFB2 /* HeaderLabel.swift in Sources */,
 				9AAF5D1F245F5B9400C3EFB2 /* NumberButton.swift in Sources */,
 				9AAF5D12245CF9B400C3EFB2 /* Constants.swift in Sources */,
 				9AAF5D21245F5DAB00C3EFB2 /* BackButton.swift in Sources */,
 				9AAF5D19245F4B3F00C3EFB2 /* ColorLabel.swift in Sources */,
-				9A366954244223DB00F44033 /* UIImageExtension.swift in Sources */,
+				9A366954244223DB00F44033 /* UIImage+Extensions.swift in Sources */,
 				9AAF5D16245F417E00C3EFB2 /* NewGameButton.swift in Sources */,
 				9AAF5D1B245F542200C3EFB2 /* SmallBackgroundButton.swift in Sources */,
 				9ADB03D6243A89BD00A8EE5B /* CustomizeBackgroundViewController.swift in Sources */,
 				9A0D378D2438324600DCF45B /* CardCell.swift in Sources */,
+				9AC8FB4A2479821B00CF5B5D /* UserDefaults+Extensions.swift in Sources */,
 				9AAF5D10245CF98600C3EFB2 /* CardModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

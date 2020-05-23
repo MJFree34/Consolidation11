@@ -173,7 +173,7 @@ class GameViewController: UIViewController {
     
     /// Sets the background from the UserDefaults to the view's backgroundColor
     func setCurrentBackground() {
-        switch defaults.string(forKey: Constants.UDKeys.background) {
+        switch defaults.string(forKey: UserDefaults.Keys.background) {
         case "green":
             currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
         case "red":

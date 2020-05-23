@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Contains all constants
 enum Constants {
     enum CardBackNames {
         static let blue = "BlueBack"
@@ -81,13 +82,6 @@ enum Constants {
         static let courgette = "Courgette-Regular"
         static let clickerScript = "ClickerScript-Regular"
         static let kranky = "Kranky-Regular"
-    }
-    
-    enum UDKeys {
-        static let background = "Background"
-        static let cardBack = "Back"
-        static let cardNumber = "NumberOfCards"
-        static let cardFrontTags = "CardFrontTags"
     }
     
     enum FileNames {

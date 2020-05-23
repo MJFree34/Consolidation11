@@ -149,7 +149,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen background
     func selectSavedBackground() {
-        switch defaults.string(forKey: Constants.UDKeys.background) {
+        switch defaults.string(forKey: UserDefaults.Keys.background) {
         case "green":
             smallBackgroundOptions[0].isSelected = true
         case "red":
@@ -163,7 +163,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen card back
     func selectSavedCardBack() {
-        switch defaults.string(forKey: Constants.UDKeys.cardBack) {
+        switch defaults.string(forKey: UserDefaults.Keys.cardBack) {
         case Constants.CardBackNames.blue:
             cardBackOptions[0].isSelected = true
         case Constants.CardBackNames.red:
@@ -262,19 +262,19 @@ extension CustomizeBackgroundViewController {
         
         switch smallBackground.tag {
         case 0:
-            defaults.set("green", forKey: Constants.UDKeys.background)
+            defaults.set("green", forKey: UserDefaults.Keys.background)
             smallBackgroundOptions[0].isSelected = true
             currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
         case 1:
-            defaults.set("red", forKey: Constants.UDKeys.background)
+            defaults.set("red", forKey: UserDefaults.Keys.background)
             smallBackgroundOptions[1].isSelected = true
             currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.red)!)
         case 2:
-            defaults.set("blue", forKey: Constants.UDKeys.background)
+            defaults.set("blue", forKey: UserDefaults.Keys.background)
             smallBackgroundOptions[2].isSelected = true
             currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.blue)!)
         default:
-            defaults.set("pink", forKey: Constants.UDKeys.background)
+            defaults.set("pink", forKey: UserDefaults.Keys.background)
             smallBackgroundOptions[3].isSelected = true
             currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.pink)!)
         }
@@ -296,31 +296,31 @@ extension CustomizeBackgroundViewController {
         
         switch cardBack.tag {
         case 0:
-            defaults.set(Constants.CardBackNames.blue, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.blue, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[0].isSelected = true
         case 1:
-            defaults.set(Constants.CardBackNames.red, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.red, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[1].isSelected = true
         case 2:
-            defaults.set(Constants.CardBackNames.green, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.green, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[2].isSelected = true
         case 3:
-            defaults.set(Constants.CardBackNames.purple, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.purple, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[3].isSelected = true
         case 4:
-            defaults.set(Constants.CardBackNames.orange, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.orange, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[4].isSelected = true
         case 5:
-            defaults.set(Constants.CardBackNames.yellow, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.yellow, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[5].isSelected = true
         case 6:
-            defaults.set(Constants.CardBackNames.pink, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.pink, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[6].isSelected = true
         case 7:
-            defaults.set(Constants.CardBackNames.circle, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.circle, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[7].isSelected = true
         default:
-            defaults.set(Constants.CardBackNames.eye, forKey: Constants.UDKeys.cardBack)
+            defaults.set(Constants.CardBackNames.eye, forKey: UserDefaults.Keys.cardBack)
             cardBackOptions[8].isSelected = true
         }
         
