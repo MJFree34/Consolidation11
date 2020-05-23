@@ -201,7 +201,7 @@ class GameViewController: UIViewController {
 // MARK: - CollectionView methods
 extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cardModel.getTotalCards()
+        return cardModel.totalCards
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -219,7 +219,7 @@ extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // selected card is not flipped nor matched
         if !cardModel.card(at: indexPath.item).isFlipped && !cardModel.card(at: indexPath.item).isMatched {
             // there has been another card flipped
-            if let cardIndexPath = cardModel.getFlippedIndex() {
+            if let cardIndexPath = cardModel.flippedIndex {
                 // flips selected cell and card
                 cardModel.toggleFlip(for: indexPath.item)
                 cell.flip()
@@ -254,7 +254,7 @@ extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cardModel.toggleFlip(for: cardIndexPath.item)
             } else { // only one card flipped
                 // set the flippedIndex to this indexPath and flip the card and cell
-                cardModel.setFlippedIndex(to: indexPath)
+                cardModel.flippedIndex = indexPath
                 cardModel.toggleFlip(for: indexPath.item)
                 cell.flip()
             }

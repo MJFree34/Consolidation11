@@ -16,41 +16,17 @@ struct CardModel {
     /// The set of cards
     private var cardSet = [Card]()
     /// Total number of cards
-    private var totalCards: Int
+    private(set) var totalCards: Int
     /// Index of only card flipped
-    private var flippedIndex: IndexPath?
+    var flippedIndex: IndexPath?
     /// All of the types of card front image names
-    private var cardFrontTypes: [String]
+    private(set) var cardFrontTypes: [String]
     
     /// Getter for card at specified index in cards
     /// - Parameter index: Index card is located
     /// - Returns: Card at specified index
     func card(at index: Int) -> Card {
         return cards[index]
-    }
-    
-    /// Getter for totalCards
-    /// - Returns: Total number of cards
-    func getTotalCards() -> Int {
-        return totalCards
-    }
-    
-    /// Getter for flippedIndex
-    /// - Returns: Index of only card flipped
-    func getFlippedIndex() -> IndexPath? {
-        return flippedIndex
-    }
-    
-    /// Getter for cardFrontTypes
-    /// - Returns: All the types of card front image names
-    func getCardFrontTypes() -> [String] {
-        return cardFrontTypes
-    }
-    
-    /// Setter for flippedIndex
-    /// - Parameter index: Index of only card flipped
-    mutating func setFlippedIndex(to index: IndexPath) {
-        flippedIndex = index
     }
     
     /// Resets flippedIndex to nil

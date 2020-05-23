@@ -144,7 +144,7 @@ class CustomizeCardsViewController: UIViewController {
             numberOptions[4].isSelected = true
         }
         
-        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.totalCards / 2)):"
     }
     
     /// Sets the selectedCardTags to the saved version from UserDefaults and selects the cards using the tags
@@ -181,7 +181,7 @@ class CustomizeCardsViewController: UIViewController {
     
     /// Creates all of the card option buttons and appends them to cardOptions using the cardModel's cardFrontTypes from card-fronts.txt
     func createCardOptions() {
-        for (index, cardFrontName) in cardModel.getCardFrontTypes().enumerated() {
+        for (index, cardFrontName) in cardModel.cardFrontTypes.enumerated() {
             let cardButton = CardOptionButton(imageName: cardFrontName, tagNumber: index)
             cardButton.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
             cardOptions.append(cardButton)
@@ -218,7 +218,7 @@ extension CustomizeCardsViewController {
         }
         
         cardModel.updateTotalCards()
-        frontsTitleLabel.text = "Fronts (Pick \(cardModel.getTotalCards() / 2)):"
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.totalCards / 2)):"
         
         setSelectedCards()
     }
@@ -251,9 +251,9 @@ extension CustomizeCardsViewController {
     
     /// Curtails or adds to the card front choices depending on how many the user chose as well as saving that to the cardModel and the selectedCardTags to the defaults
     func fillSelectedCards() {
-        if selectedCardTags.count < cardModel.getTotalCards() / 2 {
+        if selectedCardTags.count < cardModel.totalCards / 2 {
             // fills space up to amount of cards necessary in tags
-            while selectedCardTags.count < cardModel.getTotalCards() / 2 || selectedCardTags.isEmpty {
+            while selectedCardTags.count < cardModel.totalCards / 2 || selectedCardTags.isEmpty {
                 var i = 0
                 while selectedCardTags.contains(cardOptions[i].tag) {
                     i += 1
@@ -261,7 +261,7 @@ extension CustomizeCardsViewController {
                 selectedCardTags.append(cardOptions[i].tag)
             }
         } else {
-            while selectedCardTags.count > cardModel.getTotalCards() / 2 {
+            while selectedCardTags.count > cardModel.totalCards / 2 {
                 selectedCardTags.removeFirst()
             }
         }
