@@ -9,21 +9,16 @@
 import UIKit
 
 class GameViewController: UIViewController {
-    /// The model for the cards
-    var cardModel = CardModel()
-    
-    /// The IndexPath for an offscreen-matched cell
-    var hiddenCardIndexPath: IndexPath?
-    
     /// The standard UserDefaults
     let defaults = UserDefaults.standard
-    
+    /// The model for the cards
+    var cardModel = CardModel(defaults: UserDefaults.standard)
+    /// The IndexPath for an offscreen-matched cell
+    var hiddenCardIndexPath: IndexPath?
     /// The background displayed
     var currentBackground: UIImage!
-    
     /// Button to begin a new game
     var newGameButton: NewGameButton!
-    
     /// The CollectionView displaying the cards
     var collectionView: UICollectionView!
     
@@ -41,8 +36,6 @@ class GameViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         // loads a new game with the current background
         cardModel.newGame()
         setCurrentBackground()
@@ -136,7 +129,7 @@ class GameViewController: UIViewController {
     
     /// If this is the first time opening the app, it will render all backgrounds in the proper size for the device and cache them
     func resizeBackgrounds() {
-        guard defaults.data(forKey: Constants.BackgroundNames.green)?.isEmpty ?? true else {
+        guard defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)?.isEmpty ?? true else {
             setCurrentBackground()
             
             return
@@ -168,20 +161,20 @@ class GameViewController: UIViewController {
             defaults.set(imageData, forKey: backgroundName)
         }
         
-        currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
+        currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)
     }
     
     /// Sets the background from the UserDefaults to the view's backgroundColor
     func setCurrentBackground() {
-        switch defaults.string(forKey: UserDefaults.Keys.background) {
+        switch defaults.string(forKey: UserDefaults.Keys.background.rawValue) {
         case "green":
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)
         case "red":
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.red)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.redBackground.rawValue)!)
         case "blue":
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.blue)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.blueBackground.rawValue)!)
         default:
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.pink)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.pinkBackground.rawValue)!)
         }
         
         view.backgroundColor = UIColor.init(patternImage: currentBackground)
@@ -201,7 +194,7 @@ class GameViewController: UIViewController {
 // MARK: - CollectionView methods
 extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cardModel.totalCards
+        return cardModel.cardSetSaver.totalCards
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -249,7 +242,7 @@ extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
                 
                 // no more cards are flipped
-                cardModel.resetFlipIndex()
+                cardModel.flippedIndex = nil
                 cardModel.toggleFlip(for: indexPath.item)
                 cardModel.toggleFlip(for: cardIndexPath.item)
             } else { // only one card flipped
@@ -279,17 +272,13 @@ extension GameViewController {
     
     /// Transition to the CustomizeBackgroundViewController
     @objc func moveToCustomizeBackgroundViewController() {
-        let vc = CustomizeBackgroundViewController()
-        vc.currentBackground = currentBackground
-        vc.cardModel = cardModel
+        let vc = CustomizeBackgroundViewController(cardModel: cardModel, defaults: defaults, currentBackground: currentBackground)
         navigationController?.pushViewController(vc, animated: true)
     }
     
     /// Transition to the CustomizeCardsViewController
     @objc func moveToCustomizeCardsViewController() {
-        let vc = CustomizeCardsViewController()
-        vc.currentBackground = currentBackground
-        vc.cardModel = cardModel
+        let vc = CustomizeCardsViewController(cardModel: cardModel, defaults: defaults, currentBackground: currentBackground)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

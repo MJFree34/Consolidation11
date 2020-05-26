@@ -10,25 +10,31 @@ import UIKit
 
 class CustomizeCardsViewController: UIViewController {
     /// The background displayed
-    var currentBackground: UIImage!
-    
+    var currentBackground: UIImage
     /// The model for the cards
-    var cardModel: CardModel!
-    
+    var cardModel: CardModel
     /// The options for number of displayable cards
     var numberOptions = [NumberButton]()
-    
     /// The options for card fronts
     var cardOptions = [CardOptionButton]()
-    
     /// The header of the card fronts section that changes based on the number of cards selected from numberOptions
     var frontsTitleLabel: HeaderLabel!
-    
     /// The indexes of the selected card fronts in the cardOptions array
     var selectedCardTags = [Int]()
-    
     /// The standard UserDefaults
-    let defaults = UserDefaults.standard
+    var defaults: UserDefaults
+    
+    init(cardModel: CardModel, defaults: UserDefaults, currentBackground: UIImage) {
+        self.currentBackground = currentBackground
+        self.cardModel = cardModel
+        self.defaults = defaults
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Setup UI
     
@@ -131,7 +137,7 @@ class CustomizeCardsViewController: UIViewController {
     
     /// Selects the numberOption matching the cardNumber in the UserDefaults and sets the frontsTitleLabel's text to pick the right amount of cards
     func selectSavedNumberOption() {
-        switch defaults.integer(forKey: UserDefaults.Keys.cardNumber) {
+        switch cardModel.cardSetSaver.totalCards {
         case 8:
             numberOptions[0].isSelected = true
         case 16:
@@ -144,16 +150,18 @@ class CustomizeCardsViewController: UIViewController {
             numberOptions[4].isSelected = true
         }
         
-        frontsTitleLabel.text = "Fronts (Pick \(cardModel.totalCards / 2)):"
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.cardSetSaver.totalCards / 2)):"
     }
     
     /// Sets the selectedCardTags to the saved version from UserDefaults and selects the cards using the tags
     func selectCardFrontsFromSavedTags() {
-        if let frontCardsTags = defaults.array(forKey: UserDefaults.Keys.cardFrontTags) as? [Int] {
-            selectedCardTags = frontCardsTags
-        }
+        guard let cardFrontTags = defaults.array(forKey: UserDefaults.Keys.cardFrontTags.rawValue) as? [Int] else { fatalError("FrontCardTags should have a default value filled in CardSetSaver") }
         
-        setSelectedCards()
+        selectedCardTags = cardFrontTags
+        
+        for index in selectedCardTags {
+            cardOptions[index].isSelected = true
+        }
     }
     
     /// Creates all of the number option buttons and appends them to numberOptions
@@ -181,7 +189,7 @@ class CustomizeCardsViewController: UIViewController {
     
     /// Creates all of the card option buttons and appends them to cardOptions using the cardModel's cardFrontTypes from card-fronts.txt
     func createCardOptions() {
-        for (index, cardFrontName) in cardModel.cardFrontTypes.enumerated() {
+        for (index, cardFrontName) in cardModel.cardSetSaver.cardFrontTypes.enumerated() {
             let cardButton = CardOptionButton(imageName: cardFrontName, tagNumber: index)
             cardButton.addTarget(self, action: #selector(saveAndAdjustCards), for: .touchUpInside)
             cardOptions.append(cardButton)
@@ -199,28 +207,29 @@ extension CustomizeCardsViewController {
             option.isSelected = false
         }
         
+        let totalCards: Int
+        
         switch sender.title(for: .normal) {
         case "8":
-            defaults.set(8, forKey: UserDefaults.Keys.cardNumber)
+            totalCards = 8
             numberOptions[0].isSelected = true
         case "16":
-            defaults.set(16, forKey: UserDefaults.Keys.cardNumber)
+            totalCards = 16
             numberOptions[1].isSelected = true
         case "24":
-            defaults.set(24, forKey: UserDefaults.Keys.cardNumber)
+            totalCards = 24
             numberOptions[2].isSelected = true
         case "32":
-            defaults.set(32, forKey: UserDefaults.Keys.cardNumber)
+            totalCards = 32
             numberOptions[3].isSelected = true
         default:
-            defaults.set(40, forKey: UserDefaults.Keys.cardNumber)
+            totalCards = 40
             numberOptions[4].isSelected = true
         }
         
-        cardModel.updateTotalCards()
-        frontsTitleLabel.text = "Fronts (Pick \(cardModel.totalCards / 2)):"
+        cardModel.cardSetSaver.saveTotalCards(totalCards)
         
-        setSelectedCards()
+        frontsTitleLabel.text = "Fronts (Pick \(cardModel.cardSetSaver.totalCards / 2)):"
     }
     
     /// Selects the tapped card front button or unselects it and appends it or removes it from selectedCardTags
@@ -239,35 +248,7 @@ extension CustomizeCardsViewController {
             selectedCardTags.append(sender.tag)
         }
         
-        setSelectedCards()
-    }
-    
-    /// Selects the card front buttons that have not been selected yet but are in the selectedCardTags
-    func setSelectedCards() {
-        for tag in selectedCardTags {
-            cardOptions[tag].isSelected = true
-        }
-    }
-    
-    /// Curtails or adds to the card front choices depending on how many the user chose as well as saving that to the cardModel and the selectedCardTags to the defaults
-    func fillSelectedCards() {
-        if selectedCardTags.count < cardModel.totalCards / 2 {
-            // fills space up to amount of cards necessary in tags
-            while selectedCardTags.count < cardModel.totalCards / 2 || selectedCardTags.isEmpty {
-                var i = 0
-                while selectedCardTags.contains(cardOptions[i].tag) {
-                    i += 1
-                }
-                selectedCardTags.append(cardOptions[i].tag)
-            }
-        } else {
-            while selectedCardTags.count > cardModel.totalCards / 2 {
-                selectedCardTags.removeFirst()
-            }
-        }
-        
-        defaults.set(selectedCardTags, forKey: UserDefaults.Keys.cardFrontTags)
-        cardModel.setCardFronts()
+        cardModel.cardSetSaver.saveCardFrontIndexes(selectedCardTags)
     }
 }
 
@@ -276,13 +257,5 @@ extension CustomizeCardsViewController {
     /// Pops to GameViewController
     @objc func moveToGameViewController() {
         navigationController?.popViewController(animated: true)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        fillSelectedCards()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        fillSelectedCards()
     }
 }

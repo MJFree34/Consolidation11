@@ -10,22 +10,29 @@ import UIKit
 
 class CustomizeBackgroundViewController: UIViewController {
     /// The background displayed
-    var currentBackground: UIImage!
-    
+    var currentBackground: UIImage
     /// The model for the cards
-    var cardModel: CardModel!
-    
+    var cardModel: CardModel
     /// The background option buttons
     var smallBackgroundOptions = [UIButton]()
-    
     /// The card back option buttons
     var cardBackOptions = [CardOptionButton]()
-    
     /// The standard UserDefaults
-    let defaults = UserDefaults.standard
+    var defaults: UserDefaults
+    
+    init(cardModel: CardModel, defaults: UserDefaults, currentBackground: UIImage) {
+        self.currentBackground = currentBackground
+        self.cardModel = cardModel
+        self.defaults = defaults
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Setup UI
-    
     /// Makes the contents of the status bar white
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -149,7 +156,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen background
     func selectSavedBackground() {
-        switch defaults.string(forKey: UserDefaults.Keys.background) {
+        switch defaults.string(forKey: UserDefaults.Keys.background.rawValue) {
         case "green":
             smallBackgroundOptions[0].isSelected = true
         case "red":
@@ -163,7 +170,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen card back
     func selectSavedCardBack() {
-        switch defaults.string(forKey: UserDefaults.Keys.cardBack) {
+        switch defaults.string(forKey: UserDefaults.Keys.cardBack.rawValue) {
         case Constants.CardBackNames.blue:
             cardBackOptions[0].isSelected = true
         case Constants.CardBackNames.red:
@@ -180,8 +187,10 @@ class CustomizeBackgroundViewController: UIViewController {
             cardBackOptions[6].isSelected = true
         case Constants.CardBackNames.circle:
             cardBackOptions[7].isSelected = true
-        default:
+        case Constants.CardBackNames.eye:
             cardBackOptions[8].isSelected = true
+        default:
+            cardBackOptions[0].isSelected = true
         }
     }
     
@@ -262,21 +271,21 @@ extension CustomizeBackgroundViewController {
         
         switch smallBackground.tag {
         case 0:
-            defaults.set("green", forKey: UserDefaults.Keys.background)
+            defaults.set("green", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[0].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.green)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)!
         case 1:
-            defaults.set("red", forKey: UserDefaults.Keys.background)
+            defaults.set("red", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[1].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.red)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.redBackground.rawValue)!)!
         case 2:
-            defaults.set("blue", forKey: UserDefaults.Keys.background)
+            defaults.set("blue", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[2].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.blue)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.blueBackground.rawValue)!)!
         default:
-            defaults.set("pink", forKey: UserDefaults.Keys.background)
+            defaults.set("pink", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[3].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: Constants.BackgroundNames.pink)!)
+            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.pinkBackground.rawValue)!)!
         }
         
         setBackground()
@@ -296,35 +305,33 @@ extension CustomizeBackgroundViewController {
         
         switch cardBack.tag {
         case 0:
-            defaults.set(Constants.CardBackNames.blue, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.blue)
             cardBackOptions[0].isSelected = true
         case 1:
-            defaults.set(Constants.CardBackNames.red, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.red)
             cardBackOptions[1].isSelected = true
         case 2:
-            defaults.set(Constants.CardBackNames.green, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.green)
             cardBackOptions[2].isSelected = true
         case 3:
-            defaults.set(Constants.CardBackNames.purple, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.purple)
             cardBackOptions[3].isSelected = true
         case 4:
-            defaults.set(Constants.CardBackNames.orange, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.orange)
             cardBackOptions[4].isSelected = true
         case 5:
-            defaults.set(Constants.CardBackNames.yellow, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.yellow)
             cardBackOptions[5].isSelected = true
         case 6:
-            defaults.set(Constants.CardBackNames.pink, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.pink)
             cardBackOptions[6].isSelected = true
         case 7:
-            defaults.set(Constants.CardBackNames.circle, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.circle)
             cardBackOptions[7].isSelected = true
         default:
-            defaults.set(Constants.CardBackNames.eye, forKey: UserDefaults.Keys.cardBack)
+            cardModel.cardSetSaver.saveCardBack(Constants.CardBackNames.eye)
             cardBackOptions[8].isSelected = true
         }
-        
-        cardModel.setCardBacks()
     }
 }
 

@@ -9,20 +9,20 @@
 import Foundation
 
 extension UserDefaults {
-    /// Holds all common constant keys
-    struct Keys {
-        static let background = "Background"
-        static let cardBack = "Back"
-        static let cardNumber = "NumberOfCards"
-        static let cardFrontTags = "CardFrontTags"
+    /// Holds all constant keys
+    enum Keys: String, CaseIterable {
+        case background = "Background"
+        case cardBack = "Back"
+        case cardNumber = "NumberOfCards"
+        case cardFrontTags = "CardFrontTags"
+        case greenBackground = "GreenBackground"
+        case pinkBackground = "PinkBackground"
+        case redBackground = "RedBackground"
+        case blueBackground = "BlueBackground"
     }
     
     /// Resets the standard UserDefaults
-    static func reset() {
-        if let bundleID = Bundle.main.bundleIdentifier {
-            self.standard.removePersistentDomain(forName: bundleID)
-        } else {
-            print("hweld")
-        }
+    func reset() {
+        Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
 }

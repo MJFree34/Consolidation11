@@ -9,18 +9,29 @@
 import Foundation
 
 /// Model containing Cards
-struct CardModel {
+class CardModel {
     // MARK: - Properties
     /// Cards in play
     private var cards = [Card]()
-    /// The set of cards
-    private var cardSet = [Card]()
-    /// Total number of cards
-    private(set) var totalCards: Int
     /// Index of only card flipped
     var flippedIndex: IndexPath?
-    /// All of the types of card front image names
-    private(set) var cardFrontTypes: [String]
+    /// Injected UserDefaults
+    private let userDefaults: UserDefaults!
+    /// Container for cardSet that persists card data
+    var cardSetSaver: CardSetSaver!
+    
+    /// Sets the properties from saved states in UserDefaults and Disk
+    init(defaults: UserDefaults) {
+        userDefaults = defaults
+        
+        let totalCards = loadTotalCards()
+        
+        cardSetSaver = CardSetSaver(totalCards: totalCards, userDefaults: userDefaults)
+        
+        cardSetSaver.loadCardFrontTypes()
+        
+        setCardsFromLoadedCards()
+    }
     
     /// Getter for card at specified index in cards
     /// - Parameter index: Index card is located
@@ -29,14 +40,9 @@ struct CardModel {
         return cards[index]
     }
     
-    /// Resets flippedIndex to nil
-    mutating func resetFlipIndex() {        
-        flippedIndex = nil
-    }
-    
     /// Toggles flipped for card at specified index in cards
     /// - Parameter index: Index of card to toggle
-    mutating func toggleFlip(for index: Int) {
+    func toggleFlip(for index: Int) {
         cards[index].isFlipped.toggle()
     }
     
@@ -45,7 +51,7 @@ struct CardModel {
     ///   - index1: Index of first card in cards
     ///   - index2: Index of second card in cards
     /// - Returns: If cards match or not
-    mutating func matchCards(index1: Int, index2: Int) -> Bool {
+    func matchCards(index1: Int, index2: Int) -> Bool {
         if cards[index1].frontImageName == cards[index2].frontImageName {
             cards[index1].isMatched = true
             cards[index2].isMatched = true
@@ -65,129 +71,43 @@ struct CardModel {
         
         return true
     }
+}
+
+// MARK: - Initializing
+extension CardModel {
+    /// Loads the totalCards from UserDefaults or a default value
+    /// - Returns: Total cards value
+    private func loadTotalCards() -> Int {
+        if userDefaults.integer(forKey: UserDefaults.Keys.cardNumber.rawValue) != 0 {
+            return userDefaults.integer(forKey: UserDefaults.Keys.cardNumber.rawValue)
+        }
+        
+        return 32
+    }
+    
+    /// Sets the cards from the loaded cardSet
+    private func setCardsFromLoadedCards() {
+        cardSetSaver.loadCards()
+        setCards()
+    }
     
     /// Assigns cards to pairs of the cardSet and shuffles
-    private mutating func setCards() {
-        cards = cardSet + cardSet
+    private func setCards() {
+        cards = cardSetSaver.cardSet + cardSetSaver.cardSet
         shuffle()
     }
     
     /// Shuffles the cards twice
-    private mutating func shuffle() {
+    private func shuffle() {
         cards.shuffle()
         cards.shuffle()
-    }
-    
-    /// Sets the properties from saved states in UserDefaults and Disk
-    init() {
-        // getting all the types of card fronts
-        guard let cardFrontsURL = Bundle.main.url(forResource: Constants.FileNames.cardFrontsTXT, withExtension: "txt") else {
-            fatalError("Could not find \(Constants.FileNames.cardFrontsTXT).txt in app bundle.")
-        }
-        guard let cardFrontsString = try? String.init(contentsOf: cardFrontsURL) else {
-            fatalError("Could not load \(Constants.FileNames.cardFrontsTXT).txt from app bundle.")
-        }
-        
-        cardFrontTypes = cardFrontsString.components(separatedBy: "\n")
-        cardFrontTypes.removeLast() // removes blank 33rd name
-        
-        // setting the total matches
-        if UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber) != 0 {
-            totalCards = UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber)
-        } else {
-            totalCards = 32
-        }
-        
-        getCardsFromDisk()
-        
-        assert(totalCards == cards.count)
-    }
-}
-
-// MARK: - Save Cards
-extension CardModel {
-    /// Saves cardSet to Disk
-    private func saveCardsToDisk() {
-        // create url
-        let url = Bundle.main.url(forResource: Constants.FileNames.currentCardsJSON, withExtension: "json")
-        let encoder = JSONEncoder()
-        
-        do {
-            let data = try encoder.encode(cardSet)
-            try data.write(to: url!)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-    
-    /// Sets cardSet from Disk and sets the cards
-    private mutating func getCardsFromDisk() {
-        // create url
-        let url = Bundle.main.url(forResource: Constants.FileNames.currentCardsJSON, withExtension: "json")
-        let decoder = JSONDecoder()
-        
-        do {
-            // retrieve data
-            let data = try Data(contentsOf: url!)
-            let allCards = try decoder.decode([Card].self, from: data)
-            
-            cardSet = [Card]()
-            
-            var i = 0
-            
-            while i < totalCards / 2 {
-                cardSet.append(allCards[i])
-                i += 1
-            }
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-        
-        // setting the backs to the correct color
-        setCardBacks()
-        
-        // shuffling and setting the deck
-        setCards()
-    }
-}
-
-// MARK: - Edit Cards
-extension CardModel {
-    /// Sets all card backs in cardSet to the image name in defaults
-    mutating func setCardBacks() {
-        let backName = UserDefaults.standard.string(forKey: UserDefaults.Keys.cardBack) ?? Constants.CardBackNames.blue
-        
-        for index in 0..<cardSet.count {
-            cardSet[index].backImageName = backName
-        }
-        
-        saveCardsToDisk()
-    }
-    
-    /// Clears cardSet and makes new cards using the saved cardFrontTags in defaults and saves to Disk
-    mutating func setCardFronts() {
-        let cardFrontIndexes = UserDefaults.standard.array(forKey: UserDefaults.Keys.cardFrontTags) as! [Int]
-        
-        cardSet = [Card]()
-        
-        for index in cardFrontIndexes {
-            cardSet.append(Card(frontImageName: cardFrontTypes[index], backImageName: UserDefaults.standard.string(forKey: UserDefaults.Keys.cardBack) ?? Constants.CardBackNames.blue, isMatched: false, isFlipped: false))
-        }
-        
-        saveCardsToDisk()
-    }
-    
-    /// Assigns totalCards to defaults' cardNumber
-    mutating func updateTotalCards() {
-        let userDefaultsCardNumber = UserDefaults.standard.integer(forKey: UserDefaults.Keys.cardNumber)
-        totalCards = userDefaultsCardNumber == 0 ? 32 : userDefaultsCardNumber
     }
     
     /// Starts new game with cards from Disk and totalCards from defaults
-    mutating func newGame() {
-        updateTotalCards()
-        getCardsFromDisk()
+    func newGame() {
+        cardSetSaver.fillCardSet()
+        setCardsFromLoadedCards()
         
-        assert(totalCards == cards.count)
+        assert(cardSetSaver.totalCards == cards.count, "totalCards: \(String(describing: cardSetSaver.totalCards)) and cards.count: \(cards.count)")
     }
 }
