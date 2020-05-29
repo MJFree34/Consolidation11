@@ -46,9 +46,14 @@ class CustomizeCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
         selectSavedNumberOption()
         selectCardFrontsFromSavedTags()
+    }
+    
+    override func loadView() {
+        super.loadView()
+        
+        setupView()
     }
     
     /// Sets up the entire rendered screen

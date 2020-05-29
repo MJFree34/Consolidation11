@@ -30,16 +30,9 @@ struct CardSetSaver {
     
     /// Loads the cardFrontTypes from the Bundle
     mutating func loadCardFrontTypes() {
-        guard let cardFrontsURL = Bundle.main.url(forResource: Constants.FileNames.cardFrontsTXT, withExtension: "txt") else {
-            fatalError("Cannot find \(Constants.FileNames.cardFrontsTXT)")
-        }
+        let cardFrontsURL = Bundle.main.url(forResource: Constants.FileNames.cardFrontsTXT, withExtension: "txt")!
         
-        let cardFrontsString: String
-        do {
-            cardFrontsString = try String.init(contentsOf: cardFrontsURL)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        let cardFrontsString = try! String.init(contentsOf: cardFrontsURL)
         
         var cardFronts = cardFrontsString.components(separatedBy: "\n")
         cardFronts.removeLast() // removes blank 33rd name

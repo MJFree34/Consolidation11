@@ -41,9 +41,14 @@ class CustomizeBackgroundViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
         selectSavedBackground()
         selectSavedCardBack()
+    }
+    
+    override func loadView() {
+        super.loadView()
+        
+        setupView()
     }
     
     /// Sets up the entire rendered screen

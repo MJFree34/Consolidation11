@@ -25,4 +25,14 @@ extension UserDefaults {
     func reset() {
         Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
+    
+    /// Makes a cleared UserDefaults for a testing class
+    static func makeClearedInstance(for fileName: StaticString = #file) -> UserDefaults {
+        let className = "\(fileName)".split(separator: ".")[0]
+        let suiteName = "com.mattfree.consolidation11.\(className)"
+
+        let defaults = self.init(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        return defaults
+    }
 }

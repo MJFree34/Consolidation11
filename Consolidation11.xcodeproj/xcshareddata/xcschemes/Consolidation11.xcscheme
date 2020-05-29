@@ -43,9 +43,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A0C58882479D7F000FBD56B"
+               BlueprintIdentifier = "9A0C589C247C4DB400FBD56B"
                BuildableName = "MatchingPairsTests.xctest"
                BlueprintName = "MatchingPairsTests"
+               ReferencedContainer = "container:Consolidation11.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9A9C905F24817EED0060F09C"
+               BuildableName = "MatchingPairsCardModelTests.xctest"
+               BlueprintName = "MatchingPairsCardModelTests"
                ReferencedContainer = "container:Consolidation11.xcodeproj">
             </BuildableReference>
          </TestableReference>

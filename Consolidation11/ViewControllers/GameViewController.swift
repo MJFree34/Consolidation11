@@ -10,9 +10,9 @@ import UIKit
 
 class GameViewController: UIViewController {
     /// The standard UserDefaults
-    let defaults = UserDefaults.standard
+    let defaults: UserDefaults
     /// The model for the cards
-    var cardModel = CardModel(defaults: UserDefaults.standard)
+    var cardModel: CardModel
     /// The IndexPath for an offscreen-matched cell
     var hiddenCardIndexPath: IndexPath?
     /// The background displayed
@@ -24,6 +24,17 @@ class GameViewController: UIViewController {
     
     // MARK: - Setup UI
     
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        self.cardModel = CardModel(defaults: self.defaults)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     /// Makes the contents of the status bar white
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -31,6 +42,10 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func loadView() {
+        super.loadView()
         
         setupView()
     }
@@ -44,7 +59,18 @@ class GameViewController: UIViewController {
     
     /// Sets up the entire rendered screen
     func setupView() {
-        createCollectionView()
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        layout.itemSize = CGSize(width: 69, height: 100)
+        
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - 150), collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .clear
+        collectionView.register(CardCell.self, forCellWithReuseIdentifier: Constants.cardCellReuseIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
         
         // setting background picture
         resizeBackgrounds()
@@ -113,11 +139,11 @@ class GameViewController: UIViewController {
     
     /// Configures the CollectionView with proper layout, sets the delegate and dataSource, has a vertical bounce, has a clear background color to see the background image, and registers the proper CardCell
     func createCollectionView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         layout.itemSize = CGSize(width: 69, height: 100)
         
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - 150), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.alwaysBounceVertical = true
