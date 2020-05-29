@@ -108,6 +108,6 @@ extension CardModel {
         cardSetSaver.fillCardSet()
         setCardsFromLoadedCards()
         
-        assert(cardSetSaver.totalCards == cards.count, "totalCards: \(String(describing: cardSetSaver.totalCards)) and cards.count: \(cards.count)")
+        assert(cardSetSaver.totalCards == cards.count)
     }
 }
