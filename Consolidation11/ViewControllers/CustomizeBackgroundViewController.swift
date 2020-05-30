@@ -9,8 +9,6 @@
 import UIKit
 
 class CustomizeBackgroundViewController: UIViewController {
-    /// The background displayed
-    var currentBackground: UIImage
     /// The model for the cards
     var cardModel: CardModel
     /// The background option buttons
@@ -19,9 +17,11 @@ class CustomizeBackgroundViewController: UIViewController {
     var cardBackOptions = [CardOptionButton]()
     /// The standard UserDefaults
     var defaults: UserDefaults
+    /// Source for the background
+    let backgroundSaver: BackgroundSaver
     
-    init(cardModel: CardModel, defaults: UserDefaults, currentBackground: UIImage) {
-        self.currentBackground = currentBackground
+    init(cardModel: CardModel, defaults: UserDefaults, backgroundSaver: BackgroundSaver) {
+        self.backgroundSaver = backgroundSaver
         self.cardModel = cardModel
         self.defaults = defaults
         
@@ -256,7 +256,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Sets the background to the currentBackground
     func setBackground() {
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+        view.backgroundColor = UIColor.init(patternImage: backgroundSaver.currentBackground)
     }
 }
 
@@ -278,20 +278,18 @@ extension CustomizeBackgroundViewController {
         case 0:
             defaults.set("green", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[0].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)!
         case 1:
             defaults.set("red", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[1].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.redBackground.rawValue)!)!
         case 2:
             defaults.set("blue", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[2].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.blueBackground.rawValue)!)!
         default:
             defaults.set("pink", forKey: UserDefaults.Keys.background.rawValue)
             smallBackgroundOptions[3].isSelected = true
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.pinkBackground.rawValue)!)!
         }
+        
+        backgroundSaver.setCurrentBackground()
         
         setBackground()
     }

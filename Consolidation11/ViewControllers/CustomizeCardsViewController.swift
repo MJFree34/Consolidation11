@@ -9,8 +9,6 @@
 import UIKit
 
 class CustomizeCardsViewController: UIViewController {
-    /// The background displayed
-    var currentBackground: UIImage
     /// The model for the cards
     var cardModel: CardModel
     /// The options for number of displayable cards
@@ -23,9 +21,11 @@ class CustomizeCardsViewController: UIViewController {
     var selectedCardTags = [Int]()
     /// The standard UserDefaults
     var defaults: UserDefaults
+    /// Source for the background
+    let backgroundSaver: BackgroundSaver
     
-    init(cardModel: CardModel, defaults: UserDefaults, currentBackground: UIImage) {
-        self.currentBackground = currentBackground
+    init(cardModel: CardModel, defaults: UserDefaults, backgroundSaver: BackgroundSaver) {
+        self.backgroundSaver = backgroundSaver
         self.cardModel = cardModel
         self.defaults = defaults
         
@@ -59,7 +59,7 @@ class CustomizeCardsViewController: UIViewController {
     /// Sets up the entire rendered screen
     func setupView() {
         // setting background pic
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
+        view.backgroundColor = UIColor.init(patternImage: backgroundSaver.currentBackground)
         
         // giving the ability to swipe from the left of screen to pop to rootView
         navigationController?.interactivePopGestureRecognizer?.delegate = nil

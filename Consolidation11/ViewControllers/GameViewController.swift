@@ -15,8 +15,8 @@ class GameViewController: UIViewController {
     var cardModel: CardModel
     /// The IndexPath for an offscreen-matched cell
     var hiddenCardIndexPath: IndexPath?
-    /// The background displayed
-    var currentBackground: UIImage!
+    /// Source for the background
+    let backgroundSaver: BackgroundSaver
     /// Button to begin a new game
     var newGameButton: NewGameButton!
     /// The CollectionView displaying the cards
@@ -27,7 +27,7 @@ class GameViewController: UIViewController {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.cardModel = CardModel(defaults: self.defaults)
-        
+        self.backgroundSaver = BackgroundSaver(defaults: self.defaults)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,6 +42,8 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backgroundSaver.resizeBackgrounds(viewBounds: view.bounds)
     }
     
     override func loadView() {
@@ -53,7 +55,7 @@ class GameViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // loads a new game with the current background
         cardModel.newGame()
-        setCurrentBackground()
+        view.backgroundColor = UIColor.init(patternImage: backgroundSaver.currentBackground)
         collectionView.reloadData()
     }
     
@@ -71,9 +73,6 @@ class GameViewController: UIViewController {
         collectionView.register(CardCell.self, forCellWithReuseIdentifier: Constants.cardCellReuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        
-        // setting background picture
-        resizeBackgrounds()
         
         // creating newGameButton
         newGameButton = NewGameButton()
@@ -151,59 +150,6 @@ class GameViewController: UIViewController {
         collectionView.register(CardCell.self, forCellWithReuseIdentifier: Constants.cardCellReuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-    }
-    
-    /// If this is the first time opening the app, it will render all backgrounds in the proper size for the device and cache them
-    func resizeBackgrounds() {
-        guard defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)?.isEmpty ?? true else {
-            setCurrentBackground()
-            
-            return
-        }
-        
-        for i in 0..<4 {
-            let render = UIGraphicsImageRenderer(size: CGSize(width: view.bounds.width, height: view.bounds.height))
-            let backgroundName: String
-            
-            switch i {
-            case 0:
-                backgroundName = "GreenBackground"
-            case 1:
-                backgroundName = "RedBackground"
-            case 2:
-                backgroundName = "PinkBackground"
-            default: // case 3
-                backgroundName = "BlueBackground"
-            }
-            
-            let image = render.image { (context) in
-                let background = UIImage(named: backgroundName)!
-                
-                background.draw(in: CGRect(x: -50, y: -50, width: view.bounds.width + 100, height: view.bounds.height + 100))
-            }
-            
-            guard let imageData = image.jpegData(compressionQuality: 0.5) else { fatalError("Could not save background image") }
-            
-            defaults.set(imageData, forKey: backgroundName)
-        }
-        
-        currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)
-    }
-    
-    /// Sets the background from the UserDefaults to the view's backgroundColor
-    func setCurrentBackground() {
-        switch defaults.string(forKey: UserDefaults.Keys.background.rawValue) {
-        case "green":
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)
-        case "red":
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.redBackground.rawValue)!)
-        case "blue":
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.blueBackground.rawValue)!)
-        default:
-            currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.pinkBackground.rawValue)!)
-        }
-        
-        view.backgroundColor = UIColor.init(patternImage: currentBackground)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -298,13 +244,13 @@ extension GameViewController {
     
     /// Transition to the CustomizeBackgroundViewController
     @objc func moveToCustomizeBackgroundViewController() {
-        let vc = CustomizeBackgroundViewController(cardModel: cardModel, defaults: defaults, currentBackground: currentBackground)
+        let vc = CustomizeBackgroundViewController(cardModel: cardModel, defaults: defaults, backgroundSaver: backgroundSaver)
         navigationController?.pushViewController(vc, animated: true)
     }
     
     /// Transition to the CustomizeCardsViewController
     @objc func moveToCustomizeCardsViewController() {
-        let vc = CustomizeCardsViewController(cardModel: cardModel, defaults: defaults, currentBackground: currentBackground)
+        let vc = CustomizeCardsViewController(cardModel: cardModel, defaults: defaults, backgroundSaver: backgroundSaver)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
