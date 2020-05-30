@@ -16,6 +16,7 @@
 		9A84D2342481E89C00FC0A8C /* MatchingPairsBackgroundSaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A84D2332481E89C00FC0A8C /* MatchingPairsBackgroundSaverTests.swift */; };
 		9A84D2362482A22400FC0A8C /* CardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A84D2352482A22400FC0A8C /* CardCollectionViewController.swift */; };
 		9A84D2382482A4DD00FC0A8C /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A84D2372482A4DD00FC0A8C /* UIViewController+Extensions.swift */; };
+		9A84D23A2482A85C00FC0A8C /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A84D2392482A85C00FC0A8C /* UIView+Extensions.swift */; };
 		9A85B8B2242A6ADB0036CBDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */; };
 		9A85B8B4242A6ADB0036CBDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */; };
 		9A85B8B6242A6ADB0036CBDC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A85B8B5242A6ADB0036CBDC /* GameViewController.swift */; };
@@ -65,6 +66,7 @@
 		9A84D2332481E89C00FC0A8C /* MatchingPairsBackgroundSaverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingPairsBackgroundSaverTests.swift; sourceTree = "<group>"; };
 		9A84D2352482A22400FC0A8C /* CardCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewController.swift; sourceTree = "<group>"; };
 		9A84D2372482A4DD00FC0A8C /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		9A84D2392482A85C00FC0A8C /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9A85B8AE242A6ADB0036CBDC /* MatchingPairs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchingPairs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A85B8B1242A6ADB0036CBDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A85B8B3242A6ADB0036CBDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				9A366953244223DB00F44033 /* UIImage+Extensions.swift */,
 				9AC8FB492479821B00CF5B5D /* UserDefaults+Extensions.swift */,
 				9A84D2372482A4DD00FC0A8C /* UIViewController+Extensions.swift */,
+				9A84D2392482A85C00FC0A8C /* UIView+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			files = (
 				9AAF5D23245F5E5200C3EFB2 /* TopIcon.swift in Sources */,
 				9AAF5D1D245F56B600C3EFB2 /* CardOptionButton.swift in Sources */,
+				9A84D23A2482A85C00FC0A8C /* UIView+Extensions.swift in Sources */,
 				9A85B8B6242A6ADB0036CBDC /* GameViewController.swift in Sources */,
 				9A84D2322481E56000FC0A8C /* BackgroundSaver.swift in Sources */,
 				9A84D2382482A4DD00FC0A8C /* UIViewController+Extensions.swift in Sources */,

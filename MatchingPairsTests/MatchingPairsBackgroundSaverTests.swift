@@ -63,6 +63,7 @@ class MatchingPairsBackgroundSaverTests: XCTestCase {
         XCTAssertNil(defaults.data(forKey: "PinkBackground"))
         XCTAssertNotEqual(UIImage(data: greenData), backgroundSaver.currentBackground)
         XCTAssertNotEqual(UIImage(data: blueData), backgroundSaver.currentBackground)
+        XCTAssertEqual(backgroundSaver.currentBackgroundColor(), "red")
     }
     
     func renderImage(backgroundName: String, viewBounds: CGRect) -> Data {

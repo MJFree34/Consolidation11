@@ -91,4 +91,5 @@ enum Constants {
     }
     
     static let cardCellReuseIdentifier = "Card"
+    static let selectedBorderColor = UIColor.white
 }

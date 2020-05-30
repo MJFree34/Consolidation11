@@ -17,7 +17,7 @@ class SmallBackgroundButton: UIButton {
     init(imageName: String, tagNumber: Int) {
         super.init(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
         setImage(UIImage(named: imageName)?.imageWithBorder(width: 2, radius: 5, color: .black), for: .normal)
-        setImage(UIImage(named: imageName)?.imageWithBorder(width: 2, radius: 5, color: .blue), for: .selected)
+        setImage(UIImage(named: imageName)?.imageWithBorder(width: 2, radius: 5, color: Constants.selectedBorderColor), for: .selected)
         adjustsImageWhenHighlighted = false
         tag = tagNumber
     }

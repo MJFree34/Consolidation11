@@ -15,15 +15,12 @@ class CustomizeBackgroundViewController: UIViewController {
     var smallBackgroundOptions = [UIButton]()
     /// The card back option buttons
     var cardBackOptions = [CardOptionButton]()
-    /// The standard UserDefaults
-    var defaults: UserDefaults
     /// Source for the background
     let backgroundSaver: BackgroundSaver
     
-    init(cardModel: CardModel, defaults: UserDefaults, backgroundSaver: BackgroundSaver) {
+    init(cardModel: CardModel, backgroundSaver: BackgroundSaver) {
         self.backgroundSaver = backgroundSaver
         self.cardModel = cardModel
-        self.defaults = defaults
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -161,7 +158,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen background
     func selectSavedBackground() {
-        switch defaults.string(forKey: UserDefaults.Keys.background.rawValue) {
+        switch backgroundSaver.currentBackgroundColor() {
         case "green":
             smallBackgroundOptions[0].isSelected = true
         case "red":
@@ -175,7 +172,7 @@ class CustomizeBackgroundViewController: UIViewController {
     
     /// Selects the chosen card back
     func selectSavedCardBack() {
-        switch defaults.string(forKey: UserDefaults.Keys.cardBack.rawValue) {
+        switch cardModel.card(at: 0).backImageName {
         case Constants.CardBackNames.blue:
             cardBackOptions[0].isSelected = true
         case Constants.CardBackNames.red:
@@ -276,20 +273,18 @@ extension CustomizeBackgroundViewController {
         
         switch smallBackground.tag {
         case 0:
-            defaults.set("green", forKey: UserDefaults.Keys.background.rawValue)
+            backgroundSaver.setCurrentBackground("green")
             smallBackgroundOptions[0].isSelected = true
         case 1:
-            defaults.set("red", forKey: UserDefaults.Keys.background.rawValue)
+            backgroundSaver.setCurrentBackground("red")
             smallBackgroundOptions[1].isSelected = true
         case 2:
-            defaults.set("blue", forKey: UserDefaults.Keys.background.rawValue)
+            backgroundSaver.setCurrentBackground("blue")
             smallBackgroundOptions[2].isSelected = true
         default:
-            defaults.set("pink", forKey: UserDefaults.Keys.background.rawValue)
+            backgroundSaver.setCurrentBackground("pink")
             smallBackgroundOptions[3].isSelected = true
         }
-        
-        backgroundSaver.setCurrentBackground()
         
         setBackground()
     }

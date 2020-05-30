@@ -51,9 +51,7 @@ class GameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // loads a new game with the current background
-        cardModel.newGame()
         view.backgroundColor = UIColor.init(patternImage: backgroundSaver.currentBackground)
-        cardCollectionViewController.collectionView.reloadData()
     }
     
     /// Sets up the entire rendered screen
@@ -128,7 +126,7 @@ class GameViewController: UIViewController {
 extension GameViewController {
     /// Transition to the CustomizeBackgroundViewController
     @objc func moveToCustomizeBackgroundViewController() {
-        let vc = CustomizeBackgroundViewController(cardModel: cardModel, defaults: defaults, backgroundSaver: backgroundSaver)
+        let vc = CustomizeBackgroundViewController(cardModel: cardModel, backgroundSaver: backgroundSaver)
         navigationController?.pushViewController(vc, animated: true)
     }
     

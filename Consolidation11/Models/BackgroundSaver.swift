@@ -21,7 +21,7 @@ class BackgroundSaver {
     /// If this is the first time opening the app, it will render all backgrounds in the proper size for the device and cache them
     func resizeBackgrounds(viewBounds: CGRect) {
         guard defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)?.isEmpty ?? true else {
-            setCurrentBackground()
+            setCurrentBackground(nil)
             
             return
         }
@@ -52,21 +52,33 @@ class BackgroundSaver {
             defaults.set(imageData, forKey: backgroundName)
         }
         
-        defaults.set("green", forKey: UserDefaults.Keys.background.rawValue)
-        setCurrentBackground()
+        setCurrentBackground("green")
     }
     
-    /// Sets the background from the UserDefaults to the view's backgroundColor
-    func setCurrentBackground() {
-        switch defaults.string(forKey: UserDefaults.Keys.background.rawValue) {
+    /// Sets the background to the currentBackground and saves into defaults
+    func setCurrentBackground(_ backgroundColor: String?) {
+        var backgroundColor = backgroundColor
+        if backgroundColor == nil {
+            backgroundColor = defaults.string(forKey: UserDefaults.Keys.background.rawValue)!
+        }
+        
+        switch backgroundColor {
         case "green":
+            defaults.set("green", forKey: UserDefaults.Keys.background.rawValue)
             currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.greenBackground.rawValue)!)
         case "red":
+            defaults.set("red", forKey: UserDefaults.Keys.background.rawValue)
             currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.redBackground.rawValue)!)
         case "blue":
+            defaults.set("blue", forKey: UserDefaults.Keys.background.rawValue)
             currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.blueBackground.rawValue)!)
         default:
+            defaults.set("pink", forKey: UserDefaults.Keys.background.rawValue)
             currentBackground = UIImage(data: defaults.data(forKey: UserDefaults.Keys.pinkBackground.rawValue)!)
         }
+    }
+    
+    func currentBackgroundColor() -> String {
+        return defaults.string(forKey: UserDefaults.Keys.background.rawValue)!
     }
 }

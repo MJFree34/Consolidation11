@@ -39,16 +39,18 @@ class CardCollectionViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        cardModel.newGame()
+        collectionView.reloadData()
+    }
+    
     func addViews() {
         addCollectionView()
         addNewGameButton()
         
+        collectionView.pinToBounds()
+        
         NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             newGameButton.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
             newGameButton.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
             newGameButton.widthAnchor.constraint(equalToConstant: 200),
