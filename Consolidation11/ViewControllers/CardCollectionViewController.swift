@@ -15,8 +15,8 @@ class CardCollectionViewController: UIViewController {
     var cardModel: CardModel
     /// Button to begin a new game
     var newGameButton: NewGameButton!
-    /// The IndexPath for an offscreen-matched cell
-    var hiddenCardIndexPath: IndexPath?
+    /// Logic for matching cards
+    var cardLogic = CardLogic()
     
     // MARK: - Setup UI
     init(cardModel: CardModel) {
@@ -108,53 +108,52 @@ extension CardCollectionViewController: UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCell else { fatalError("Could not find a CardCell") }
         
-        // selected card is not flipped nor matched
-        if !cardModel.card(at: indexPath.item).isFlipped && !cardModel.card(at: indexPath.item).isMatched {
-            // there has been another card flipped
-            if let cardIndexPath = cardModel.flippedIndex {
-                // flips selected cell and card
-                cardModel.toggleFlip(for: indexPath.item)
-                cell.flip()
-                
-                // other cell is visible that is flipped
-                if let cell2 = collectionView.cellForItem(at: cardIndexPath) as? CardCell {
-                    // match the cards if they match
-                    if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
-                        cell.remove()
-                        cell2.remove()
-                    }
-                    
-                    // flips both over
-                    cell.flipBack()
-                    cell2.flipBack()
-                } else { // the second cell is offscreen
-                    // match the cards if they match
-                    if cardModel.matchCards(index1: indexPath.item, index2: cardIndexPath.item) {
-                        cell.remove()
-                    }
-                    
-                    // flipping all of these for both match and not match
-                    cell.flipBack()
-                    
-                    // set this to know of a hidden card in the future
-                    hiddenCardIndexPath = cardIndexPath
-                }
-                
-                // no more cards are flipped
-                cardModel.flippedIndex = nil
-                cardModel.toggleFlip(for: indexPath.item)
-                cardModel.toggleFlip(for: cardIndexPath.item)
-            } else { // only one card flipped
-                // set the flippedIndex to this indexPath and flip the card and cell
-                cardModel.flippedIndex = indexPath
-                cardModel.toggleFlip(for: indexPath.item)
-                cell.flip()
+        let resultTuple: (flipCell1: Bool, flipBackCell1: Bool, flipBackCell2: Bool, removeCell1: Bool, removeCell2: Bool, flippedIndex: IndexPath?)
+        
+        if let flippedIndex = cardModel.flippedIndex {
+            if let _ = collectionView.cellForItem(at: flippedIndex) as? CardCell {
+                resultTuple = cardLogic.cardSelected(cardModel: cardModel, cell2Exists: true, selectedIndexPath: indexPath)
+            } else {
+                resultTuple = cardLogic.cardSelected(cardModel: cardModel, cell2Exists: false, selectedIndexPath: indexPath)
+            }
+        } else {
+            resultTuple = cardLogic.cardSelected(cardModel: cardModel, cell2Exists: false, selectedIndexPath: indexPath)
+        }
+        
+        if resultTuple.flipCell1 {
+            cell.flip()
+        }
+        
+        if resultTuple.flipBackCell1 {
+            cell.flipBack()
+        }
+        
+        if resultTuple.removeCell1 {
+            cell.remove()
+        }
+        
+        if resultTuple.flipBackCell2 {
+            let cell2 = collectionView.cellForItem(at: resultTuple.flippedIndex!) as! CardCell
+            cell2.flipBack()
+            
+            if resultTuple.removeCell2 {
+                cell2.remove()
             }
         }
         
         // shows newGameButton if all cards are matched
         if cardModel.allMatched() {
             newGameButton.show()
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        for indexPath in collectionView.indexPathsForVisibleItems {
+            if indexPath == cardLogic.hiddenCardIndexPath {
+                // make sure the cell is flipped the correct way and reset hiddenCardIndexPath
+                collectionView.reloadItems(at: [indexPath])
+                cardLogic.hiddenCardIndexPath = nil
+            }
         }
     }
 }

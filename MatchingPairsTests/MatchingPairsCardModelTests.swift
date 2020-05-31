@@ -18,7 +18,7 @@ class MatchingPairsCardModelTests: XCTestCase {
         defaults = UserDefaults.makeClearedInstance()
         defaults.removePersistentDomain(forName: #file)
         
-        cardModel = CardModel(defaults: defaults)
+        cardModel = CardModel(defaults: defaults, shouldShuffle: false)
     }
 
     override func tearDown() {
@@ -42,14 +42,7 @@ class MatchingPairsCardModelTests: XCTestCase {
     func testDoesNotMatchCardsWhenNotMatch() {
         // given
         let index1 = 0
-        let card1 = cardModel.card(at: index1)
-        
-        let index2: Int
-        if card1.frontImageName == cardModel.card(at: 1).frontImageName {
-            index2 = 1
-        } else {
-            index2 = 2
-        }
+        let index2 = index1 + 1
         
         // when
         XCTAssertFalse(cardModel.allMatched())
@@ -64,16 +57,7 @@ class MatchingPairsCardModelTests: XCTestCase {
     func testMatchesCardsWhenMatch() {
         // given
         let index1 = 0
-        let card1 = cardModel.card(at: index1)
-        
-        var index2: Int = 1
-        for i in 1..<32 {
-            let card2 = cardModel.card(at: i)
-            if card2.frontImageName == card1.frontImageName {
-                index2 = i
-                break
-            }
-        }
+        let index2 = index1 + 16
         
         // when
         XCTAssertFalse(cardModel.allMatched())
@@ -99,15 +83,8 @@ class MatchingPairsCardModelTests: XCTestCase {
     func testAllMatched() {
         // given
         // all cards are matched
-        for i in 0..<32 {
-            let card1 = cardModel.card(at: i)
-            
-            for j in i..<32 {
-                if cardModel.card(at: j).frontImageName == card1.frontImageName {
-                    _ = cardModel.matchCards(index1: i, index2: j)
-                    break
-                }
-            }
+        for i in 0..<16 {
+            _ = cardModel.matchCards(index1: i, index2: i + 16)
         }
         
         // when

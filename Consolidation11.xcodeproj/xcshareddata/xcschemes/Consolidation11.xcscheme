@@ -59,6 +59,16 @@
                ReferencedContainer = "container:Consolidation11.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9A84D24224832C6E00FC0A8C"
+               BuildableName = "MatchingPairsUITests.xctest"
+               BlueprintName = "MatchingPairsUITests"
+               ReferencedContainer = "container:Consolidation11.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -19,10 +19,13 @@ class CardModel {
     private let userDefaults: UserDefaults!
     /// Container for cardSet that persists card data
     var cardSetSaver: CardSetSaver!
+    /// Tells whether the cardModel is shuffled
+    let shouldShuffle: Bool
     
     /// Sets the properties from saved states in UserDefaults and Disk
-    init(defaults: UserDefaults) {
+    init(defaults: UserDefaults, shouldShuffle: Bool = true) {
         userDefaults = defaults
+        self.shouldShuffle = shouldShuffle
         
         let totalCards = loadTotalCards()
         
@@ -94,7 +97,9 @@ extension CardModel {
     /// Assigns cards to pairs of the cardSet and shuffles
     private func setCards() {
         cards = cardSetSaver.cardSet + cardSetSaver.cardSet
-        shuffle()
+        if shouldShuffle {
+            shuffle()
+        }
     }
     
     /// Shuffles the cards twice

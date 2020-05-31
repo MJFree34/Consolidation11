@@ -10,7 +10,7 @@ import UIKit
 
 class GameViewController: UIViewController {
     /// The standard UserDefaults
-    let defaults: UserDefaults
+    var defaults: UserDefaults
     /// The model for the cards
     var cardModel: CardModel
     /// Source for the background
@@ -22,8 +22,16 @@ class GameViewController: UIViewController {
     
     // MARK: - Setup UI
     init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-        self.cardModel = CardModel(defaults: self.defaults)
+        if CommandLine.arguments.contains("--uitesting") {
+            self.defaults = UserDefaults.makeClearedInstance()
+            self.defaults.removePersistentDomain(forName: #file)
+            
+            self.cardModel = CardModel(defaults: self.defaults, shouldShuffle: false)
+        } else {
+            self.defaults = defaults
+            self.cardModel = CardModel(defaults: self.defaults)
+        }
+        
         self.backgroundSaver = BackgroundSaver(defaults: self.defaults)
         super.init(nibName: nil, bundle: nil)
     }
@@ -109,16 +117,6 @@ class GameViewController: UIViewController {
             customizeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             customizeLabel.topAnchor.constraint(equalTo: cardCollectionViewController.collectionView.bottomAnchor, constant: 10)
         ])
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        for indexPath in cardCollectionViewController.collectionView.indexPathsForVisibleItems {
-            if indexPath == cardCollectionViewController.hiddenCardIndexPath {
-                // make sure the cell is flipped the correct way and reset hiddenCardIndexPath
-                cardCollectionViewController.collectionView.reloadItems(at: [indexPath])
-                cardCollectionViewController.hiddenCardIndexPath = nil
-            }
-        }
     }
 }
 
