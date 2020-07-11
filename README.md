@@ -9,4 +9,7 @@ MatchedPairs is a Memory or Concentration card game made completely in Swift. It
 - (Attempted) MVC architecture
 - Programmatic UI
 
-This is my attempt at a true iOS app, and will be published in Testflight at a later time. Thank you!
+## Beta
+Want to join the beta? Use this link to test it on TestFlight! [Join Beta](https://testflight.apple.com/join/xHQSTXsx)
+
+This is my first attempt at a true iOS app. Thank you!
