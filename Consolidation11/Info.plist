@@ -17,9 +17,16 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FingerPaint-Regular.ttf</string>
+		<string>Courgette-Regular.ttf</string>
+		<string>ClickerScript-Regular.ttf</string>
+		<string>Kranky-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -53,13 +60,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>FingerPaint-Regular.ttf</string>
-		<string>Courgette-Regular.ttf</string>
-		<string>ClickerScript-Regular.ttf</string>
-		<string>Kranky-Regular.ttf</string>
 	</array>
 </dict>
 </plist>
